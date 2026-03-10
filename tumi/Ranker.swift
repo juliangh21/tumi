@@ -1,3 +1,11 @@
+//
+//  Ranker.swift
+//  tumi
+//
+//  Created by Julian Garcia-Haugland on 3/8/26.
+//
+import SwiftUI
+
 struct Ranker: View {
 //    var rank: Int
     var rank: String
