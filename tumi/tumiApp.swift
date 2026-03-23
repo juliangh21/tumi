@@ -11,7 +11,7 @@ import SwiftUI
 struct tumiApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(Recipes: ListOfRecipes)
         }
     }
 }

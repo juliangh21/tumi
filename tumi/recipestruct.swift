@@ -32,3 +32,13 @@ struct Recipe: Identifiable{
         recipeType=newType
     }
 }
+
+@ViewBuilder
+func betterrank(r1:Recipe, r2: Recipe)-> some View{
+    if(r1.getRank()>r2.getRank()){
+        Ranker(rank: r1.getRank(), recipe_name: r1.getName(), recipe_type: r1.getType())
+    }
+    else{
+        Ranker(rank: r2.getRank(), recipe_name: r2.getName(), recipe_type: r2.getType())
+    }
+}
