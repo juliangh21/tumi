@@ -8,7 +8,7 @@
 import SwiftUI
 
     
-struct Recipe: Identifiable{
+struct Recipe: Identifiable{ //this is the recipe struct
     let id = UUID()
     var recipeRank: String
     var recipeName: String
@@ -33,7 +33,7 @@ struct Recipe: Identifiable{
     }
 }
 
-@ViewBuilder
+@ViewBuilder //this returns the best recipe among two recipes
 func betterrank(r1:Recipe, r2: Recipe)-> some View{
     if(r1.getRank()>r2.getRank()){
         Ranker(rank: r1.getRank(), recipe_name: r1.getName(), recipe_type: r1.getType())

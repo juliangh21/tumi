@@ -6,8 +6,7 @@
 //
 import SwiftUI
 
-struct Ranker: View {
-//    var rank: Int
+struct Ranker: View { // view for data from recipe and the rectangle. This is the final card
     var rank: String
     var recipe_name: String
     var recipe_type: String
@@ -29,7 +28,7 @@ struct Ranker: View {
     }
 }
 
-struct infoView: View {
+struct infoView: View { // this is the view for the data from recipe. NOT THE RECTANGLE variables are taken in as parameters and displatd
     var rank: String
 //    var rank: Int
     var recipe_name: String
@@ -42,7 +41,7 @@ struct infoView: View {
                 .font(.largeTitle)
 //                .padding(.trailing)
 //                .frame(width: 340/5)
-            Spacer()
+            Spacer() //spacer to make sure its in the left quarter
             Text(recipe_name)
                 .font(.body)
             Spacer()
