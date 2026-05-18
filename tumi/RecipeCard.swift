@@ -9,12 +9,12 @@ import SwiftUI
 struct Ranker: View { // view for data from recipe and the rectangle. This is the final card
     @EnvironmentObject var router: appRouter
     var theRecipe: Recipe
-    var rank: String
+    var rank: Int
     var recipe_name: String
     var recipe_type: String
     var rectwidth: Double = 340
     var body: some View {
-        Button(action: {print("tapped");router.goTo(to: .recipe(theRecipe))}){
+        Button(action: {print("tapped");router.goTo(to: .recipe(theRecipe)) }) {
 //            router.goTo(to: .recipe(theRecipe))
             ZStack{
                 RoundedRectangle(cornerRadius: 9)
@@ -35,7 +35,7 @@ struct Ranker: View { // view for data from recipe and the rectangle. This is th
 }
 
 struct infoView: View { // this is the view for the data from recipe. NOT THE RECTANGLE variables are taken in as parameters and displatd
-    var rank: String
+    var rank: Int
 //    var rank: Int
     var recipe_name: String
     var recipe_type: String

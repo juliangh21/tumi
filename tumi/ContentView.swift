@@ -22,24 +22,28 @@ struct RecipeList: View{
 struct ContentView: View {
     @EnvironmentObject var router: appRouter
     @State var RecipeArray =
-        [Recipe(recipeRank: "2", recipeName: "x", recipeType: "s"),
-         Recipe(recipeRank: "1", recipeName: "y", recipeType: "a"),  //this is the list of recipes
-         Recipe(recipeRank: "3", recipeName: "z", recipeType: "b")]
+        [Recipe(recipeRank: 2, recipeName: "x", recipeType: "1"),
+         Recipe(recipeRank: 1, recipeName: "y", recipeType: "B"),  //this is the list of recipes
+         Recipe(recipeRank: 3, recipeName: "z", recipeType: "b")]
     var body: some View{
-        ScrollView{ // makes it scroll so there is an infinite amount of recipes
-            RecipeList(Recipes: $RecipeArray)
-            Button("Add recipe"){
-                RecipeArray.append(Recipe(recipeRank: "4", recipeName: "r", recipeType: "1")) //this adds a recipe to the list
-                print("Recipe added")
-                
+        VStack{
+            listOfcategories(Recipes: RecipeArray)
+            ScrollView{ // makes it scroll so there is an infinite amount of recipes
+                RecipeList(Recipes: $RecipeArray)
+                Button("Add recipe"){
+                    RecipeArray.append(Recipe(recipeRank: (Int.random(in: 1...10)), recipeName: "r", recipeType: String(Int.random(in: 1...10)))) //this adds a recipe to the list
+                    print("Recipe added")
+                    
+                }
             }
         }
+        
         
     }
 }
 
 func sortRecipe(list1:[Recipe])->[Recipe]{
-    let sortedRecipe = list1.sorted{$0.getRank()<$1.getRank()}
+    let sortedRecipe = list1.sorted{ $0.getRank()<$1.getRank()}
     return sortedRecipe
 }
 

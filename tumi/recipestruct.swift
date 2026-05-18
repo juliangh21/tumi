@@ -10,13 +10,13 @@ import SwiftUI
     
 struct Recipe: Identifiable, Hashable{ //this is the recipe struct
     let id = UUID()
-    var recipeRank: String
+    var recipeRank: Int
     var recipeName: String
     var recipeType: String
-    func getRank() -> String{
+    func getRank() -> Int{
         return recipeRank
     }
-    mutating func changeRank(newRank: String) -> (){ // mutating is when you change smth about the struct. For example, change rank
+    mutating func changeRank(newRank: Int) -> (){ // mutating is when you change smth about the struct. For example, change rank
         recipeRank=newRank
     }
     func getName() -> String{
@@ -32,17 +32,17 @@ struct Recipe: Identifiable, Hashable{ //this is the recipe struct
         recipeType=newType
     }
     func getRankwsuffix() -> String{
-        if(recipeRank == "1"){
-            return (recipeRank + "st")
+        if(recipeRank == 1){
+            return (String(recipeRank) + "st")
         }
-        else if (recipeRank == "2"){
-            return (recipeRank + "nd")
+        else if (recipeRank == 2){
+            return (String(recipeRank) + "nd")
         }
-        else if(recipeRank == "3"){
-            return (recipeRank + "rd")
+        else if(recipeRank == 3){
+            return (String(recipeRank) + "rd")
         }
         else{
-            return (recipeRank + "th")
+            return (String(recipeRank) + "th")
         }
 //        for i in 1...4{
 //            if(i =  )){
