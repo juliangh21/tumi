@@ -13,28 +13,28 @@ struct RecipeList: View{
     var body: some View {
         VStack{
             ForEach(sortRecipe(list1: Recipes)) {card in
-                Ranker(rank: card.getRank(), recipe_name: card.getName(), recipe_type: card.getType())
+                Ranker(theRecipe:card ,rank: card.getRank(), recipe_name: card.getName(), recipe_type: card.getType()) //this sorts through a list of recipes and will create a viewable list of recipes
             }
         }
     }
 }
 
 struct ContentView: View {
+    @EnvironmentObject var router: appRouter
     @State var RecipeArray =
         [Recipe(recipeRank: "2", recipeName: "x", recipeType: "s"),
-         Recipe(recipeRank: "1", recipeName: "y", recipeType: "a"),
+         Recipe(recipeRank: "1", recipeName: "y", recipeType: "a"),  //this is the list of recipes
          Recipe(recipeRank: "3", recipeName: "z", recipeType: "b")]
     var body: some View{
-        ScrollView{
+        ScrollView{ // makes it scroll so there is an infinite amount of recipes
             RecipeList(Recipes: $RecipeArray)
             Button("Add recipe"){
-                RecipeArray.append(Recipe(recipeRank: "4", recipeName: "r", recipeType: "1"))
-                print("added")
-                print(RecipeArray)
+                RecipeArray.append(Recipe(recipeRank: "4", recipeName: "r", recipeType: "1")) //this adds a recipe to the list
+                print("Recipe added")
+                
             }
         }
         
-//        RecipeList(Recipes: RecipeArray)
     }
 }
 
@@ -44,5 +44,20 @@ func sortRecipe(list1:[Recipe])->[Recipe]{
 }
 
 #Preview {
-    ContentView()
-}
+    @Previewable @StateObject var router = appRouter()
+    NavigationStack(path: $router.path){
+        ContentView()
+            .navigationDestination(for: appRoute.self){ route in
+                switch route {
+                    case .home:
+                        ContentView()
+                    case .recipe(let recipe):
+                        recipeView(theRecipe: recipe)
+                    }
+                    
+                }
+            .environmentObject(router)
+            }
+        
+    }
+

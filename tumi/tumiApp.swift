@@ -9,10 +9,29 @@ import SwiftUI
 
 @main
 struct tumiApp: App {
+    @StateObject var router =  appRouter()
     var body: some Scene {
-        WindowGroup {
-//            ContentView(Recipes: ListOfRecipes)
-            ContentView()
+//        WindowGroup {
+////            ContentView(Recipes: ListOfRecipes)
+//            ContentView()
+//        }
+        WindowGroup{
+            NavigationStack(path: $router.path){
+                ContentView()
+                    .navigationDestination(for: appRoute.self){ route in
+                        switch route {
+                            case .home:
+                                ContentView()
+                            case .recipe(let recipe):
+                                recipeView(theRecipe: recipe)
+                            }
+                            
+                        }
+                    .environmentObject(router)
+                    }
+                
+            }
         }
-    }
+        
 }
+

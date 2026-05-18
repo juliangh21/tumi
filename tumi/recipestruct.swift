@@ -8,7 +8,7 @@
 import SwiftUI
 
     
-struct Recipe: Identifiable{ //this is the recipe struct
+struct Recipe: Identifiable, Hashable{ //this is the recipe struct
     let id = UUID()
     var recipeRank: String
     var recipeName: String
@@ -16,7 +16,7 @@ struct Recipe: Identifiable{ //this is the recipe struct
     func getRank() -> String{
         return recipeRank
     }
-    mutating func changeRank(newRank: String) -> (){
+    mutating func changeRank(newRank: String) -> (){ // mutating is when you change smth about the struct. For example, change rank
         recipeRank=newRank
     }
     func getName() -> String{
@@ -31,14 +31,33 @@ struct Recipe: Identifiable{ //this is the recipe struct
     mutating func changeType(newType: String) -> (){
         recipeType=newType
     }
+    func getRankwsuffix() -> String{
+        if(recipeRank == "1"){
+            return (recipeRank + "st")
+        }
+        else if (recipeRank == "2"){
+            return (recipeRank + "nd")
+        }
+        else if(recipeRank == "3"){
+            return (recipeRank + "rd")
+        }
+        else{
+            return (recipeRank + "th")
+        }
+//        for i in 1...4{
+//            if(i =  )){
+//            //            return (recipeRank + "st")
+//            //        }
+//        }
+    }
 }
 
-@ViewBuilder //this returns the best recipe among two recipes
-func betterrank(r1:Recipe, r2: Recipe)-> some View{
-    if(r1.getRank()>r2.getRank()){
-        Ranker(rank: r1.getRank(), recipe_name: r1.getName(), recipe_type: r1.getType())
-    }
-    else{
-        Ranker(rank: r2.getRank(), recipe_name: r2.getName(), recipe_type: r2.getType())
-    }
-}
+//@/*ViewBuilder*/ //this returns the best recipe among two recipes
+//func betterrank(r1:Recipe, r2: Recipe)-> some View{
+//    if(r1.getRank()>r2.getRank()){
+//        Ranker(rank: r1.getRank(), recipe_name: r1.getName(), recipe_type: r1.getType())
+//    }
+//    else{
+//        Ranker(rank: r2.getRank(), recipe_name: r2.getName(), recipe_type: r2.getType())
+//    }
+//}
