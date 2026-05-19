@@ -31,11 +31,12 @@ struct categoryframe: View{
 
 struct listOfcategories: View{
     var Recipes: [Recipe]
+    var onTap: (String?) -> Void
     @State var selectedcategory: String? = nil
         var uniqueCategories: [String] {
             var categorys: [String] = []
             for recipe in Recipes{
-                if(!(categorys.contains(recipe.getType().lowercased()))){
+                if(!(categorys.contains(recipe.getType().lowercased()))){ //this sorts through all the diffrenrt categories and finds the unique ones. Then, it adds them to a list.
                     categorys.append(recipe.getType().lowercased())
                 }
             }
@@ -47,12 +48,13 @@ struct listOfcategories: View{
                     ForEach(uniqueCategories, id: \.self){category in
                         Button(action: {
                             print("Cat tapped")
-                            if (selectedcategory==category){
+                            if (selectedcategory==category){//if button is double tapped, unpress
                                 selectedcategory = nil
                             }
                             else{
                                 selectedcategory=category
                             }
+                            onTap(selectedcategory)
                         }){
                         ZStack{
                             if(selectedcategory == (category)){
