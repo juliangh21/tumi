@@ -14,8 +14,15 @@ struct RecipeList: View{
     var body: some View {
         VStack{
             ForEach(sortRecipe(list1: Recipes)) {card in
-                Ranker(theRecipe:card ,rank: card.getRank(), recipe_name: card.getName(), recipe_type: card.getType()) //this sorts through a list of recipes and will create a viewable list of recipes
+                if(card.getRank() == -1){
+//                    print("not today")
+                }
+                else{
+                    Ranker(theRecipe:card ,rank: card.getRank(), recipe_name: card.getName(), recipe_type: card.getType()) //this sorts through a list of recipes and will create a viewable list of recipes
+                }
+                
             }
+
         }
     }
 }
@@ -24,10 +31,11 @@ struct ContentView: View {
     @EnvironmentObject var router: appRouter
     @State var RecipeArray =
         [Recipe(recipeRank: 2, recipeName: "x", recipeType: "1"),
-         Recipe(recipeRank: 1, recipeName: "y", recipeType: "B"),  //this is the list of recipes
+         Recipe(recipeRank: -1, recipeName: "y", recipeType: "B"),  //this is the list of recipes
          Recipe(recipeRank: 3, recipeName: "z", recipeType: "b")]
     @State var CategoryRecipeArray: [Recipe] = []
     @State var selectedCategory: String? = nil
+    @State var recipeSheetshowing: Bool = false
     var body: some View{
         VStack{
             listOfcategories(Recipes: RecipeArray, onTap: { selectedcategory in //this is the closure statement. From the listOfcategories struct, it grabs a value, and runs the code
@@ -46,6 +54,17 @@ struct ContentView: View {
                 }
                 
             }
+            Button("Add Recipe"){
+                recipeSheetshowing = true
+            }
+            .sheet(isPresented: $recipeSheetshowing){
+                AddRecipeSheet(recipeAdded: { recipenew in
+                    RecipeArray.append(recipenew)
+                    print("New Recipe added")
+                    recipeSheetshowing = false
+                })
+            }
+            
         }
         
         
@@ -63,7 +82,11 @@ func catrecipeonly(list1:[Recipe], SelectedCategory: String?)->[Recipe]{ //this 
         return list1
     }
     for recipe in list1 {
-        if (recipe.getType().lowercased() == SelectedCategory?.lowercased()){
+        if (recipe.getRank( ) == -1){
+            print("NOPE")
+            
+        }
+        else if (recipe.getType().lowercased() == SelectedCategory?.lowercased()){
             goodRecipes.append(recipe)
         }
     }
