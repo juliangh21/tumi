@@ -31,7 +31,7 @@ struct ContentView: View {
     @EnvironmentObject var router: appRouter
     @State var RecipeArray =
         [Recipe(recipeRank: 2, recipeName: "x", recipeType: "1"),
-         Recipe(recipeRank: -1, recipeName: "y", recipeType: "B"),  //this is the list of recipes
+         Recipe(recipeRank: 1, recipeName: "y", recipeType: "B"),  //this is the list of recipes
          Recipe(recipeRank: 3, recipeName: "z", recipeType: "b")]
     @State var CategoryRecipeArray: [Recipe] = []
     @State var selectedCategory: String? = nil
