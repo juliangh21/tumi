@@ -58,7 +58,7 @@ struct ContentView: View {
                 recipeSheetshowing = true
             }
             .sheet(isPresented: $recipeSheetshowing){
-                AddRecipeSheet(recipeAdded: { recipenew in
+                AddRecipeSheet(RecipeList: RecipeArray, recipeAdded: { recipenew in
                     RecipeArray.append(recipenew)
                     print("New Recipe added")
                     recipeSheetshowing = false
