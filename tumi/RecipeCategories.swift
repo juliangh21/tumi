@@ -16,13 +16,6 @@ struct categoryframe: View{
                 RoundedRectangle(cornerRadius: 8)
                     .fill(color)
                     .frame(width: CGFloat(80),height: 30)
-//                Text(caterogy)
-//                    .tint(.white)
-//                
-//            }
-//        }
-//    
-//        
     }
 }
 
@@ -58,13 +51,13 @@ struct listOfcategories: View{
                         }){
                         ZStack{
                             if(selectedcategory == (category)){
-                                categoryframe(color: .orange)
+                                categoryframe(color: Color.accentorange)
                             }
                             else{
-                                categoryframe(color: .gray)
+                                categoryframe(color: Color.primarybrown)
                             }
                             Text(category)
-                                .tint(.white)
+                                .tint(Color.secondaryfont)
                     
                                 }
                             }

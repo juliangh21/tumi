@@ -46,13 +46,30 @@ struct addSheet: View{
         VStack{
             Text("Add Recipe")
                 .font(.title)
-                .padding()
+                .foregroundStyle(Color.darkbrownimpactfont)
+//                .padding()
 //            Spacer()
-            TextField("Recipe name", text: $recipename)
-                .padding()
-//            Spacer()
+            ZStack{
+                RoundedRectangle(cornerRadius: 9)
+                    .fill(Color.primarybrown)
+                    .frame(width: 340, height: 80)
+                TextField("Recipe Name", text: $recipename)
+//                    .padding()
+//                    .padding(.vertical, 140)
+                    .padding(.horizontal,50)
+            }
             Text("Add Recipe Category")
-            TextField("Recipe Category", text: $recipeCategory)
+//            TextField("Recipe Category", text: $recipeCategory)
+//                .padding()
+            ZStack{
+                RoundedRectangle(cornerRadius: 9)
+                    .fill(.brown)
+                    .frame(width: 340, height: 80)
+                TextField("Recipe Category", text: $recipeCategory)
+//                    .padding()
+//                    .padding(.vertical, 140)
+                    .padding(.horizontal,50)
+            }
             Button("Add recipe"){
                 print("Recipe added")
                 let recipenew = Recipe(recipeRank: 2, recipeName: recipename, recipeType: recipeCategory)
@@ -136,8 +153,6 @@ struct recipecomparisonbutton: View {
         
     }
 }
-
-
 struct recipeComparison: View {
     var oldrecipe: Recipe
     var newRecipe: Recipe

@@ -28,9 +28,11 @@ struct tumiApp: App {
                             
                         }
                     .environmentObject(router)
+                
                     }
                 
             }
+        
         }
         
 }

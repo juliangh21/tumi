@@ -18,7 +18,7 @@ struct Ranker: View { // view for data from recipe and the rectangle. This is th
 //            router.goTo(to: .recipe(theRecipe))
             ZStack{
                 RoundedRectangle(cornerRadius: 9)
-                    .fill(.brown)
+                    .fill(Color.primarybrown)
                     .frame(width: CGFloat(rectwidth),height: 80)
     //            Text("1")
     //                .font(.largeTitle)
@@ -45,19 +45,19 @@ struct infoView: View { // this is the view for the data from recipe. NOT THE RE
         HStack(){
             Text(String(rank)+".")
                 .font(.largeTitle)
-                .foregroundStyle(.black)
+                .foregroundStyle(Color.darkbrownimpactfont)
 //                .padding(.trailing)
 //                .frame(width: 340/5)
             Spacer() //spacer to make sure its in the left quarter
             Text(recipe_name)
                 .font(.body)
-                .foregroundStyle(.black)
+                .foregroundStyle(Color.brownfont)
             Spacer()
             Spacer()
             Spacer()
             Text(recipe_type)
                 .font(.footnote)
-                .foregroundStyle(.black)
+                .foregroundStyle(Color.secondaryfont)
             
         }
         

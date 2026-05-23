@@ -37,36 +37,42 @@ struct ContentView: View {
     @State var selectedCategory: String? = nil
     @State var recipeSheetshowing: Bool = false
     var body: some View{
-        VStack{
-            listOfcategories(Recipes: RecipeArray, onTap: { selectedcategory in //this is the closure statement. From the listOfcategories struct, it grabs a value, and runs the code
-                
-                if !(selectedCategory == selectedcategory){
-                    selectedCategory = selectedcategory
-                }
-            })
-            ScrollView{ // makes it scroll so there is an infinite amount of recipes
-//                RecipeList(Recipes: $RecipeArray)
-                RecipeList(Recipes: catrecipeonly(list1: RecipeArray, SelectedCategory: selectedCategory))
-                Button("Add recipe"){
-                    RecipeArray.append(Recipe(recipeRank: (Int.random(in: 1...10)), recipeName: "r", recipeType: String(Int.random(in: 1...10)))) //this adds a recipe to the list
-                    print("Recipe added")
+        ZStack{
+            Color.lightbrownbkgrnd
+                .ignoresSafeArea()
+            VStack{
+                listOfcategories(Recipes: RecipeArray, onTap: { selectedcategory in //this is the closure statement. From the listOfcategories struct, it grabs a value, and runs the code
+                    
+                    if !(selectedCategory == selectedcategory){
+                        selectedCategory = selectedcategory
+                    }
+                })
+                ScrollView{ // makes it scroll so there is an infinite amount of recipes
+    //                RecipeList(Recipes: $RecipeArray)
+                    RecipeList(Recipes: catrecipeonly(list1: RecipeArray, SelectedCategory: selectedCategory))
+//                    Button("Add recipe"){
+//                        RecipeArray.append(Recipe(recipeRank: (Int.random(in: 1...10)), recipeName: "r", recipeType: String(Int.random(in: 1...10)))) //this adds a recipe to the list
+//                        print("Recipe added")
+//                        
+//                    }
                     
                 }
+                Button("Add Recipe"){
+                    recipeSheetshowing = true
+                }
+                .sheet(isPresented: $recipeSheetshowing){
+                    AddRecipeSheet(RecipeList: RecipeArray, recipeAdded: { recipenew in
+                        RecipeArray.append(recipenew)
+                        RecipeArray = resortrecipe(list1: RecipeArray)
+                        print("New Recipe added")
+                        recipeSheetshowing = false
+                    })
+                }
                 
             }
-            Button("Add Recipe"){
-                recipeSheetshowing = true
-            }
-            .sheet(isPresented: $recipeSheetshowing){
-                AddRecipeSheet(RecipeList: RecipeArray, recipeAdded: { recipenew in
-                    RecipeArray.append(recipenew)
-                    print("New Recipe added")
-                    recipeSheetshowing = false
-                })
-            }
-            
+
         }
-        
+                
         
     }
 }
@@ -75,6 +81,15 @@ func sortRecipe(list1:[Recipe])->[Recipe]{
     let sortedRecipe = list1.sorted{ $0.getRank()<$1.getRank()}
     return sortedRecipe
 }
+
+func resortrecipe(list1:[Recipe])->[Recipe] {
+    var r1 = sortRecipe(list1: list1)
+    for i in r1.indices{
+        r1[i].changeRank(newRank: i+1)
+    }
+    return r1
+}
+
 
 func catrecipeonly(list1:[Recipe], SelectedCategory: String?)->[Recipe]{ //this function sorts through a list of recipes that only have the selected category
     var goodRecipes : [Recipe] = []
