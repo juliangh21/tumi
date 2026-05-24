@@ -107,14 +107,12 @@ struct RankSheetView: View {
                         Text("Confirm this new recipe")
                     }
                     
-                    
                 }
                 else if !(sortedRecipe.count == 0){
                     recipeComparison(oldrecipe: sortedRecipe[mid], newRecipe: newRecipe, betterRecipe: {
                         recipepreffered in
                         nextrecipes(preffered: recipepreffered)
                     } )
-                    
                 }
                 else{
                     ProgressView()

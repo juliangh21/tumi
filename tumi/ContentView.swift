@@ -9,23 +9,35 @@ import SwiftUI
 
 struct RecipeList: View{
     
-//    @Binding var Recipes: [Recipe]
-    var Recipes: [Recipe]
+    //    @Binding var Recipes: [Recipe]
+    @Binding var Recipes: [Recipe]
     var body: some View {
-        VStack{
-            ForEach(sortRecipe(list1: Recipes)) {card in
+        List{
+            ForEach(sortRecipe(list1: $Recipes)) {card in
                 if(card.getRank() == -1){
-//                    print("not today")
+                    //                    print("not today")
                 }
                 else{
                     Ranker(theRecipe:card ,rank: card.getRank(), recipe_name: card.getName(), recipe_type: card.getType()) //this sorts through a list of recipes and will create a viewable list of recipes
+                        .swipeActions{
+                            Button(role:.destructive){
+                                print("theverge")
+                                $Recipes.remove(at:deleteRecipe(list1: Recipes, recipe: card))
+                            }label: {
+                                //   Image(systemName: "trash")
+                                //                            }
+                                SwipeDeleteActions()
+                                //                                Text("theverge")
+                            }
+                        }
                 }
                 
             }
-
+            
         }
     }
 }
+
 
 struct ContentView: View {
     @EnvironmentObject var router: appRouter
@@ -47,7 +59,7 @@ struct ContentView: View {
                         selectedCategory = selectedcategory
                     }
                 })
-                ScrollView{ // makes it scroll so there is an infinite amount of recipes
+//                ScrollView{ // makes it scroll so there is an infinite amount of recipes
     //                RecipeList(Recipes: $RecipeArray)
                     RecipeList(Recipes: catrecipeonly(list1: RecipeArray, SelectedCategory: selectedCategory))
 //                    Button("Add recipe"){
@@ -56,7 +68,7 @@ struct ContentView: View {
 //                        
 //                    }
                     
-                }
+//                }
                 Button("Add Recipe"){
                     recipeSheetshowing = true
                 }
@@ -107,7 +119,10 @@ func catrecipeonly(list1:[Recipe], SelectedCategory: String?)->[Recipe]{ //this 
     }
     return goodRecipes
 }
-
+func deleteRecipe(list1: [Recipe], recipe: Recipe)->Int{
+    let index = list1.firstIndex(of: recipe)
+    return Int(index!)
+}
 
 #Preview {
     @Previewable @StateObject var router = appRouter()
