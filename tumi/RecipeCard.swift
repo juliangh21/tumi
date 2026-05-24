@@ -45,6 +45,7 @@ struct infoView: View { // this is the view for the data from recipe. NOT THE RE
         HStack(){
             Text(String(rank)+".")
                 .font(.largeTitle)
+//                .font(.headline)
                 .foregroundStyle(Color.darkbrownimpactfont)
 //                .padding(.trailing)
 //                .frame(width: 340/5)
@@ -69,14 +70,22 @@ struct infoView: View { // this is the view for the data from recipe. NOT THE RE
 struct recipeView: View {
     var theRecipe: Recipe
     var body: some View {
-        ScrollView{
-            VStack{
-                Text(theRecipe.recipeName)
-                    .font(.largeTitle)
-                Spacer()
-                Text("Currently ranked " + theRecipe.getRankwsuffix())
+            ZStack{
+                Color.lightbrownbkgrnd.ignoresSafeArea()
+                ScrollView{
+                    VStack{
+                        Text(theRecipe.recipeName)
+                            .font(.largeTitle)
+                            .foregroundStyle(Color.brownfont)
+                        Spacer()
+                        Text("Currently ranked " + theRecipe.getRankwsuffix())
+                            .foregroundStyle(Color.secondaryfont)
+                        
+                    }
+                }
                 
             }
-        }
+            
+        
     }
 }

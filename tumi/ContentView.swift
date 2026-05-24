@@ -119,6 +119,8 @@ func catrecipeonly(list1:[Recipe], SelectedCategory: String?)->[Recipe]{ //this 
                         ContentView()
                     case .recipe(let recipe):
                         recipeView(theRecipe: recipe)
+                            Color.lightbrownbkgrnd
+                                .ignoresSafeArea()
                     }
                     
                 }

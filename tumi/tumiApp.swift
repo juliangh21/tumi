@@ -24,6 +24,8 @@ struct tumiApp: App {
                                 ContentView()
                             case .recipe(let recipe):
                                 recipeView(theRecipe: recipe)
+                                    Color.lightbrownbkgrnd
+                                        .ignoresSafeArea()
                             }
                             
                         }
