@@ -68,16 +68,26 @@ struct infoView: View { // this is the view for the data from recipe. NOT THE RE
 
 
 struct recipeView: View {
-    var theRecipe: Recipe
+    @State var theRecipe: Recipe
+    @State var sheetshowing = false
+    var newRecipe: (OldRecipeNewRecipe) -> Void
+//    var oldrecipeIndex: (String) -> Void
     var body: some View {
             ZStack{
                 Color.lightbrownbkgrnd.ignoresSafeArea()
                 ScrollView{
                     VStack{
-                        Button(action: addSheet(recipename: theRecipe.recipeName, recipeCategory: theRecipe.recipeType , recipeAdded: { <#Recipe#> in
-                            <#code#>
-                        }: ){
+                        Button(action: {sheetshowing=true}){
                             Text("Edit")
+                        }
+                        .sheet(isPresented: $sheetshowing ){
+                            addSheet(recipeAdded: { recipenew in
+                                let oldRecipe = theRecipe
+                                theRecipe = recipenew
+                                sheetshowing = false
+                                let bothRecipes = OldRecipeNewRecipe(newRecipe: recipenew, oldRecipe: oldRecipe)
+                                newRecipe(bothRecipes)
+                            })
                         }
                         Text(theRecipe.recipeName)
                             .font(.largeTitle)

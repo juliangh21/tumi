@@ -11,25 +11,28 @@ struct RecipeList: View{
     
     //    @Binding var Recipes: [Recipe]
     @Binding var Recipes: [Recipe]
+    var category: String
+    
     var body: some View {
-        List{
-            ForEach(sortRecipe(list1: Recipes)) {card in
+        var sortedrecipe = catrecipeonly(list1: Recipes, SelectedCategory: category)
+        VStack{
+            ForEach(sortRecipe(list1: sortedrecipe)) {card in
                 if(card.getRank() == -1){
                     //                    print("not today")
                 }
                 else{
                     Ranker(theRecipe:card ,rank: card.getRank(), recipe_name: card.getName(), recipe_type: card.getType()) //this sorts through a list of recipes and will create a viewable list of recipes
-                        .swipeActions{
-                            Button(role:.destructive){
-                                print("theverge")
-                                Recipes.remove(at:deleteRecipe(list1: Recipes, recipe: card))
-                            }label: {
+//                        .swipeActions{
+//                            But/*t*/on(role:.destructive){
+//                                print("theverge")
+//                                Recipes.remove(at:deleteRecipe(list1: Recipes, recipe: card))
+//                            }label: {
                                 //   Image(systemName: "trash")
                                 //                            }
-                                SwipeDeleteActions()
+//                                SwipeDeleteActions()
                                 //                                Text("theverge")
-                            }
-                        }
+                            
+                        
                 }
                 
             }
@@ -41,10 +44,11 @@ struct RecipeList: View{
 
 struct ContentView: View {
     @EnvironmentObject var router: appRouter
-    @State var RecipeArray =
-        [Recipe(recipeRank: 2, recipeName: "x", recipeType: "1"),
-         Recipe(recipeRank: 1, recipeName: "y", recipeType: "B"),  //this is the list of recipes
-         Recipe(recipeRank: 3, recipeName: "z", recipeType: "b")]
+//    @State var RecipeArray =
+//        [Recipe(recipeRank: 2, recipeName: "x", recipeType: "1"),
+//         Recipe(recipeRank: 1, recipeName: "y", recipeType: "B"),  //this is the list of recipes
+//         Recipe(recipeRank: 3, recipeName: "z", recipeType: "b")]
+    @Binding var RecipeArray : [Recipe]
     @State var CategoryRecipeArray: [Recipe] = []
     @State var selectedCategory: String? = nil
     @State var recipeSheetshowing: Bool = false
@@ -59,16 +63,15 @@ struct ContentView: View {
                         selectedCategory = selectedcategory
                     }
                 })
-//                ScrollView{ // makes it scroll so there is an infinite amount of recipes
-    //                RecipeList(Recipes: $RecipeArray)
-                    RecipeList(Recipes: catrecipeonly(list1: $RecipeArray, SelectedCategory: selectedCategory))
+                ScrollView{ // makes it scroll so there is an infinite amount of recipes
+                    RecipeList(Recipes: $RecipeArray, category: selectedCategory ?? "")
 //                    Button("Add recipe"){
 //                        RecipeArray.append(Recipe(recipeRank: (Int.random(in: 1...10)), recipeName: "r", recipeType: String(Int.random(in: 1...10)))) //this adds a recipe to the list
 //                        print("Recipe added")
 //                        
 //                    }
                     
-//                }
+                }
                 Button("Add Recipe"){
                     recipeSheetshowing = true
                 }
@@ -105,7 +108,7 @@ func resortrecipe(list1:[Recipe])->[Recipe] {
 
 func catrecipeonly(list1:[Recipe], SelectedCategory: String?)->[Recipe]{ //this function sorts through a list of recipes that only have the selected category
     var goodRecipes : [Recipe] = []
-    if(SelectedCategory==nil){//if not selected category: no change
+    if(SelectedCategory==nil || SelectedCategory == ""){//if not selected category: no change
         return list1
     }
     for recipe in list1 {
@@ -119,21 +122,35 @@ func catrecipeonly(list1:[Recipe], SelectedCategory: String?)->[Recipe]{ //this 
     }
     return goodRecipes
 }
-func deleteRecipe(list1: [Recipe], recipe: Recipe)->Int{
-    let index = list1.firstIndex(of: recipe)
-    return Int(index!)
+func deleteRecipe(list1: [Recipe], recipe: Recipe){
+    let index = list1.firstIndex(of: recipe)!
+//    return Int(index!)
+//    list1[index].changeRank(newRank: -1)
 }
 
 #Preview {
     @Previewable @StateObject var router = appRouter()
+    @Previewable @State var RecipeArray =
+            [Recipe(recipeRank: 2, recipeName: "x", recipeType: "1"),
+             Recipe(recipeRank: 1, recipeName: "y", recipeType: "B"),  //this is the list of recipes
+             Recipe(recipeRank: 3, recipeName: "z", recipeType: "b")]
     NavigationStack(path: $router.path){
-        ContentView()
+        ContentView(RecipeArray: $RecipeArray)
             .navigationDestination(for: appRoute.self){ route in
                 switch route {
                     case .home:
-                        ContentView()
+                    ContentView(RecipeArray: $RecipeArray)
                     case .recipe(let recipe):
-                        recipeView(theRecipe: recipe)
+                    recipeView(theRecipe: recipe, newRecipe: {
+                        bothrecipes in
+                        let firstindex = RecipeArray.firstIndex(of: bothrecipes.getOldRecipe())
+                        if(firstindex == nil){
+                            
+                        }else{
+                            RecipeArray[firstindex!] = bothrecipes.getNewRecipe()
+                        }
+                        
+                    })
                             Color.lightbrownbkgrnd
                                 .ignoresSafeArea()
                     }

@@ -52,6 +52,17 @@ struct Recipe: Identifiable, Hashable{ //this is the recipe struct
     }
 }
 
+struct OldRecipeNewRecipe: Identifiable, Hashable{ //this is the recipe struct
+    let id = UUID()
+    var newRecipe: Recipe
+    var oldRecipe: Recipe
+    func getOldRecipe() -> Recipe {
+        return oldRecipe
+    }
+    func getNewRecipe() -> Recipe {
+        return newRecipe
+    }
+}
 //@/*ViewBuilder*/ //this returns the best recipe among two recipes
 //func betterrank(r1:Recipe, r2: Recipe)-> some View{
 //    if(r1.getRank()>r2.getRank()){
