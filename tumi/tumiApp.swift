@@ -11,9 +11,9 @@ import SwiftUI
 struct tumiApp: App {
     @StateObject var router =  appRouter()
     @State var RecipeArray =
-    [Recipe(recipeRank: 2, recipeName: "x", recipeType: "1"),
-     Recipe(recipeRank: 1, recipeName: "y", recipeType: "B"),  //this is the list of recipes
-     Recipe(recipeRank: 3, recipeName: "z", recipeType: "b")]
+    [Recipe(recipeRank: 2, recipeName: "2nd Recipe", recipeType: "2"),
+     Recipe(recipeRank: 1, recipeName: "1st Recipe", recipeType: "1"),  //this is the list of recipes
+     Recipe(recipeRank: 3, recipeName: "3rd Recipe", recipeType: "3")]
     var body: some Scene {
 //        WindowGroup {
 ////            ContentView(Recipes: ListOfRecipes)
@@ -27,13 +27,15 @@ struct tumiApp: App {
                             case .home:
                                 ContentView(RecipeArray: $RecipeArray)
                             case .recipe(let recipe):
-                                recipeView(theRecipe: recipe, newRecipe: {
+                            recipeView(recipeList:RecipeArray, theRecipe: recipe, newRecipe: {
                                     bothrecipes in
                                     let firstindex = RecipeArray.firstIndex(of: bothrecipes.getOldRecipe())
                                     if(firstindex == nil){
                                         
                                     }else{
                                         RecipeArray[firstindex!] = bothrecipes.getNewRecipe()
+                                        RecipeArray = resortrecipe(list1: RecipeArray)
+                                        print(bothrecipes.getNewRecipe().getRankwsuffix())
                                     }
                                     
                                 })

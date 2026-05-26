@@ -22,7 +22,7 @@ struct AddRecipeSheet: View {
         switch currentPage {
         case .add:
             
-            addSheet(recipeAdded: { recipenew in
+            addSheet(EditOrAdd: "Add",recipeAdded: { recipenew in
                 newRecipe = recipenew
                 currentPage = .rank
             })
@@ -39,6 +39,7 @@ struct AddRecipeSheet: View {
     }
 }
 struct addSheet: View{
+    var EditOrAdd: String
     @State var recipename  = ""
     @State var recipeCategory = ""
     var recipeAdded: (Recipe) -> Void
@@ -47,7 +48,7 @@ struct addSheet: View{
             Color.lightbrownbkgrnd
                 .ignoresSafeArea()
             VStack{
-                Text("Add Recipe")
+                Text(EditOrAdd + " Recipe")
                     .font(.title)
                     .foregroundStyle(Color.darkbrownimpactfont)
     //                .padding()

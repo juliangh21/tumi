@@ -52,10 +52,18 @@ struct Recipe: Identifiable, Hashable{ //this is the recipe struct
     }
 }
 
-struct OldRecipeNewRecipe: Identifiable, Hashable{ //this is the recipe struct
+struct RecipeViewStruct: Identifiable, Hashable{ //this is the recipe struct
     let id = UUID()
     var newRecipe: Recipe
     var oldRecipe: Recipe
+//    var isEditing: Bool
+//    var rank: Int
+//    func getNewRank() -> Int{
+//        return rank
+//    }
+//    func getOldRank() -> Int{
+//        return oldRecipe.getRank()
+//    }
     func getOldRecipe() -> Recipe {
         return oldRecipe
     }

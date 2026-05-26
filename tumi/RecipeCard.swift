@@ -61,40 +61,73 @@ struct infoView: View { // this is the view for the data from recipe. NOT THE RE
                 .foregroundStyle(Color.secondaryfont)
             
         }
-        
         .frame(width: CGFloat((rect_width*0.85)), height: CGFloat((rect_height*0.8)))
     }
 }
-
-
 struct recipeView: View {
+    var recipeList: [Recipe]
     @State var theRecipe: Recipe
-    @State var sheetshowing = false
-    var newRecipe: (OldRecipeNewRecipe) -> Void
+    @State var editsheetshowing = false
+    @State var ranksheetshowing = false
+    var newRecipe: (RecipeViewStruct) -> Void
 //    var oldrecipeIndex: (String) -> Void
     var body: some View {
             ZStack{
                 Color.lightbrownbkgrnd.ignoresSafeArea()
                 ScrollView{
-                    VStack{
-                        Button(action: {sheetshowing=true}){
-                            Text("Edit")
+                    VStack(spacing: 1 ){
+                        Button(action: {editsheetshowing=true}){
+                            ZStack{
+                                    RoundedRectangle(cornerRadius: 8)
+                                    .fill(Color.accentorange)
+                                    .frame(width: CGFloat(80),height: 30)
+                                    Text("Edit")
+                                    .foregroundStyle(Color.white)
+                                }
+
                         }
-                        .sheet(isPresented: $sheetshowing ){
-                            addSheet(recipeAdded: { recipenew in
+                        .frame(maxWidth:.infinity, alignment: .trailing)
+                        .padding(.horizontal)
+                        .sheet(isPresented: $editsheetshowing ){
+                            addSheet(EditOrAdd: "Edit", recipeAdded: { recipenew in
                                 let oldRecipe = theRecipe
                                 theRecipe = recipenew
-                                sheetshowing = false
-                                let bothRecipes = OldRecipeNewRecipe(newRecipe: recipenew, oldRecipe: oldRecipe)
+                                editsheetshowing = false
+                                let bothRecipes = RecipeViewStruct(newRecipe: recipenew, oldRecipe: oldRecipe)
                                 newRecipe(bothRecipes)
                             })
                         }
-                        Text(theRecipe.recipeName)
-                            .font(.largeTitle)
-                            .foregroundStyle(Color.brownfont)
-                        Spacer()
-                        Text("Currently ranked " + theRecipe.getRankwsuffix())
-                            .foregroundStyle(Color.secondaryfont)
+                            Text(theRecipe.recipeName)
+    //                            .font(.largeTitle)
+                                .font(.system(size:50))
+                                .foregroundStyle(Color.brownfont)
+                                .lineLimit(3)
+                                .allowsTightening(true)
+                                .minimumScaleFactor(0.75)
+                                .padding([.horizontal], 30)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        HStack(spacing: 5){
+                            Text("Currently ranked " + theRecipe.getRankwsuffix()+".")
+                                .foregroundStyle(Color.secondaryfont)
+                            Button(action: {ranksheetshowing=true}){
+                                Text("Change that")
+                                    .underline()
+                                    .foregroundStyle(Color.secondaryfont)
+                            }
+                            .sheet(isPresented: $ranksheetshowing){
+                                RankSheetView(recipeList: recipeList, newRecipe: theRecipe, rankclosureout: {
+                                    finalRank in
+                                    theRecipe.changeRank(newRank: finalRank)
+                                    print(theRecipe.getRankwsuffix())
+                                    ranksheetshowing = false
+                                    let bothRecipes = RecipeViewStruct(newRecipe: theRecipe, oldRecipe: theRecipe)
+                                    newRecipe(bothRecipes)
+                                })
+                            }
+//                           
+                            
+                        }
+                        
                         
                     }
                 }
@@ -104,3 +137,10 @@ struct recipeView: View {
         
     }
 }
+
+
+//#Preview{
+//    recipeView(theRecipe: Recipe(recipeRank: 1, recipeName: "Spagetti and Meatballs", recipeType: "Lasgagna"), newRecipe: {
+//        bothRecipes in print(bothRecipes.getOldRecipe())
+//    })
+//}

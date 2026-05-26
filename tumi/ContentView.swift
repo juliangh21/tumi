@@ -128,36 +128,36 @@ func deleteRecipe(list1: [Recipe], recipe: Recipe){
 //    list1[index].changeRank(newRank: -1)
 }
 
-#Preview {
-    @Previewable @StateObject var router = appRouter()
-    @Previewable @State var RecipeArray =
-            [Recipe(recipeRank: 2, recipeName: "x", recipeType: "1"),
-             Recipe(recipeRank: 1, recipeName: "y", recipeType: "B"),  //this is the list of recipes
-             Recipe(recipeRank: 3, recipeName: "z", recipeType: "b")]
-    NavigationStack(path: $router.path){
-        ContentView(RecipeArray: $RecipeArray)
-            .navigationDestination(for: appRoute.self){ route in
-                switch route {
-                    case .home:
-                    ContentView(RecipeArray: $RecipeArray)
-                    case .recipe(let recipe):
-                    recipeView(theRecipe: recipe, newRecipe: {
-                        bothrecipes in
-                        let firstindex = RecipeArray.firstIndex(of: bothrecipes.getOldRecipe())
-                        if(firstindex == nil){
-                            
-                        }else{
-                            RecipeArray[firstindex!] = bothrecipes.getNewRecipe()
-                        }
-                        
-                    })
-                            Color.lightbrownbkgrnd
-                                .ignoresSafeArea()
-                    }
-                    
-                }
-            .environmentObject(router)
-            }
-        
-    }
+//#Preview {
+//    @Previewable @StateObject var router = appRouter()
+//    @Previewable @State var RecipeArray =
+//            [Recipe(recipeRank: 2, recipeName: "x", recipeType: "1"),
+//             Recipe(recipeRank: 1, recipeName: "y", recipeType: "B"),  //this is the list of recipes
+//             Recipe(recipeRank: 3, recipeName: "z", recipeType: "b")]
+//    NavigationStack(path: $router.path){
+//        ContentView(RecipeArray: $RecipeArray)
+//            .navigationDestination(for: appRoute.self){ route in
+//                switch route {
+//                    case .home:
+//                    ContentView(RecipeArray: $RecipeArray)
+//                    case .recipe(let recipe):
+//                    recipeView(theRecipe: recipe, newRecipe: {
+//                        bothrecipes in
+//                        let firstindex = RecipeArray.firstIndex(of: bothrecipes.getOldRecipe())
+//                        if(firstindex == nil){
+//                            
+//                        }else{
+//                            RecipeArray[firstindex!] = bothrecipes.getNewRecipe()
+//                        }
+//                        
+//                    })
+//                            Color.lightbrownbkgrnd
+//                                .ignoresSafeArea()
+//                    }
+//                    
+//                }
+//            .environmentObject(router)
+//            }
+//        
+//    }
 
