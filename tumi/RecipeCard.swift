@@ -74,6 +74,11 @@ struct recipeView: View {
                 Color.lightbrownbkgrnd.ignoresSafeArea()
                 ScrollView{
                     VStack{
+                        Button(action: addSheet(recipename: theRecipe.recipeName, recipeCategory: theRecipe.recipeType , recipeAdded: { <#Recipe#> in
+                            <#code#>
+                        }: ){
+                            Text("Edit")
+                        }
                         Text(theRecipe.recipeName)
                             .font(.largeTitle)
                             .foregroundStyle(Color.brownfont)

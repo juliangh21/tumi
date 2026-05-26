@@ -13,7 +13,7 @@ struct RecipeList: View{
     @Binding var Recipes: [Recipe]
     var body: some View {
         List{
-            ForEach(sortRecipe(list1: $Recipes)) {card in
+            ForEach(sortRecipe(list1: Recipes)) {card in
                 if(card.getRank() == -1){
                     //                    print("not today")
                 }
@@ -22,7 +22,7 @@ struct RecipeList: View{
                         .swipeActions{
                             Button(role:.destructive){
                                 print("theverge")
-                                $Recipes.remove(at:deleteRecipe(list1: Recipes, recipe: card))
+                                Recipes.remove(at:deleteRecipe(list1: Recipes, recipe: card))
                             }label: {
                                 //   Image(systemName: "trash")
                                 //                            }
@@ -61,7 +61,7 @@ struct ContentView: View {
                 })
 //                ScrollView{ // makes it scroll so there is an infinite amount of recipes
     //                RecipeList(Recipes: $RecipeArray)
-                    RecipeList(Recipes: catrecipeonly(list1: RecipeArray, SelectedCategory: selectedCategory))
+                    RecipeList(Recipes: catrecipeonly(list1: $RecipeArray, SelectedCategory: selectedCategory))
 //                    Button("Add recipe"){
 //                        RecipeArray.append(Recipe(recipeRank: (Int.random(in: 1...10)), recipeName: "r", recipeType: String(Int.random(in: 1...10)))) //this adds a recipe to the list
 //                        print("Recipe added")
