@@ -89,13 +89,14 @@ struct recipeView: View {
                         .frame(maxWidth:.infinity, alignment: .trailing)
                         .padding(.horizontal)
                         .sheet(isPresented: $editsheetshowing ){
-                            addSheet(EditOrAdd: "Edit", recipeAdded: { recipenew in
+                            addSheet(Making: false, recipeAdded: { recipenew in
                                 let oldRecipe = theRecipe
                                 theRecipe = recipenew
                                 editsheetshowing = false
                                 let bothRecipes = RecipeViewStruct(newRecipe: recipenew, oldRecipe: oldRecipe)
                                 newRecipe(bothRecipes)
                             })
+                            .presentationDetents([.medium, .large])
                         }
                             Text(theRecipe.recipeName)
     //                            .font(.largeTitle)

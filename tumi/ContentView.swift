@@ -82,7 +82,11 @@ struct ContentView: View {
                         print("New Recipe added")
                         recipeSheetshowing = false
                     })
+                    .presentationDetents([.medium, .large])
+                    
                 }
+                
+                
                 
             }
 

@@ -22,7 +22,7 @@ struct AddRecipeSheet: View {
         switch currentPage {
         case .add:
             
-            addSheet(EditOrAdd: "Add",recipeAdded: { recipenew in
+            addSheet(Making:true, recipeAdded: { recipenew in
                 newRecipe = recipenew
                 currentPage = .rank
             })
@@ -39,7 +39,7 @@ struct AddRecipeSheet: View {
     }
 }
 struct addSheet: View{
-    var EditOrAdd: String
+    var Making: Bool
     @State var recipename  = ""
     @State var recipeCategory = ""
     var recipeAdded: (Recipe) -> Void
@@ -48,44 +48,85 @@ struct addSheet: View{
             Color.lightbrownbkgrnd
                 .ignoresSafeArea()
             VStack{
-                Text(EditOrAdd + " Recipe")
-                    .font(.title)
-                    .foregroundStyle(Color.darkbrownimpactfont)
-    //                .padding()
-    //            Spacer()
+                Button(action: {let recipenew = Recipe(recipeRank: 2, recipeName: recipename, recipeType: recipeCategory)
+                    recipeAdded(recipenew)}){
                 ZStack{
-                    RoundedRectangle(cornerRadius: 9)
-                        .fill(Color.primarybrown)
-                        .frame(width: 340, height: 80)
-                    TextField("Recipe Name", text: $recipename)
-    //                    .padding()
-    //                    .padding(.vertical, 140)
-                        .padding(.horizontal,50)
+                        RoundedRectangle(cornerRadius: 8)
+                        .fill(Color.accentorange)
+                        .frame(width: CGFloat(80),height: 30)
+                    if(Making){
+                        Text("Rank!")
+                            .foregroundStyle(Color.white)
+                    }
+                    else{
+                        Text("Done!")
+                            .foregroundStyle(Color.white)
+                    }
+                        
                 }
-                Text("Add Recipe Category")
-    //            TextField("Recipe Category", text: $recipeCategory)
-    //                .padding()
-                ZStack{
-                    RoundedRectangle(cornerRadius: 9)
-                        .fill(Color.primarybrown)
-                        .frame(width: 340, height: 80)
-                    TextField("Recipe Category", text: $recipeCategory)
-    //                    .padding()
-    //                    .padding(.vertical, 140)
-                        .padding(.horizontal,50)
+
                 }
-                Button("Add recipe"){
-                    print("Recipe added")
-                    let recipenew = Recipe(recipeRank: 2, recipeName: recipename, recipeType: recipeCategory)
-                    recipeAdded(recipenew)
+                .frame(maxWidth:.infinity, alignment: .trailing)
+                .padding(.horizontal)
+                if(Making){
+                    Text("Add your Recipe.")
+                        .font(.system(size:50))
+                        .foregroundStyle(Color.brownfont)
+                        .lineLimit(3)
+                        .allowsTightening(true)
+                        .minimumScaleFactor(0.75)
+                        .padding([.horizontal], 30)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
+                else{
+                    Text("Edit your Recipe.")
+                        .font(.system(size:50))
+                        .foregroundStyle(Color.brownfont)
+                        .lineLimit(3)
+                        .allowsTightening(true)
+                        .minimumScaleFactor(0.75)
+                        .padding([.horizontal], 30)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                
+                
+                addButton(inputtype: "Name", input: $recipename)
+                addButton(inputtype: "Category", input: $recipeCategory)
             }
+            .padding(.top)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         }
+        
+//        .ignoresSafeArea(edges: .top)
         
         
     }
 }
-
+struct addButton: View {
+    var inputtype: String
+    @Binding var input: String
+    var body: some View {
+        HStack{
+            Text(inputtype + ":")
+                .foregroundStyle(Color.secondaryfont)
+            ZStack{
+                RoundedRectangle(cornerRadius: 9)
+                    .fill(Color.primarybrown)
+                    .frame(width: 240, height: 45)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 9, style: .continuous)
+                            .strokeBorder(Color.brownfont, lineWidth: 1.3)
+                    )
+                TextField("Recipe " + inputtype, text: $input)
+                    .padding(.horizontal)
+                    .frame(width: 240, height: 45)
+            }
+        }
+        .padding(.horizontal)
+        .padding(.horizontal)
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+}
 struct RankSheetView: View {
     var recipeList: [Recipe]
     var newRecipe: Recipe
@@ -156,6 +197,12 @@ struct recipecomparisonbutton: View {
                     .frame(width: 113, height: 90)
                 Text(recipecomp1.getName())
                     .foregroundStyle(Color.secondaryfont)
+                    .lineLimit(3)
+                    .allowsTightening(true)
+                    .minimumScaleFactor(0.75)
+                    .frame(width: 103, height: 80)
+                    .padding(.horizontal)
+                    .padding(.horizontal)
             }
         }
         
@@ -199,3 +246,10 @@ struct recipeComparison: View {
         
     }
 }
+
+
+//#Preview{
+//    addSheet(recipeAdded: { recipenew in
+//        print(recipenew)
+//    })
+//}
