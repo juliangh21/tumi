@@ -14,7 +14,7 @@ struct RecipeList: View{
     var category: String
     
     var body: some View {
-        var sortedrecipe = catrecipeonly(list1: Recipes, SelectedCategory: category)
+        var sortedrecipe = resortrecipe(list1: catrecipeonly(list1: Recipes, SelectedCategory: category))
         VStack{
             ForEach(sortRecipe(list1: sortedrecipe)) {card in
                 if(card.getRank() == -1){
@@ -99,12 +99,19 @@ func sortRecipe(list1:[Recipe])->[Recipe]{
 
 func resortrecipe(list1:[Recipe])->[Recipe] {
     var r1 = sortRecipe(list1: list1)
+    NicePrintRecipe(list1: r1)
     for i in r1.indices{
         r1[i].changeRank(newRank: i+1)
+        
     }
+    NicePrintRecipe(list1: r1)
     return r1
 }
-
+func NicePrintRecipe(list1:[Recipe])->(Void){
+    for i in list1.indices{
+        print(list1[i].getName() + " has a rank of " + String(list1[i].getRank()))
+    }
+}
 
 func catrecipeonly(list1:[Recipe], SelectedCategory: String?)->[Recipe]{ //this function sorts through a list of recipes that only have the selected category
     var goodRecipes : [Recipe] = []
@@ -128,36 +135,55 @@ func deleteRecipe(list1: [Recipe], recipe: Recipe){
 //    list1[index].changeRank(newRank: -1)
 }
 
-//#Preview {
-//    @Previewable @StateObject var router = appRouter()
-//    @Previewable @State var RecipeArray =
-//            [Recipe(recipeRank: 2, recipeName: "x", recipeType: "1"),
-//             Recipe(recipeRank: 1, recipeName: "y", recipeType: "B"),  //this is the list of recipes
-//             Recipe(recipeRank: 3, recipeName: "z", recipeType: "b")]
-//    NavigationStack(path: $router.path){
-//        ContentView(RecipeArray: $RecipeArray)
-//            .navigationDestination(for: appRoute.self){ route in
-//                switch route {
-//                    case .home:
-//                    ContentView(RecipeArray: $RecipeArray)
-//                    case .recipe(let recipe):
-//                    recipeView(theRecipe: recipe, newRecipe: {
-//                        bothrecipes in
-//                        let firstindex = RecipeArray.firstIndex(of: bothrecipes.getOldRecipe())
-//                        if(firstindex == nil){
-//                            
-//                        }else{
-//                            RecipeArray[firstindex!] = bothrecipes.getNewRecipe()
-//                        }
-//                        
-//                    })
-//                            Color.lightbrownbkgrnd
-//                                .ignoresSafeArea()
-//                    }
-//                    
-//                }
-//            .environmentObject(router)
-//            }
-//        
-//    }
+#Preview {
+    @Previewable @StateObject var router = appRouter()
+    @Previewable @State var RecipeArray =
+            [Recipe(recipeRank: 2, recipeName: "x", recipeType: "1"),
+             Recipe(recipeRank: 1, recipeName: "y", recipeType: "B"),  //this is the list of recipes
+             Recipe(recipeRank: 3, recipeName: "z", recipeType: "b")]
+    NavigationStack(path: $router.path){
+        ContentView(RecipeArray: $RecipeArray)
+            .navigationDestination(for: appRoute.self){ route in
+                switch route {
+                    case .home:
+                    ContentView(RecipeArray: $RecipeArray)
+                    case .recipe(let recipe):
+                    recipeView(recipeList:RecipeArray, theRecipe: recipe, newRecipe: {
+                        bothrecipes in
+                        let firstindex = RecipeArray.firstIndex(of: bothrecipes.getOldRecipe())
+                        print("WHY")
+                        if(firstindex == nil){
+                            print("NO")
+//                            if(bothrecipes.getOldRecipe().getRank()==0){
+                                let oldindex = RecipeArray.firstIndex(of: bothrecipes.getOldRecipe())
+                                let newindex = bothrecipes.getOldRecipe().getRank() - 1
+                                RecipeArray.insert(bothrecipes.getNewRecipe(), at: bothrecipes.getOldRecipe().getRank())
+                                if(oldindex==nil){
+                                    
+                                }
+                                else if(newindex<oldindex!){
+                                    RecipeArray.insert(bothrecipes.getNewRecipe(), at: newindex)
+                                    RecipeArray[oldindex!+1].changeRank(newRank: -1)
+                                }
+                                else if(oldindex!<newindex){
+                                    RecipeArray.insert(bothrecipes.getNewRecipe(), at: newindex)
+                                    RecipeArray[oldindex!].changeRank(newRank: -1)
+                                }
+                                RecipeArray = resortrecipe(list1: RecipeArray)
+//                            }
+                        }else{
+                            print("I LOVE")
+                            RecipeArray[firstindex!] = bothrecipes.getNewRecipe()
+                            print(bothrecipes)
+                        }
+                        
+                    })
+                            Color.lightbrownbkgrnd
+                                .ignoresSafeArea()
+                    }
+                    
+                }
+            .environmentObject(router)
+            }
+    }
 

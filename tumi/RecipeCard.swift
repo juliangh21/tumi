@@ -117,10 +117,13 @@ struct recipeView: View {
                             .sheet(isPresented: $ranksheetshowing){
                                 RankSheetView(recipeList: recipeList, newRecipe: theRecipe, rankclosureout: {
                                     finalRank in
+//                                    theRecipe.changeRank(newRank: finalRank)
+                                    let oldRecipe = theRecipe
                                     theRecipe.changeRank(newRank: finalRank)
+                                    print(finalRank)
                                     print(theRecipe.getRankwsuffix())
                                     ranksheetshowing = false
-                                    let bothRecipes = RecipeViewStruct(newRecipe: theRecipe, oldRecipe: theRecipe)
+                                    let bothRecipes = RecipeViewStruct(newRecipe: theRecipe, oldRecipe: oldRecipe)
                                     newRecipe(bothRecipes)
                                 })
                             }

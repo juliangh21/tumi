@@ -25,28 +25,46 @@ struct tumiApp: App {
                     .navigationDestination(for: appRoute.self){ route in
                         switch route {
                             case .home:
-                                ContentView(RecipeArray: $RecipeArray)
+                            ContentView(RecipeArray: $RecipeArray)
                             case .recipe(let recipe):
                             recipeView(recipeList:RecipeArray, theRecipe: recipe, newRecipe: {
-                                    bothrecipes in
-                                    let firstindex = RecipeArray.firstIndex(of: bothrecipes.getOldRecipe())
-                                    if(firstindex == nil){
-                                        
-                                    }else{
-                                        RecipeArray[firstindex!] = bothrecipes.getNewRecipe()
+                                bothrecipes in
+                                let firstindex = RecipeArray.firstIndex(of: bothrecipes.getOldRecipe())
+                                print("WHY")
+                                if(firstindex == nil){
+                                    print("NO")
+        //                            if(bothrecipes.getOldRecipe().getRank()==0){
+                                        let oldindex = RecipeArray.firstIndex(of: bothrecipes.getOldRecipe())
+                                        let newindex = bothrecipes.getOldRecipe().getRank() - 1
+                                        RecipeArray.insert(bothrecipes.getNewRecipe(), at: bothrecipes.getOldRecipe().getRank())
+                                        if(oldindex==nil){
+                                            
+                                        }
+                                        else if(newindex<oldindex!){
+                                            RecipeArray.insert(bothrecipes.getNewRecipe(), at: newindex)
+                                            RecipeArray[oldindex!+1].changeRank(newRank: -1)
+                                        }
+                                        else if(oldindex!<newindex){
+                                            RecipeArray.insert(bothrecipes.getNewRecipe(), at: newindex)
+                                            RecipeArray[oldindex!].changeRank(newRank: -1)
+                                        }
                                         RecipeArray = resortrecipe(list1: RecipeArray)
-                                        print(bothrecipes.getNewRecipe().getRankwsuffix())
-                                    }
-                                    
-                                })
+        //                            }
+                                }else{
+                                    print("I LOVE")
+                                    RecipeArray[firstindex!] = bothrecipes.getNewRecipe()
+                                    print(bothrecipes)
+                                }
+                                
+                            })
                                     Color.lightbrownbkgrnd
                                         .ignoresSafeArea()
                             }
                             
                         }
                     .environmentObject(router)
-                
                     }
+
                 
             }
         
