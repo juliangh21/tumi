@@ -20,11 +20,6 @@ struct Ranker: View { // view for data from recipe and the rectangle. This is th
                 RoundedRectangle(cornerRadius: 9)
                     .fill(Color.primarybrown)
                     .frame(width: CGFloat(rectwidth),height: 80)
-    //            Text("1")
-    //                .font(.largeTitle)
-    //                .padding(.trailing, CGFloat(rectwidth - (0.20*rectwidth)))
-    //                .padding()
-    //                .frame(maxWidth:.infinity, alignment: .leading)
                 infoView(rank: rank, recipe_name: recipe_name, recipe_type: recipe_type, rect_width: rectwidth, rect_height: 80)
                     .padding(.leading)
             }
@@ -89,7 +84,7 @@ struct recipeView: View {
                         .frame(maxWidth:.infinity, alignment: .trailing)
                         .padding(.horizontal)
                         .sheet(isPresented: $editsheetshowing ){
-                            addSheet(Making: false, recipeAdded: { recipenew in
+                            addSheet(Making: false, recipelist: recipeList, recipeAdded: { recipenew in
                                 let oldRecipe = theRecipe
                                 theRecipe = recipenew
                                 editsheetshowing = false
@@ -98,6 +93,7 @@ struct recipeView: View {
                             })
                             .presentationDetents([.medium, .large])
                         }
+                        .presentationDetents([.medium, .large])
                             Text(theRecipe.recipeName)
     //                            .font(.largeTitle)
                                 .font(.system(size:50))
@@ -107,6 +103,13 @@ struct recipeView: View {
                                 .minimumScaleFactor(0.75)
                                 .padding([.horizontal], 30)
                                 .frame(maxWidth: .infinity, alignment: .leading)
+                        Text("Made on " + String(theRecipe.datecreated.formatted()))
+                            .padding(.horizontal)
+                            .padding(.horizontal)
+                            .padding(.horizontal)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.vertical)
+                            .foregroundStyle(Color.secondaryfont)
                         HStack(spacing: 5){
                             Text("Currently ranked " + theRecipe.getRankwsuffix()+".")
                                 .foregroundStyle(Color.secondaryfont)
@@ -127,10 +130,17 @@ struct recipeView: View {
                                     let bothRecipes = RecipeViewStruct(newRecipe: theRecipe, oldRecipe: oldRecipe)
                                     newRecipe(bothRecipes)
                                 })
+                                .presentationDetents([.medium, .large])
                             }
-//                           
+                            .presentationDetents([.medium, .large])
+//
                             
                         }
+                        .padding(.horizontal)
+                        .padding(.horizontal)
+                        .padding(.horizontal)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        
                         
                         
                     }
@@ -141,10 +151,3 @@ struct recipeView: View {
         
     }
 }
-
-
-//#Preview{
-//    recipeView(theRecipe: Recipe(recipeRank: 1, recipeName: "Spagetti and Meatballs", recipeType: "Lasgagna"), newRecipe: {
-//        bothRecipes in print(bothRecipes.getOldRecipe())
-//    })
-//}

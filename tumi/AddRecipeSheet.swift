@@ -22,7 +22,7 @@ struct AddRecipeSheet: View {
         switch currentPage {
         case .add:
             
-            addSheet(Making:true, recipeAdded: { recipenew in
+            addSheet(Making:true, recipelist: RecipeList, recipeAdded: { recipenew in
                 newRecipe = recipenew
                 currentPage = .rank
             })
@@ -40,6 +40,7 @@ struct AddRecipeSheet: View {
 }
 struct addSheet: View{
     var Making: Bool
+    var recipelist: [Recipe]
     @State var recipename  = ""
     @State var recipeCategory = ""
     var recipeAdded: (Recipe) -> Void
@@ -90,8 +91,8 @@ struct addSheet: View{
                 }
                 
                 
-                addButton(inputtype: "Name", input: $recipename)
-                addButton(inputtype: "Category", input: $recipeCategory)
+                addButton(inputtype: "Name", input: $recipename,content: {textInputField(inputtype: "Name", input: $recipename)})
+                addButton(inputtype: "Category", input: $recipeCategory, content: {pickerButton(picked: $recipeCategory, list: recipelist)})
             }
             .padding(.top)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
@@ -102,13 +103,16 @@ struct addSheet: View{
         
     }
 }
-struct addButton: View {
+
+struct addButton<Content: View>: View {
     var inputtype: String
     @Binding var input: String
+    @ViewBuilder let content: () -> Content
     var body: some View {
         HStack{
             Text(inputtype + ":")
                 .foregroundStyle(Color.secondaryfont)
+            
             ZStack{
                 RoundedRectangle(cornerRadius: 9)
                     .fill(Color.primarybrown)
@@ -117,14 +121,79 @@ struct addButton: View {
                         RoundedRectangle(cornerRadius: 9, style: .continuous)
                             .strokeBorder(Color.brownfont, lineWidth: 1.3)
                     )
-                TextField("Recipe " + inputtype, text: $input)
-                    .padding(.horizontal)
-                    .frame(width: 240, height: 45)
+                content()
             }
+            
         }
         .padding(.horizontal)
         .padding(.horizontal)
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+}
+
+struct textInputField: View {
+    var inputtype: String
+    @Binding var input: String
+    var body: some View {
+        ZStack{
+            RoundedRectangle(cornerRadius: 9)
+                .fill(Color.primarybrown)
+                .frame(width: 240, height: 45)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 9, style: .continuous)
+                        .strokeBorder(Color.brownfont, lineWidth: 1.3)
+                )
+            TextField("Recipe " + inputtype, text: $input)
+                .padding(.horizontal)
+                .frame(width: 240, height: 45)
+        }
+    }
+}
+
+
+struct pickerButton: View {
+    @Binding var picked: String
+    var list: [Recipe]
+    @State var custom = false
+    var body: some View {
+        if(!(custom)){
+            LabeledContent("Pick Recipe Category"){
+                Picker("Category", selection: $picked){
+                    ForEach(categoryslist(list1: list), id: \.self) { recipe in //the id:\.self makes it indentifaible
+                        Text(recipe)
+                    }
+                    
+                }
+                .tint(Color.primarybrown)
+                .colorMultiply(Color.primarybrown)
+                .onChange(of: picked){
+                    if(picked == "Custom Category"){
+                        custom = true
+                        picked = ""
+                    }
+                }
+            }
+            .padding(.horizontal)
+            .frame(width: 250, height: 45)
+            .foregroundStyle(Color.gray)
+            
+        }
+        else if(custom){
+            ZStack{
+                textInputField(inputtype: "Name", input: $picked)
+                HStack{
+                    Spacer()
+                    Button(action:{ custom=false}){
+                        Image(systemName: "chevron.up.chevron.down")
+                            .foregroundStyle(Color.brown)
+                    }
+                }
+                .frame(width: 220,height: 45)
+                
+
+            }
+            
+        }
     }
 }
 struct RankSheetView: View {
@@ -241,9 +310,7 @@ struct recipeComparison: View {
             }
 
         }
-                
-        
-        
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }
 }
 

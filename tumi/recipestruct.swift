@@ -13,6 +13,7 @@ struct Recipe: Identifiable, Hashable{ //this is the recipe struct
     var recipeRank: Int
     var recipeName: String
     var recipeType: String
+    var datecreated: Date = Date()
     func getRank() -> Int{
         return recipeRank
     }
