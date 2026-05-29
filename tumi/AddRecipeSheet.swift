@@ -54,6 +54,8 @@ struct addSheet: View{
                 ZStack{
                         RoundedRectangle(cornerRadius: 8)
                         .fill(Color.accentorange)
+//                        /*.glassEffec*/t(/*.tint(Color.accentorange)*/)
+
                         .frame(width: CGFloat(80),height: 30)
                     if(Making){
                         Text("Rank!")
@@ -286,7 +288,7 @@ struct recipeComparison: View {
             Color.lightbrownbkgrnd
                 .ignoresSafeArea()
             VStack{
-                Text("Click on the better recipe")
+                Text("Click on the worse recipe")
                     .font(.title)
                 HStack{
                     Spacer()

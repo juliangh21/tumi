@@ -58,9 +58,16 @@ struct listOfcategories: View{
                             }
                             Text(category)
                                 .tint(Color.secondaryfont)
+                                .lineLimit(3)
+                                .allowsTightening(true)
+                                .minimumScaleFactor(0.75)
+//                                .padding([.horizontal], 30)
+                                .frame(width: 70, height: 25)
                     
                                 }
                             }
+                            
+                        
                 }
             }
             .padding(.leading, 35)
