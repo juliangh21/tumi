@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PhotosUI
 import Foundation
 
 enum addrankconfirm{
@@ -21,7 +22,7 @@ struct AddRecipeSheet: View {
     var body: some View{
         switch currentPage {
         case .add:
-            
+
             addSheet(Making:true, recipelist: RecipeList, recipeAdded: { recipenew in
                 newRecipe = recipenew
                 currentPage = .rank
@@ -40,17 +41,33 @@ struct AddRecipeSheet: View {
 }
 struct addSheet: View{
     var Making: Bool
+    @State var catcolor = Color.brownfont
+    @State var namecolor = Color.brownfont
+    @State var canMoveOn1 = false
+    var canMoveOn: Bool{
+        !recipename.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+        !recipeCategory.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+
+    }
+    var catmoveon: Bool{
+        !recipeCategory.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && canMoveOn1 && !(recipename == "")
+    }
+    var namemoveon: Bool{
+        !recipename.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
     var recipelist: [Recipe]
     @State var recipename  = ""
     @State var recipeCategory = ""
+    @State var selecetedImage: UIImage?
     var recipeAdded: (Recipe) -> Void
     var body: some View {
         ZStack{
             Color.lightbrownbkgrnd
                 .ignoresSafeArea()
             VStack{
-                Button(action: {let recipenew = Recipe(recipeRank: 2, recipeName: recipename, recipeType: recipeCategory)
-                    recipeAdded(recipenew)}){
+                Button(action: {let recipenew = Recipe(recipeRank: 2, recipeName: recipename, recipeType: recipeCategory, Image: ImageToData(image: selecetedImage! /*?? UIImage(systemName: "gear")*/))
+                    recipeAdded(recipenew);canMoveOn1.toggle()}){
+                        
                 ZStack{
                         RoundedRectangle(cornerRadius: 8)
                         .fill(Color.accentorange)
@@ -65,36 +82,25 @@ struct addSheet: View{
                         Text("Done!")
                             .foregroundStyle(Color.white)
                     }
-                        
                 }
-
                 }
+                    .disabled(!canMoveOn)
+                .onChange(of: canMoveOn) {oldvalue, newvalue in
+                    print("changed")
+                    
+                    }
                 .frame(maxWidth:.infinity, alignment: .trailing)
                 .padding(.horizontal)
                 if(Making){
-                    Text("Add your Recipe.")
-                        .font(.system(size:50))
-                        .foregroundStyle(Color.brownfont)
-                        .lineLimit(3)
-                        .allowsTightening(true)
-                        .minimumScaleFactor(0.75)
-                        .padding([.horizontal], 30)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                    BigTextView(input: "Add your Recipe.")
+
                 }
                 else{
-                    Text("Edit your Recipe.")
-                        .font(.system(size:50))
-                        .foregroundStyle(Color.brownfont)
-                        .lineLimit(3)
-                        .allowsTightening(true)
-                        .minimumScaleFactor(0.75)
-                        .padding([.horizontal], 30)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                    BigTextView(input: "Edit your Recipe.")
                 }
-                
-                
-                addButton(inputtype: "Name", input: $recipename,content: {textInputField(inputtype: "Name", input: $recipename)})
-                addButton(inputtype: "Category", input: $recipeCategory, content: {pickerButton(picked: $recipeCategory, list: recipelist)})
+                addButton(inputtype: "Name", /*input: $recipename,*/ color: namemoveon ? Color.brownfont:Color.red, content: {textInputField(inputtype: "Name", input: $recipename)})
+                addButton(inputtype: "Category", /*input: $recipeCategory,*/ color: catmoveon ? Color.brownfont:Color.red, content: {pickerButton(picked: $recipeCategory, list: recipelist)})
+                addButton(inputtype: "Image", /*input: $selecetedImage,*/ color: Color.brownfont, content: {photoPickerView(selecetedImage: $selecetedImage)})
             }
             .padding(.top)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
@@ -106,9 +112,26 @@ struct addSheet: View{
     }
 }
 
+struct BigTextView: View {
+    var input: String
+    var body: some View {
+        Text(input)
+            .font(.system(size:50))
+            .foregroundStyle(Color.brownfont)
+            .lineLimit(3)
+            .allowsTightening(true)
+            .minimumScaleFactor(0.75)
+            .padding([.horizontal], 30)
+            .frame(maxWidth: .infinity, alignment: .leading)
+    }
+}
+
+
+
 struct addButton<Content: View>: View {
     var inputtype: String
-    @Binding var input: String
+//    @Binding var input: String
+    var color: Color
     @ViewBuilder let content: () -> Content
     var body: some View {
         HStack{
@@ -133,6 +156,39 @@ struct addButton<Content: View>: View {
     }
 }
 
+struct photoPickerView: View {
+    @State var selectedItem : PhotosPickerItem? // holds the selected image
+    @Binding var selecetedImage: UIImage?
+    @State var showtext = false// holds the photo
+    var body: some View {
+        if let selecetedImage = selecetedImage{
+            ImageView(uiImage: selecetedImage, Big:false)
+            
+        }
+        PhotosPicker(selection: $selectedItem, matching: .images, photoLibrary: .shared()){
+            if(!(showtext)){
+                Text("Select your photo")
+                    .foregroundStyle(Color.gray)
+            }
+            else{
+                EmptyView()
+            }
+        }
+        .onChange(of: selectedItem){oldvalue, newvalue in
+            showtext = true
+            if let newvalue = newvalue{
+                Task{
+                    if let data = try? await newvalue.loadTransferable(type: Data.self), let image = UIImage(data: data){
+                        selecetedImage = image
+                    }
+                }
+            }
+            
+        }
+        
+    }
+   
+}
 struct textInputField: View {
     var inputtype: String
     @Binding var input: String
@@ -155,11 +211,12 @@ struct textInputField: View {
 
 struct pickerButton: View {
     @Binding var picked: String
+    @State var CategoryLabel = "Pick Recipe Category"
     var list: [Recipe]
     @State var custom = false
     var body: some View {
         if(!(custom)){
-            LabeledContent("Pick Recipe Category"){
+            LabeledContent(CategoryLabel){
                 Picker("Category", selection: $picked){
                     ForEach(categoryslist(list1: list), id: \.self) { recipe in //the id:\.self makes it indentifaible
                         Text(recipe)
@@ -169,6 +226,7 @@ struct pickerButton: View {
                 .tint(Color.primarybrown)
                 .colorMultiply(Color.primarybrown)
                 .onChange(of: picked){
+                    CategoryLabel = picked
                     if(picked == "Custom Category"){
                         custom = true
                         picked = ""

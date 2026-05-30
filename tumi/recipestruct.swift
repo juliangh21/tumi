@@ -14,6 +14,7 @@ struct Recipe: Identifiable, Hashable{ //this is the recipe struct
     var recipeName: String
     var recipeType: String
     var datecreated: Date = Date()
+    var Image: Data?
     func getRank() -> Int{
         return recipeRank
     }
@@ -50,6 +51,13 @@ struct Recipe: Identifiable, Hashable{ //this is the recipe struct
 //            //            return (recipeRank + "st")
 //            //        }
 //        }
+    }
+    func getImage() -> UIImage{
+//        return UIImage(data: Image?? Image(systemName: “photo”).frame(width: 0.001, height: 0.001))
+        if let Image = Image{
+            return UIImage(data: Image)!
+        }
+        return UIImage(systemName: "camera")!
     }
 }
 

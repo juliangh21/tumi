@@ -62,3 +62,12 @@ func categoryslist(list1:[Recipe])-> [String]{
     catlist.append("Custom Category")
     return catlist
 }
+
+func ImageToData(image:UIImage) -> Data{
+    let data = image.pngData()
+//    let data = image?.jpegData(compressionQuality: 0.9)
+    
+    return data!
+    
+        
+}

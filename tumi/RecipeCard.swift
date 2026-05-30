@@ -59,6 +59,30 @@ struct infoView: View { // this is the view for the data from recipe. NOT THE RE
         .frame(width: CGFloat((rect_width*0.85)), height: CGFloat((rect_height*0.8)))
     }
 }
+
+
+struct ImageView: View {
+    var uiImage: UIImage
+    var Big: Bool
+    var body: some View {
+        if(Big){
+            Image(uiImage: uiImage)
+                .resizable()
+                .scaledToFill()
+                .clipShape(RoundedRectangle(cornerRadius: 9))
+                .frame(width: 100, height: 250)
+        }
+        else{
+            Image(uiImage: uiImage)
+                .resizable()
+                .scaledToFill()
+                .clipShape(RoundedRectangle(cornerRadius: 9))
+                .frame(width: 50, height: 125)
+        }
+        
+    }
+}
+
 struct recipeView: View {
     var recipeList: [Recipe]
     @State var theRecipe: Recipe
@@ -103,6 +127,14 @@ struct recipeView: View {
                                 .minimumScaleFactor(0.75)
                                 .padding([.horizontal], 30)
                                 .frame(maxWidth: .infinity, alignment: .leading)
+                        if (theRecipe.Image != nil){
+                            ImageView(uiImage: theRecipe.getImage(), Big: true)
+//                            Image(uiImage: theRecipe.getImage())
+//                                .resizable()
+//                                .scaledToFill()
+//                                .clipShape(RoundedRectangle(cornerRadius: 9))
+//                                .frame(width: 100, height: 250)
+                        }
                         Text("Made on " + String(theRecipe.datecreated.formatted()))
                             .padding(.horizontal)
                             .padding(.horizontal)
@@ -133,18 +165,14 @@ struct recipeView: View {
                                 .presentationDetents([.medium, .large])
                             }
                             .presentationDetents([.medium, .large])
-//
-                            
                         }
                         .padding(.horizontal)
                         .padding(.horizontal)
                         .padding(.horizontal)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        
-                        
-                        
                     }
                 }
+//                .frame(maxWidth: .infinity, maxHeight:.infinity)
                 
             }
             
