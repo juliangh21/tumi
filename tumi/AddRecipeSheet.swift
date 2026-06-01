@@ -44,6 +44,7 @@ struct addSheet: View{
     @State var catcolor = Color.brownfont
     @State var namecolor = Color.brownfont
     @State var canMoveOn1 = false
+    
     var canMoveOn: Bool{
         !recipename.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
         !recipeCategory.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -59,6 +60,7 @@ struct addSheet: View{
     @State var recipename  = ""
     @State var recipeCategory = ""
     @State var selecetedImage: UIImage?
+    @State var recipeSource = ""
     var recipeAdded: (Recipe) -> Void
     var body: some View {
         ZStack{
@@ -68,32 +70,32 @@ struct addSheet: View{
                 Button(action: {let recipenew = Recipe(recipeRank: 2, recipeName: recipename, recipeType: recipeCategory, Image: ImageToData(image: selecetedImage! /*?? UIImage(systemName: "gear")*/))
                     recipeAdded(recipenew);canMoveOn1.toggle()}){
                         
-                ZStack{
-                        RoundedRectangle(cornerRadius: 8)
-                        .fill(Color.accentorange)
-//                        /*.glassEffec*/t(/*.tint(Color.accentorange)*/)
-
-                        .frame(width: CGFloat(80),height: 30)
-                    if(Making){
-                        Text("Rank!")
-                            .foregroundStyle(Color.white)
+                        ZStack{
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(Color.accentorange)
+                            //                        /*.glassEffec*/t(/*.tint(Color.accentorange)*/)
+                            
+                                .frame(width: CGFloat(80),height: 30)
+                            if(Making){
+                                Text("Rank!")
+                                    .foregroundStyle(Color.white)
+                            }
+                            else{
+                                Text("Done!")
+                                    .foregroundStyle(Color.white)
+                            }
+                        }
                     }
-                    else{
-                        Text("Done!")
-                            .foregroundStyle(Color.white)
-                    }
-                }
-                }
                     .disabled(!canMoveOn)
-                .onChange(of: canMoveOn) {oldvalue, newvalue in
-                    print("changed")
-                    
+                    .onChange(of: canMoveOn) {oldvalue, newvalue in
+                        print("changed")
+                        
                     }
-                .frame(maxWidth:.infinity, alignment: .trailing)
-                .padding(.horizontal)
+                    .frame(maxWidth:.infinity, alignment: .trailing)
+                    .padding(.horizontal)
                 if(Making){
                     BigTextView(input: "Add your Recipe.")
-
+                    
                 }
                 else{
                     BigTextView(input: "Edit your Recipe.")
@@ -101,6 +103,7 @@ struct addSheet: View{
                 addButton(inputtype: "Name", /*input: $recipename,*/ color: namemoveon ? Color.brownfont:Color.red, content: {textInputField(inputtype: "Name", input: $recipename)})
                 addButton(inputtype: "Category", /*input: $recipeCategory,*/ color: catmoveon ? Color.brownfont:Color.red, content: {pickerButton(picked: $recipeCategory, list: recipelist)})
                 addButton(inputtype: "Image", /*input: $selecetedImage,*/ color: Color.brownfont, content: {photoPickerView(selecetedImage: $selecetedImage)})
+                addButton(inputtype: "Source", color: Color.brown, content: {textInputField(inputtype: "Source", input: $recipeSource)})
             }
             .padding(.top)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)

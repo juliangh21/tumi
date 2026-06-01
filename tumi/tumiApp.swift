@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct tumiApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var router =  appRouter()
     @State var selectedTab = 0
     @State var RecipeAddSheetPresented = false

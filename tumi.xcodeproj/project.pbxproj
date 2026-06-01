@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		B9938D902FCB80B6006226B6 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B9938D8F2FCB80B6006226B6 /* FirebaseAnalytics */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		B972AA582F5CDE650031DAD5 /* tumi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tumi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9938D902FCB80B6006226B6 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +83,7 @@
 			);
 			name = tumi;
 			packageProductDependencies = (
+				B9938D8F2FCB80B6006226B6 /* FirebaseAnalytics */,
 			);
 			productName = tumi;
 			productReference = B972AA582F5CDE650031DAD5 /* tumi.app */;
@@ -107,6 +113,9 @@
 			);
 			mainGroup = B972AA4F2F5CDE650031DAD5;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				B9938D8E2FCB80B6006226B6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B972AA592F5CDE650031DAD5 /* Products */;
 			projectDirPath = "";
@@ -370,6 +379,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B9938D8E2FCB80B6006226B6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.14.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B9938D8F2FCB80B6006226B6 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B9938D8E2FCB80B6006226B6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B972AA502F5CDE650031DAD5 /* Project object */;
 }

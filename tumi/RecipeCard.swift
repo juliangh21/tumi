@@ -118,15 +118,39 @@ struct recipeView: View {
                             .presentationDetents([.medium, .large])
                         }
                         .presentationDetents([.medium, .large])
-                            Text(theRecipe.recipeName)
-    //                            .font(.largeTitle)
-                                .font(.system(size:50))
-                                .foregroundStyle(Color.brownfont)
-                                .lineLimit(3)
-                                .allowsTightening(true)
-                                .minimumScaleFactor(0.75)
+                        
+                            if(theRecipe.getSourceString() != ""){
+                                HStack{
+                                    Link(destination: URL(string: theRecipe.getSourceString())!,){
+                                        Text(theRecipe.recipeName)
+                                        //                            .font(.largeTitle)
+                                            .font(.system(size:50))
+                                            .foregroundStyle(Color.brownfont)
+                                            .lineLimit(3)
+                                            .allowsTightening(true)
+                                            .minimumScaleFactor(0.75)
+                                    }
+                                    Image(systemName: "link")
+                                        .font(.system(size:40))
+                                        .foregroundStyle(Color.brownfont)
+                                }
                                 .padding([.horizontal], 30)
                                 .frame(maxWidth: .infinity, alignment: .leading)
+                            }
+                            else{
+                                Text(theRecipe.recipeName)
+        //                            .font(.largeTitle)
+                                    .font(.system(size:50))
+                                    .foregroundStyle(Color.brownfont)
+                                    .lineLimit(3)
+                                    .allowsTightening(true)
+                                    .minimumScaleFactor(0.75)
+                                    .padding([.horizontal], 30)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                            }
+                                
+                        
+                        
                         if (theRecipe.Image != nil){
                             ImageView(uiImage: theRecipe.getImage(), Big: true)
 //                            Image(uiImage: theRecipe.getImage())
@@ -142,6 +166,7 @@ struct recipeView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.vertical)
                             .foregroundStyle(Color.secondaryfont)
+
                         HStack(spacing: 5){
                             Text("Currently ranked " + theRecipe.getRankwsuffix()+".")
                                 .foregroundStyle(Color.secondaryfont)
@@ -171,6 +196,7 @@ struct recipeView: View {
                         .padding(.horizontal)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     }
+                    
                 }
 //                .frame(maxWidth: .infinity, maxHeight:.infinity)
                 

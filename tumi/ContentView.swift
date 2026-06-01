@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import FirebaseCore
 struct RecipeList: View{
     
     //    @Binding var Recipes: [Recipe]
@@ -41,6 +41,19 @@ struct RecipeList: View{
     }
 }
 
+class AppDelegate: NSObject, UIApplicationDelegate {
+
+  func application(_ application: UIApplication,
+
+                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+
+    FirebaseApp.configure()
+
+    return true
+
+  }
+
+}
 
 struct ContentView: View {
     @EnvironmentObject var router: appRouter
@@ -124,11 +137,12 @@ struct addRecipeButton: View {
 
 
 #Preview {
+    @Previewable @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @Previewable @StateObject var router = appRouter()
     @Previewable @State var selectedTab = 0
     @Previewable @State var RecipeAddSheetPresented = false
     @Previewable @State var RecipeArray =
-    [Recipe(recipeRank: 2, recipeName: "x", recipeType: "1"),
+    [Recipe(recipeRank: 2, recipeName: "x", recipeType: "1", source: "theverge.com"),
      Recipe(recipeRank: 1, recipeName: "y", recipeType: "B"),  //this is the list of recipes
      Recipe(recipeRank: 3, recipeName: "z", recipeType: "b")]
     NavigationStack(path: $router.path){
