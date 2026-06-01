@@ -108,7 +108,7 @@ struct recipeView: View {
                         .frame(maxWidth:.infinity, alignment: .trailing)
                         .padding(.horizontal)
                         .sheet(isPresented: $editsheetshowing ){
-                            addSheet(Making: false, recipelist: recipeList, recipeAdded: { recipenew in
+                            addSheet(theRecipe: theRecipe, isCreating: false, recipelist: recipeList, recipeAdded: { recipenew in
                                 let oldRecipe = theRecipe
                                 theRecipe = recipenew
                                 editsheetshowing = false

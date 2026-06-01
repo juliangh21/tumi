@@ -23,7 +23,7 @@ struct AddRecipeSheet: View {
         switch currentPage {
         case .add:
 
-            addSheet(Making:true, recipelist: RecipeList, recipeAdded: { recipenew in
+            addSheet(isCreating:true, recipelist: RecipeList, recipeAdded: { recipenew in
                 newRecipe = recipenew
                 currentPage = .rank
             })
@@ -40,7 +40,8 @@ struct AddRecipeSheet: View {
     }
 }
 struct addSheet: View{
-    var Making: Bool
+    var theRecipe:Recipe = Recipe(recipeRank: -1, recipeName: "", recipeType: "")
+    var isCreating: Bool
     @State var catcolor = Color.brownfont
     @State var namecolor = Color.brownfont
     @State var canMoveOn1 = false
@@ -76,7 +77,7 @@ struct addSheet: View{
                             //                        /*.glassEffec*/t(/*.tint(Color.accentorange)*/)
                             
                                 .frame(width: CGFloat(80),height: 30)
-                            if(Making){
+                            if(isCreating){
                                 Text("Rank!")
                                     .foregroundStyle(Color.white)
                             }
@@ -93,7 +94,7 @@ struct addSheet: View{
                     }
                     .frame(maxWidth:.infinity, alignment: .trailing)
                     .padding(.horizontal)
-                if(Making){
+                if(isCreating){
                     BigTextView(input: "Add your Recipe.")
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
@@ -103,10 +104,10 @@ struct addSheet: View{
                     BigTextView(input: "Edit your Recipe.")
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                addButton(inputtype: "Name", /*input: $recipename,*/ color: namemoveon ? Color.brownfont:Color.red, content: {textInputField(inputtype: "Name", input: $recipename)})
-                addButton(inputtype: "Category", /*input: $recipeCategory,*/ color: catmoveon ? Color.brownfont:Color.red, content: {pickerButton(picked: $recipeCategory, list: recipelist)})
+                addButton(inputtype: "Name", /*input: $recipename,*/ color: namemoveon ? Color.brownfont:Color.red, content: {textInputField(inputtype: isCreating ? "Recipe Name": theRecipe.getName() , input: $recipename)})
+                addButton(inputtype: "Category", /*input: $recipeCategory,*/ color: catmoveon ? Color.brownfont:Color.red, content: {pickerButton(inputtype: isCreating ? "Recipe Category": theRecipe.getType(), picked: $recipeCategory, list: recipelist)})
                 addButton(inputtype: "Image", /*input: $selecetedImage,*/ color: Color.brownfont, content: {photoPickerView(selecetedImage: $selecetedImage)})
-                addButton(inputtype: "Source", color: Color.brown, content: {textInputField(inputtype: "Source", input: $recipeSource)})
+                addButton(inputtype: "Source", color: Color.brown, content: {textInputField(inputtype: isCreating ? "Recipe Source": theRecipe.getSourceString(), input: $recipeSource)})
             }
             .padding(.top)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
@@ -121,17 +122,31 @@ struct addSheet: View{
 struct PasteButton: View {
     @State var text = ""
     var pasted: (String) -> Void
+    @State var isPressed = false
     var body: some View {
-        Button(action: pasteFromClipboard){
-            Image(systemName: "document.on.clipboard.fill")
-                .foregroundStyle(Color.accentorange)
+        ZStack{
+//            Capsule()
+//                .fill(Color.gray)
+//                .frame(width: isPressed ? 70:0, height: isPressed ? 30: 0)
+//                .offset(y:isPressed ? -50:0)
+            
+            
+            Button(action: pasteFromClipboard){
+                Image(systemName: "document.on.clipboard.fill")
+                    .foregroundStyle(Color.accentorange)
+            }
         }
+//        Button(action: pasteFromClipboard){
+//            Image(systemName: "document.on.clipboard.fill")
+//                .foregroundStyle(Color.accentorange)
+//        }
         .onChange(of: text ){ oldval, newval in
             pasted(newval)
         }
     }
         
     func pasteFromClipboard(){
+        isPressed.toggle()
         if let string = UIPasteboard.general.string{
             text = string
         }
@@ -228,7 +243,7 @@ struct textInputField: View {
                         .strokeBorder(Color.brownfont, lineWidth: 1.3)
                 )
             ZStack{
-                TextField("Recipe " + inputtype, text: $input)
+                TextField(/*"Recipe " +*/ inputtype, text: $input)
                     .padding(.horizontal)
                     .frame(width: 240, height: 45)
                 HStack{
@@ -248,13 +263,14 @@ struct textInputField: View {
 
 
 struct pickerButton: View {
+    @State var inputtype: String = "Pick Recipe Category"
     @Binding var picked: String
-    @State var CategoryLabel = "Pick Recipe Category"
+//    @State var CategoryLabel = "Pick Recipe Category"
     var list: [Recipe]
     @State var custom = false
     var body: some View {
         if(!(custom)){
-            LabeledContent(CategoryLabel){
+            LabeledContent(inputtype){
                 Picker("Category", selection: $picked){
                     ForEach(categoryslist(list1: list), id: \.self) { recipe in //the id:\.self makes it indentifaible
                         Text(recipe)
@@ -264,8 +280,8 @@ struct pickerButton: View {
                 .tint(Color.primarybrown)
                 .colorMultiply(Color.primarybrown)
                 .onChange(of: picked){
-                    CategoryLabel = picked
-                    if(picked == "Custom Category"){
+                    inputtype = picked
+                    if(picked == "Custom Category" || picked == inputtype){
                         custom = true
                         picked = ""
                     }
@@ -278,7 +294,7 @@ struct pickerButton: View {
         }
         else if(custom){
             ZStack{
-                textInputField(inputtype: "Name", input: $picked)
+                textInputField(inputtype: inputtype, input: $picked)
                 HStack{
                     Spacer()
                     Button(action:{ custom=false}){

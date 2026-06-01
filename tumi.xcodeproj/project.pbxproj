@@ -8,10 +8,36 @@
 
 /* Begin PBXBuildFile section */
 		B9938D902FCB80B6006226B6 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B9938D8F2FCB80B6006226B6 /* FirebaseAnalytics */; };
+		B9C22ECA2FCDE46E00FB269B /* tumishare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B9C22EBE2FCDE46C00FB269B /* tumishare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B9C22EC82FCDE46E00FB269B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B972AA502F5CDE650031DAD5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B9C22EBD2FCDE46C00FB269B;
+			remoteInfo = tumishare;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B9C22ECB2FCDE46E00FB269B /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B9C22ECA2FCDE46E00FB269B /* tumishare.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		B972AA582F5CDE650031DAD5 /* tumi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tumi.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9C22EBE2FCDE46C00FB269B /* tumishare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = tumishare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -22,6 +48,13 @@
 			);
 			target = B972AA572F5CDE650031DAD5 /* tumi */;
 		};
+		B9C22ECF2FCDE46E00FB269B /* Exceptions for "tumishare" folder in "tumishare" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = B9C22EBD2FCDE46C00FB269B /* tumishare */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -31,6 +64,14 @@
 				B9ADA1412FC1D76D00CA4B8A /* Exceptions for "tumi" folder in "tumi" target */,
 			);
 			path = tumi;
+			sourceTree = "<group>";
+		};
+		B9C22EBF2FCDE46D00FB269B /* tumishare */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				B9C22ECF2FCDE46E00FB269B /* Exceptions for "tumishare" folder in "tumishare" target */,
+			);
+			path = tumishare;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -44,6 +85,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B9C22EBB2FCDE46C00FB269B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -51,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				B972AA5A2F5CDE650031DAD5 /* tumi */,
+				B9C22EBF2FCDE46D00FB269B /* tumishare */,
 				B972AA592F5CDE650031DAD5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -59,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				B972AA582F5CDE650031DAD5 /* tumi.app */,
+				B9C22EBE2FCDE46C00FB269B /* tumishare.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -73,10 +123,12 @@
 				B972AA542F5CDE650031DAD5 /* Sources */,
 				B972AA552F5CDE650031DAD5 /* Frameworks */,
 				B972AA562F5CDE650031DAD5 /* Resources */,
+				B9C22ECB2FCDE46E00FB269B /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				B9C22EC92FCDE46E00FB269B /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				B972AA5A2F5CDE650031DAD5 /* tumi */,
@@ -89,6 +141,28 @@
 			productReference = B972AA582F5CDE650031DAD5 /* tumi.app */;
 			productType = "com.apple.product-type.application";
 		};
+		B9C22EBD2FCDE46C00FB269B /* tumishare */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B9C22ECE2FCDE46E00FB269B /* Build configuration list for PBXNativeTarget "tumishare" */;
+			buildPhases = (
+				B9C22EBA2FCDE46C00FB269B /* Sources */,
+				B9C22EBB2FCDE46C00FB269B /* Frameworks */,
+				B9C22EBC2FCDE46C00FB269B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				B9C22EBF2FCDE46D00FB269B /* tumishare */,
+			);
+			name = tumishare;
+			packageProductDependencies = (
+			);
+			productName = tumishare;
+			productReference = B9C22EBE2FCDE46C00FB269B /* tumishare.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -100,6 +174,9 @@
 				LastUpgradeCheck = 2610;
 				TargetAttributes = {
 					B972AA572F5CDE650031DAD5 = {
+						CreatedOnToolsVersion = 26.1.1;
+					};
+					B9C22EBD2FCDE46C00FB269B = {
 						CreatedOnToolsVersion = 26.1.1;
 					};
 				};
@@ -122,12 +199,20 @@
 			projectRoot = "";
 			targets = (
 				B972AA572F5CDE650031DAD5 /* tumi */,
+				B9C22EBD2FCDE46C00FB269B /* tumishare */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		B972AA562F5CDE650031DAD5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B9C22EBC2FCDE46C00FB269B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -144,7 +229,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B9C22EBA2FCDE46C00FB269B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B9C22EC92FCDE46E00FB269B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B9C22EBD2FCDE46C00FB269B /* tumishare */;
+			targetProxy = B9C22EC82FCDE46E00FB269B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		B972AA612F5CDE690031DAD5 /* Debug */ = {
@@ -357,6 +457,72 @@
 			};
 			name = Release;
 		};
+		B9C22ECC2FCDE46E00FB269B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Y58F4SVQTC;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = tumishare/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = tumishare;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = JGH.tumi.tumishare;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B9C22ECD2FCDE46E00FB269B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Y58F4SVQTC;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = tumishare/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = tumishare;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = JGH.tumi.tumishare;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -374,6 +540,15 @@
 			buildConfigurations = (
 				B972AA642F5CDE690031DAD5 /* Debug */,
 				B972AA652F5CDE690031DAD5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B9C22ECE2FCDE46E00FB269B /* Build configuration list for PBXNativeTarget "tumishare" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B9C22ECC2FCDE46E00FB269B /* Debug */,
+				B9C22ECD2FCDE46E00FB269B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
