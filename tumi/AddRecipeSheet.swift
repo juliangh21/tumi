@@ -95,10 +95,13 @@ struct addSheet: View{
                     .padding(.horizontal)
                 if(Making){
                     BigTextView(input: "Add your Recipe.")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
                     
                 }
                 else{
                     BigTextView(input: "Edit your Recipe.")
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 addButton(inputtype: "Name", /*input: $recipename,*/ color: namemoveon ? Color.brownfont:Color.red, content: {textInputField(inputtype: "Name", input: $recipename)})
                 addButton(inputtype: "Category", /*input: $recipeCategory,*/ color: catmoveon ? Color.brownfont:Color.red, content: {pickerButton(picked: $recipeCategory, list: recipelist)})
@@ -115,6 +118,26 @@ struct addSheet: View{
     }
 }
 
+struct PasteButton: View {
+    @State var text = ""
+    var pasted: (String) -> Void
+    var body: some View {
+        Button(action: pasteFromClipboard){
+            Image(systemName: "document.on.clipboard.fill")
+                .foregroundStyle(Color.accentorange)
+        }
+        .onChange(of: text ){ oldval, newval in
+            pasted(newval)
+        }
+    }
+        
+    func pasteFromClipboard(){
+        if let string = UIPasteboard.general.string{
+            text = string
+        }
+    }
+}
+
 struct BigTextView: View {
     var input: String
     var body: some View {
@@ -125,7 +148,7 @@ struct BigTextView: View {
             .allowsTightening(true)
             .minimumScaleFactor(0.75)
             .padding([.horizontal], 30)
-            .frame(maxWidth: .infinity, alignment: .leading)
+//            .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
@@ -204,9 +227,21 @@ struct textInputField: View {
                     RoundedRectangle(cornerRadius: 9, style: .continuous)
                         .strokeBorder(Color.brownfont, lineWidth: 1.3)
                 )
-            TextField("Recipe " + inputtype, text: $input)
-                .padding(.horizontal)
-                .frame(width: 240, height: 45)
+            ZStack{
+                TextField("Recipe " + inputtype, text: $input)
+                    .padding(.horizontal)
+                    .frame(width: 240, height: 45)
+                HStack{
+                    Spacer()
+                    PasteButton(pasted: {
+                        newval in input = newval
+                    })
+                }
+                .frame(width: 220,height: 45)
+                
+            }
+            
+            
         }
     }
 }

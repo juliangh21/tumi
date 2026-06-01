@@ -120,15 +120,10 @@ struct recipeView: View {
                         .presentationDetents([.medium, .large])
                         
                             if(theRecipe.getSourceString() != ""){
-                                HStack{
+                                HStack(spacing:1){
                                     Link(destination: URL(string: theRecipe.getSourceString())!,){
-                                        Text(theRecipe.recipeName)
-                                        //                            .font(.largeTitle)
-                                            .font(.system(size:50))
-                                            .foregroundStyle(Color.brownfont)
-                                            .lineLimit(3)
-                                            .allowsTightening(true)
-                                            .minimumScaleFactor(0.75)
+                                        BigTextView(input: theRecipe.recipeName)
+                                            .padding([.horizontal], -30)
                                     }
                                     Image(systemName: "link")
                                         .font(.system(size:40))
@@ -138,14 +133,7 @@ struct recipeView: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             }
                             else{
-                                Text(theRecipe.recipeName)
-        //                            .font(.largeTitle)
-                                    .font(.system(size:50))
-                                    .foregroundStyle(Color.brownfont)
-                                    .lineLimit(3)
-                                    .allowsTightening(true)
-                                    .minimumScaleFactor(0.75)
-                                    .padding([.horizontal], 30)
+                                BigTextView(input: theRecipe.recipeName)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                             }
                                 
