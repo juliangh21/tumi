@@ -7,17 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B9938D902FCB80B6006226B6 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B9938D8F2FCB80B6006226B6 /* FirebaseAnalytics */; };
-		B9C22ECA2FCDE46E00FB269B /* tumishare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B9C22EBE2FCDE46C00FB269B /* tumishare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B908F5392FCE2F32001E4980 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = B908F5382FCE2F32001E4980 /* GoogleSignIn */; };
+		B908F53B2FCE2F32001E4980 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B908F53A2FCE2F32001E4980 /* GoogleSignInSwift */; };
+		B908F5412FCE30D9001E4980 /* FirebaseAI in Frameworks */ = {isa = PBXBuildFile; productRef = B908F5402FCE30D9001E4980 /* FirebaseAI */; };
+		B908F5432FCE30D9001E4980 /* FirebaseAILogic in Frameworks */ = {isa = PBXBuildFile; productRef = B908F5422FCE30D9001E4980 /* FirebaseAILogic */; };
+		B908F5452FCE30D9001E4980 /* FirebaseAnalyticsCore in Frameworks */ = {isa = PBXBuildFile; productRef = B908F5442FCE30D9001E4980 /* FirebaseAnalyticsCore */; };
+		B908F5472FCE30D9001E4980 /* FirebaseAnalyticsIdentitySupport in Frameworks */ = {isa = PBXBuildFile; productRef = B908F5462FCE30D9001E4980 /* FirebaseAnalyticsIdentitySupport */; };
+		B908F5522FCE31D4001E4980 /* FirebaseAI in Frameworks */ = {isa = PBXBuildFile; productRef = B908F5512FCE31D4001E4980 /* FirebaseAI */; };
+		B908F5542FCE31D4001E4980 /* FirebaseAILogic in Frameworks */ = {isa = PBXBuildFile; productRef = B908F5532FCE31D4001E4980 /* FirebaseAILogic */; };
+		B908F5562FCE31D4001E4980 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B908F5552FCE31D4001E4980 /* FirebaseAnalytics */; };
+		B908F5582FCE31D4001E4980 /* FirebaseAnalyticsCore in Frameworks */ = {isa = PBXBuildFile; productRef = B908F5572FCE31D4001E4980 /* FirebaseAnalyticsCore */; };
+		B908F55A2FCE31D4001E4980 /* FirebaseAnalyticsIdentitySupport in Frameworks */ = {isa = PBXBuildFile; productRef = B908F5592FCE31D4001E4980 /* FirebaseAnalyticsIdentitySupport */; };
+		B9C22EDE2FCDFAB400FB269B /* tumi_share.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B9C22ED42FCDFAB400FB269B /* tumi_share.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		B9C22EC82FCDE46E00FB269B /* PBXContainerItemProxy */ = {
+		B9C22EDC2FCDFAB400FB269B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B972AA502F5CDE650031DAD5 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = B9C22EBD2FCDE46C00FB269B;
-			remoteInfo = tumishare;
+			remoteGlobalIDString = B9C22ED32FCDFAB400FB269B;
+			remoteInfo = tumi_share;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -28,7 +38,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				B9C22ECA2FCDE46E00FB269B /* tumishare.appex in Embed Foundation Extensions */,
+				B9C22EDE2FCDFAB400FB269B /* tumi_share.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -37,7 +47,7 @@
 
 /* Begin PBXFileReference section */
 		B972AA582F5CDE650031DAD5 /* tumi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tumi.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B9C22EBE2FCDE46C00FB269B /* tumishare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = tumishare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9C22ED42FCDFAB400FB269B /* tumi_share.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = tumi_share.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -48,12 +58,12 @@
 			);
 			target = B972AA572F5CDE650031DAD5 /* tumi */;
 		};
-		B9C22ECF2FCDE46E00FB269B /* Exceptions for "tumishare" folder in "tumishare" target */ = {
+		B9C22EE22FCDFAB400FB269B /* Exceptions for "tumi_share" folder in "tumi_share" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = B9C22EBD2FCDE46C00FB269B /* tumishare */;
+			target = B9C22ED32FCDFAB400FB269B /* tumi_share */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -66,12 +76,12 @@
 			path = tumi;
 			sourceTree = "<group>";
 		};
-		B9C22EBF2FCDE46D00FB269B /* tumishare */ = {
+		B9C22ED52FCDFAB400FB269B /* tumi_share */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				B9C22ECF2FCDE46E00FB269B /* Exceptions for "tumishare" folder in "tumishare" target */,
+				B9C22EE22FCDFAB400FB269B /* Exceptions for "tumi_share" folder in "tumi_share" target */,
 			);
-			path = tumishare;
+			path = tumi_share;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -81,11 +91,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B9938D902FCB80B6006226B6 /* FirebaseAnalytics in Frameworks */,
+				B908F5542FCE31D4001E4980 /* FirebaseAILogic in Frameworks */,
+				B908F5522FCE31D4001E4980 /* FirebaseAI in Frameworks */,
+				B908F53B2FCE2F32001E4980 /* GoogleSignInSwift in Frameworks */,
+				B908F5452FCE30D9001E4980 /* FirebaseAnalyticsCore in Frameworks */,
+				B908F5412FCE30D9001E4980 /* FirebaseAI in Frameworks */,
+				B908F5472FCE30D9001E4980 /* FirebaseAnalyticsIdentitySupport in Frameworks */,
+				B908F5392FCE2F32001E4980 /* GoogleSignIn in Frameworks */,
+				B908F5582FCE31D4001E4980 /* FirebaseAnalyticsCore in Frameworks */,
+				B908F55A2FCE31D4001E4980 /* FirebaseAnalyticsIdentitySupport in Frameworks */,
+				B908F5432FCE30D9001E4980 /* FirebaseAILogic in Frameworks */,
+				B908F5562FCE31D4001E4980 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B9C22EBB2FCDE46C00FB269B /* Frameworks */ = {
+		B9C22ED12FCDFAB400FB269B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -99,7 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				B972AA5A2F5CDE650031DAD5 /* tumi */,
-				B9C22EBF2FCDE46D00FB269B /* tumishare */,
+				B9C22ED52FCDFAB400FB269B /* tumi_share */,
 				B972AA592F5CDE650031DAD5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -108,7 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				B972AA582F5CDE650031DAD5 /* tumi.app */,
-				B9C22EBE2FCDE46C00FB269B /* tumishare.appex */,
+				B9C22ED42FCDFAB400FB269B /* tumi_share.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -128,39 +148,49 @@
 			buildRules = (
 			);
 			dependencies = (
-				B9C22EC92FCDE46E00FB269B /* PBXTargetDependency */,
+				B9C22EDD2FCDFAB400FB269B /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				B972AA5A2F5CDE650031DAD5 /* tumi */,
 			);
 			name = tumi;
 			packageProductDependencies = (
-				B9938D8F2FCB80B6006226B6 /* FirebaseAnalytics */,
+				B908F5382FCE2F32001E4980 /* GoogleSignIn */,
+				B908F53A2FCE2F32001E4980 /* GoogleSignInSwift */,
+				B908F5402FCE30D9001E4980 /* FirebaseAI */,
+				B908F5422FCE30D9001E4980 /* FirebaseAILogic */,
+				B908F5442FCE30D9001E4980 /* FirebaseAnalyticsCore */,
+				B908F5462FCE30D9001E4980 /* FirebaseAnalyticsIdentitySupport */,
+				B908F5512FCE31D4001E4980 /* FirebaseAI */,
+				B908F5532FCE31D4001E4980 /* FirebaseAILogic */,
+				B908F5552FCE31D4001E4980 /* FirebaseAnalytics */,
+				B908F5572FCE31D4001E4980 /* FirebaseAnalyticsCore */,
+				B908F5592FCE31D4001E4980 /* FirebaseAnalyticsIdentitySupport */,
 			);
 			productName = tumi;
 			productReference = B972AA582F5CDE650031DAD5 /* tumi.app */;
 			productType = "com.apple.product-type.application";
 		};
-		B9C22EBD2FCDE46C00FB269B /* tumishare */ = {
+		B9C22ED32FCDFAB400FB269B /* tumi_share */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B9C22ECE2FCDE46E00FB269B /* Build configuration list for PBXNativeTarget "tumishare" */;
+			buildConfigurationList = B9C22EDF2FCDFAB400FB269B /* Build configuration list for PBXNativeTarget "tumi_share" */;
 			buildPhases = (
-				B9C22EBA2FCDE46C00FB269B /* Sources */,
-				B9C22EBB2FCDE46C00FB269B /* Frameworks */,
-				B9C22EBC2FCDE46C00FB269B /* Resources */,
+				B9C22ED02FCDFAB400FB269B /* Sources */,
+				B9C22ED12FCDFAB400FB269B /* Frameworks */,
+				B9C22ED22FCDFAB400FB269B /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				B9C22EBF2FCDE46D00FB269B /* tumishare */,
+				B9C22ED52FCDFAB400FB269B /* tumi_share */,
 			);
-			name = tumishare;
+			name = tumi_share;
 			packageProductDependencies = (
 			);
-			productName = tumishare;
-			productReference = B9C22EBE2FCDE46C00FB269B /* tumishare.appex */;
+			productName = tumi_share;
+			productReference = B9C22ED42FCDFAB400FB269B /* tumi_share.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -176,7 +206,7 @@
 					B972AA572F5CDE650031DAD5 = {
 						CreatedOnToolsVersion = 26.1.1;
 					};
-					B9C22EBD2FCDE46C00FB269B = {
+					B9C22ED32FCDFAB400FB269B = {
 						CreatedOnToolsVersion = 26.1.1;
 					};
 				};
@@ -191,7 +221,8 @@
 			mainGroup = B972AA4F2F5CDE650031DAD5;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				B9938D8E2FCB80B6006226B6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				B908F5372FCE2F32001E4980 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				B908F5502FCE31D4001E4980 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B972AA592F5CDE650031DAD5 /* Products */;
@@ -199,7 +230,7 @@
 			projectRoot = "";
 			targets = (
 				B972AA572F5CDE650031DAD5 /* tumi */,
-				B9C22EBD2FCDE46C00FB269B /* tumishare */,
+				B9C22ED32FCDFAB400FB269B /* tumi_share */,
 			);
 		};
 /* End PBXProject section */
@@ -212,7 +243,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B9C22EBC2FCDE46C00FB269B /* Resources */ = {
+		B9C22ED22FCDFAB400FB269B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -229,7 +260,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B9C22EBA2FCDE46C00FB269B /* Sources */ = {
+		B9C22ED02FCDFAB400FB269B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -239,10 +270,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		B9C22EC92FCDE46E00FB269B /* PBXTargetDependency */ = {
+		B9C22EDD2FCDFAB400FB269B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = B9C22EBD2FCDE46C00FB269B /* tumishare */;
-			targetProxy = B9C22EC82FCDE46E00FB269B /* PBXContainerItemProxy */;
+			target = B9C22ED32FCDFAB400FB269B /* tumi_share */;
+			targetProxy = B9C22EDC2FCDFAB400FB269B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -457,69 +488,64 @@
 			};
 			name = Release;
 		};
-		B9C22ECC2FCDE46E00FB269B /* Debug */ = {
+		B9C22EE02FCDFAB400FB269B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Y58F4SVQTC;
-				ENABLE_APP_SANDBOX = YES;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = tumishare/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = tumishare;
+				INFOPLIST_FILE = tumi_share/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = tumi_share;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = JGH.tumi.tumishare;
+				PRODUCT_BUNDLE_IDENTIFIER = "JGH.tumi.tumi-share";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		B9C22ECD2FCDE46E00FB269B /* Release */ = {
+		B9C22EE12FCDFAB400FB269B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Y58F4SVQTC;
-				ENABLE_APP_SANDBOX = YES;
-				ENABLE_HARDENED_RUNTIME = YES;
-				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = tumishare/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = tumishare;
+				INFOPLIST_FILE = tumi_share/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = tumi_share;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = JGH.tumi.tumishare;
+				PRODUCT_BUNDLE_IDENTIFIER = "JGH.tumi.tumi-share";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
+				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -544,11 +570,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B9C22ECE2FCDE46E00FB269B /* Build configuration list for PBXNativeTarget "tumishare" */ = {
+		B9C22EDF2FCDFAB400FB269B /* Build configuration list for PBXNativeTarget "tumi_share" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B9C22ECC2FCDE46E00FB269B /* Debug */,
-				B9C22ECD2FCDE46E00FB269B /* Release */,
+				B9C22EE02FCDFAB400FB269B /* Debug */,
+				B9C22EE12FCDFAB400FB269B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -556,9 +582,17 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		B9938D8E2FCB80B6006226B6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+		B908F5372FCE2F32001E4980 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.1.0;
+			};
+		};
+		B908F5502FCE31D4001E4980 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 12.14.0;
@@ -567,10 +601,56 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B9938D8F2FCB80B6006226B6 /* FirebaseAnalytics */ = {
+		B908F5382FCE2F32001E4980 /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B9938D8E2FCB80B6006226B6 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = B908F5372FCE2F32001E4980 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		B908F53A2FCE2F32001E4980 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B908F5372FCE2F32001E4980 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
+		B908F5402FCE30D9001E4980 /* FirebaseAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirebaseAI;
+		};
+		B908F5422FCE30D9001E4980 /* FirebaseAILogic */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirebaseAILogic;
+		};
+		B908F5442FCE30D9001E4980 /* FirebaseAnalyticsCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirebaseAnalyticsCore;
+		};
+		B908F5462FCE30D9001E4980 /* FirebaseAnalyticsIdentitySupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FirebaseAnalyticsIdentitySupport;
+		};
+		B908F5512FCE31D4001E4980 /* FirebaseAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B908F5502FCE31D4001E4980 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAI;
+		};
+		B908F5532FCE31D4001E4980 /* FirebaseAILogic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B908F5502FCE31D4001E4980 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAILogic;
+		};
+		B908F5552FCE31D4001E4980 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B908F5502FCE31D4001E4980 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalytics;
+		};
+		B908F5572FCE31D4001E4980 /* FirebaseAnalyticsCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B908F5502FCE31D4001E4980 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsCore;
+		};
+		B908F5592FCE31D4001E4980 /* FirebaseAnalyticsIdentitySupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B908F5502FCE31D4001E4980 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsIdentitySupport;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

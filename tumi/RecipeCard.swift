@@ -64,21 +64,35 @@ struct infoView: View { // this is the view for the data from recipe. NOT THE RE
 struct ImageView: View {
     var uiImage: UIImage
     var Big: Bool
+    var widthheight: ([Int]) -> Void
     var body: some View {
-        if(Big){
+//        if(Big){
+            let height: CGFloat = Big ? 250 : 125
+            let aspectRatio = uiImage.size.width / uiImage.size.height
+            let width = height * aspectRatio
             Image(uiImage: uiImage)
                 .resizable()
                 .scaledToFill()
                 .clipShape(RoundedRectangle(cornerRadius: 9))
-                .frame(width: 100, height: 250)
-        }
-        else{
-            Image(uiImage: uiImage)
-                .resizable()
-                .scaledToFill()
-                .clipShape(RoundedRectangle(cornerRadius: 9))
-                .frame(width: 50, height: 125)
-        }
+                .frame(width: width, height: height)
+                .onGeometryChange(for: CGSize.self) { proxy in
+                                    proxy.size
+                                } action: { newValue in
+                                    widthheight([Int(newValue.width), Int(newValue.height)])
+                                }
+//        }
+//        else{
+//            Image(uiImage: uiImage)
+//                .resizable()
+//                .scaledToFill()
+//                .clipShape(RoundedRectangle(cornerRadius: 9))
+//                .frame(width: 50, height: 125)
+//                .onGeometryChange(for: CGSize.self) { proxy in
+//                                    proxy.size
+//                                } action: { newValue in
+//                                    widthheight([Int(newValue.width), Int(newValue.height)])
+//                                }
+//        }
         
     }
 }
@@ -140,7 +154,7 @@ struct recipeView: View {
                         
                         
                         if (theRecipe.Image != nil){
-                            ImageView(uiImage: theRecipe.getImage(), Big: true)
+                            ImageView(uiImage: theRecipe.getImage(), Big: true, widthheight: {newval in print(newval)})
 //                            Image(uiImage: theRecipe.getImage())
 //                                .resizable()
 //                                .scaledToFill()
