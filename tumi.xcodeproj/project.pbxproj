@@ -9,15 +9,12 @@
 /* Begin PBXBuildFile section */
 		B908F5392FCE2F32001E4980 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = B908F5382FCE2F32001E4980 /* GoogleSignIn */; };
 		B908F53B2FCE2F32001E4980 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = B908F53A2FCE2F32001E4980 /* GoogleSignInSwift */; };
-		B908F5412FCE30D9001E4980 /* FirebaseAI in Frameworks */ = {isa = PBXBuildFile; productRef = B908F5402FCE30D9001E4980 /* FirebaseAI */; };
-		B908F5432FCE30D9001E4980 /* FirebaseAILogic in Frameworks */ = {isa = PBXBuildFile; productRef = B908F5422FCE30D9001E4980 /* FirebaseAILogic */; };
 		B908F5452FCE30D9001E4980 /* FirebaseAnalyticsCore in Frameworks */ = {isa = PBXBuildFile; productRef = B908F5442FCE30D9001E4980 /* FirebaseAnalyticsCore */; };
 		B908F5472FCE30D9001E4980 /* FirebaseAnalyticsIdentitySupport in Frameworks */ = {isa = PBXBuildFile; productRef = B908F5462FCE30D9001E4980 /* FirebaseAnalyticsIdentitySupport */; };
-		B908F5522FCE31D4001E4980 /* FirebaseAI in Frameworks */ = {isa = PBXBuildFile; productRef = B908F5512FCE31D4001E4980 /* FirebaseAI */; };
-		B908F5542FCE31D4001E4980 /* FirebaseAILogic in Frameworks */ = {isa = PBXBuildFile; productRef = B908F5532FCE31D4001E4980 /* FirebaseAILogic */; };
 		B908F5562FCE31D4001E4980 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B908F5552FCE31D4001E4980 /* FirebaseAnalytics */; };
 		B908F5582FCE31D4001E4980 /* FirebaseAnalyticsCore in Frameworks */ = {isa = PBXBuildFile; productRef = B908F5572FCE31D4001E4980 /* FirebaseAnalyticsCore */; };
 		B908F55A2FCE31D4001E4980 /* FirebaseAnalyticsIdentitySupport in Frameworks */ = {isa = PBXBuildFile; productRef = B908F5592FCE31D4001E4980 /* FirebaseAnalyticsIdentitySupport */; };
+		B9AF381F2FD076E10028B692 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B9AF381E2FD076E10028B692 /* FirebaseAuth */; };
 		B9C22EDE2FCDFAB400FB269B /* tumi_share.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B9C22ED42FCDFAB400FB269B /* tumi_share.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -91,16 +88,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B908F5542FCE31D4001E4980 /* FirebaseAILogic in Frameworks */,
-				B908F5522FCE31D4001E4980 /* FirebaseAI in Frameworks */,
 				B908F53B2FCE2F32001E4980 /* GoogleSignInSwift in Frameworks */,
 				B908F5452FCE30D9001E4980 /* FirebaseAnalyticsCore in Frameworks */,
-				B908F5412FCE30D9001E4980 /* FirebaseAI in Frameworks */,
 				B908F5472FCE30D9001E4980 /* FirebaseAnalyticsIdentitySupport in Frameworks */,
 				B908F5392FCE2F32001E4980 /* GoogleSignIn in Frameworks */,
+				B9AF381F2FD076E10028B692 /* FirebaseAuth in Frameworks */,
 				B908F5582FCE31D4001E4980 /* FirebaseAnalyticsCore in Frameworks */,
 				B908F55A2FCE31D4001E4980 /* FirebaseAnalyticsIdentitySupport in Frameworks */,
-				B908F5432FCE30D9001E4980 /* FirebaseAILogic in Frameworks */,
 				B908F5562FCE31D4001E4980 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -120,6 +114,7 @@
 			children = (
 				B972AA5A2F5CDE650031DAD5 /* tumi */,
 				B9C22ED52FCDFAB400FB269B /* tumi_share */,
+				B9AF381D2FD076E10028B692 /* Frameworks */,
 				B972AA592F5CDE650031DAD5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -131,6 +126,13 @@
 				B9C22ED42FCDFAB400FB269B /* tumi_share.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		B9AF381D2FD076E10028B692 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -157,15 +159,12 @@
 			packageProductDependencies = (
 				B908F5382FCE2F32001E4980 /* GoogleSignIn */,
 				B908F53A2FCE2F32001E4980 /* GoogleSignInSwift */,
-				B908F5402FCE30D9001E4980 /* FirebaseAI */,
-				B908F5422FCE30D9001E4980 /* FirebaseAILogic */,
 				B908F5442FCE30D9001E4980 /* FirebaseAnalyticsCore */,
 				B908F5462FCE30D9001E4980 /* FirebaseAnalyticsIdentitySupport */,
-				B908F5512FCE31D4001E4980 /* FirebaseAI */,
-				B908F5532FCE31D4001E4980 /* FirebaseAILogic */,
 				B908F5552FCE31D4001E4980 /* FirebaseAnalytics */,
 				B908F5572FCE31D4001E4980 /* FirebaseAnalyticsCore */,
 				B908F5592FCE31D4001E4980 /* FirebaseAnalyticsIdentitySupport */,
+				B9AF381E2FD076E10028B692 /* FirebaseAuth */,
 			);
 			productName = tumi;
 			productReference = B972AA582F5CDE650031DAD5 /* tumi.app */;
@@ -611,14 +610,6 @@
 			package = B908F5372FCE2F32001E4980 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignInSwift;
 		};
-		B908F5402FCE30D9001E4980 /* FirebaseAI */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = FirebaseAI;
-		};
-		B908F5422FCE30D9001E4980 /* FirebaseAILogic */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = FirebaseAILogic;
-		};
 		B908F5442FCE30D9001E4980 /* FirebaseAnalyticsCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = FirebaseAnalyticsCore;
@@ -626,16 +617,6 @@
 		B908F5462FCE30D9001E4980 /* FirebaseAnalyticsIdentitySupport */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = FirebaseAnalyticsIdentitySupport;
-		};
-		B908F5512FCE31D4001E4980 /* FirebaseAI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B908F5502FCE31D4001E4980 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAI;
-		};
-		B908F5532FCE31D4001E4980 /* FirebaseAILogic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = B908F5502FCE31D4001E4980 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAILogic;
 		};
 		B908F5552FCE31D4001E4980 /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -651,6 +632,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B908F5502FCE31D4001E4980 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalyticsIdentitySupport;
+		};
+		B9AF381E2FD076E10028B692 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B908F5502FCE31D4001E4980 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -8,8 +8,8 @@
 import SwiftUI
 
     
-struct Recipe: Identifiable, Hashable{ //this is the recipe struct
-    let id = UUID()
+struct Recipe: Identifiable, Hashable, Codable{ //this is the recipe struct
+    var id = UUID()
     var recipeRank: Int
     var recipeName: String
     var recipeType: String

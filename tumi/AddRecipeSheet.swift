@@ -103,21 +103,22 @@ struct addSheet: View{
                             Text(helpuserform)
                                 .foregroundStyle(Color.secondaryfont)
                                 .multilineTextAlignment(.trailing)
-                            ZStack{
-                                RoundedRectangle(cornerRadius: 8)
-                                    .fill(colorOfButton)
-                                //                        /*.glassEffec*/t(/*.tint(Color.accentorange)*/)
-                                
-                                    .frame(width: CGFloat(80),height: 30)
-                                if(isCreating){
-                                    Text("Rank!")
-                                        .foregroundStyle(Color.white)
-                                }
-                                else{
-                                    Text("Done!")
-                                        .foregroundStyle(Color.white)
-                                }
-                            }
+//                            ZStack{
+//                                RoundedRectangle(cornerRadius: 8)
+//                                    .fill(colorOfButton)
+//                                //                        /*.glassEffec*/t(/*.tint(Color.accentorange)*/)
+//                                
+//                                    .frame(width: CGFloat(80),height: 30)
+//                                if(isCreating){
+//                                    Text("Rank!")
+//                                        .foregroundStyle(Color.white)
+//                                }
+//                                else{
+//                                    Text("Done!")
+//                                        .foregroundStyle(Color.white)
+//                                }
+//                            }
+                            CompleteButton(colorOfButton: colorOfButton, input: isCreating ? "Rank!": "Done!")
                             .disabled(!canMoveOn)
                             .onChange(of: canMoveOn) {oldvalue, newvalue in
                                 print("changed")
@@ -145,7 +146,21 @@ struct addSheet: View{
         }
     }
 }
-
+struct CompleteButton: View {
+    var colorOfButton: Color
+    var input: String
+    var widthheight =  [80,30]
+    var body: some View {
+        ZStack{
+            RoundedRectangle(cornerRadius: 8)
+                .fill(colorOfButton)
+                .frame(width: CGFloat(widthheight[0]),height: CGFloat(widthheight[1]))
+            Text(input)
+                .foregroundStyle(Color.white)
+        }
+        
+    }
+}
 struct PasteButton: View {
     @State var text = ""
     var pasted: (String) -> Void
@@ -258,34 +273,6 @@ struct photoPickerView: View {
                 
             }
         }
-//        if let newimage = selecetedImage{
-//            ImageView(uiImage: newimage, Big:false, widthheight: {
-//                newval in
-//                widthheight = newval
-//                
-//            })
-//            PhotosPicker(selection: $selectedItem, matching: .images, photoLibrary: .shared()){
-//                if(!(showtext)){
-//                    Text("Select your photo")
-//                        .foregroundStyle(Color.gray)
-//                }
-//                else{
-//                    EmptyView()
-//                }
-//            }
-//            .onChange(of: selectedItem){oldvalue, newvalue in
-//                showtext = true
-//        if let newvalue = newvalue{
-//                    Task{
-//                        if let data = try? await newvalue.loadTransferable(type: Data.self), let image = UIImage(data: data){
-//                            selecetedImage = image
-//                        }
-//                    }
-//                }
-//                
-//            }
-//            
-//        }
         
     }
 
@@ -295,13 +282,6 @@ struct textInputField: View {
     var body: some View {
         ZStack{
             brownRectangle(width: 240, height: 45)
-//            RoundedRectangle(cornerRadius: 9)
-//                .fill(Color.primarybrown)
-//                .frame(width: 240, height: 45)
-//                .overlay(
-//                    RoundedRectangle(cornerRadius: 9, style: .continuous)
-//                        .strokeBorder(Color.brownfont, lineWidth: 1.3)
-//                )
             ZStack{
                 TextField(/*"Recipe " +*/ inputtype, text: $input)
                     .padding(.horizontal)

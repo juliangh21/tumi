@@ -5,7 +5,7 @@
 //  Created by Julian Garcia-Haugland on 3/8/26.
 //
 import SwiftUI
-
+import FirebaseAnalytics
 struct Ranker: View { // view for data from recipe and the rectangle. This is the final card
     @EnvironmentObject var router: appRouter
     var theRecipe: Recipe
@@ -20,9 +20,11 @@ struct Ranker: View { // view for data from recipe and the rectangle. This is th
                 RoundedRectangle(cornerRadius: 9)
                     .fill(Color.primarybrown)
                     .frame(width: CGFloat(rectwidth),height: 80)
+                    .analyticsScreen(name: "WORK DAMMIT")
                 infoView(rank: rank, recipe_name: recipe_name, recipe_type: recipe_type, rect_width: rectwidth, rect_height: 80)
                     .padding(.leading)
             }
+            
         }
         
     
@@ -75,6 +77,7 @@ struct ImageView: View {
                 .scaledToFill()
                 .clipShape(RoundedRectangle(cornerRadius: 9))
                 .frame(width: width, height: height)
+                .analyticsScreen(name: "Image added")
                 .onGeometryChange(for: CGSize.self) { proxy in
                                     proxy.size
                                 } action: { newValue in
@@ -116,6 +119,7 @@ struct recipeView: View {
                                     .frame(width: CGFloat(80),height: 30)
                                     Text("Edit")
                                     .foregroundStyle(Color.white)
+                                    .analyticsScreen(name: "WORK HOLY CRAP")
                                 }
 
                         }
