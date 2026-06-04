@@ -36,7 +36,7 @@ struct SignInView: View {
         VStack{
             NavigationLink{
                 //                    brownRectangle(width: 240, height: 45)
-                SignInEmailView()
+                SignInEmailView(canmoveon: {x in})
 
             }label:{
                 ZStack{

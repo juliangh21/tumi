@@ -7,12 +7,16 @@
 
 import SwiftUI
 
+
+
+
 @main
 struct tumiApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var router =  appRouter()
     @State var selectedTab = 0
     @State var RecipeAddSheetPresented = false
+    @State var SignInSheetPresented: Bool = true
     @State var RecipeArray =
     [Recipe(recipeRank: 2, recipeName: "2nd Recipe", recipeType: "2"),
      Recipe(recipeRank: 1, recipeName: "1st Recipe", recipeType: "1"),  //this is the list of recipes
@@ -23,38 +27,30 @@ struct tumiApp: App {
         ////            ContentView(Recipes: ListOfRecipes)
         //            ContentView()
         //        }
+        
         WindowGroup{
             NavigationStack(path: $router.path){
                 TabView(selection: $selectedTab) {
                     Tab("Home", systemImage: "house", value: 0) {
-                        //                Text("Home")
                         
                         ContentView(RecipeArray: $RecipeArray)
                     }
-                    //                            .environmentObject(router)
                     
                     
                     Tab("Add Recipe", systemImage: "plus", value:1) {
-                        //                addRecipeButton(RecipeArray: $RecipeArray)
                         EmptyView()
                         
                     }
                     Tab("Make account", systemImage: "person.circle", value: 2){
-                        SignInEmailView()
+                        SignInEmailView(canmoveon: {x in print(x)})
                     }
-                    //            Tab("Settings", systemImage: "gear") {
-                    //                Text("Profile")
-                    //                .tag(2)
-                    //            }
+
                 }
-                
-//                Tab("Make account", systemImage: "person.circle", value: 2){
-//                    SignInEmailView()
-//                }
+
                 .onChange(of: selectedTab){ oldValue, newValue in
                     if(newValue == 1){
                         RecipeAddSheetPresented = true
-                        selectedTab = /*oldValue*/ 2
+                        selectedTab = /*oldValue*/ 0
                     }
                 }
                 .sheet(isPresented: $RecipeAddSheetPresented){
@@ -110,6 +106,20 @@ struct tumiApp: App {
                     
                 }
                 .environmentObject(router)
+                
+            }// end of nav stack
+            .onAppear{
+//                let authuser = try? AuthenticationManager.shared.getAuthenticatedUser()
+//                self.SignInSheetPresented = authuser == nil
+            }
+            .fullScreenCover(isPresented: $SignInSheetPresented){
+                VStack{
+                    SignInEmailView(canmoveon: {
+                        x in SignInSheetPresented = !x
+                        
+                    })
+                    Text("SignInSheetPresented is \(SignInSheetPresented)")
+                }
                 
             }
             
