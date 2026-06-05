@@ -84,9 +84,9 @@ struct SignInEmailView: View {
     
 }
 
-//#Preview {
-//    SignInEmailView( canmoveon: {x in})
-//}
+#Preview {
+    SignInEmailView( canmoveon: {x in})
+}
 
 
 final class AuthenticationManager{

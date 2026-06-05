@@ -11,7 +11,7 @@ import FirebaseAnalytics
 struct RecipeList: View{
     
     //    @Binding var Recipes: [Recipe]
-    @Binding var Recipes: [Recipe]
+    /*@Binding*/ var Recipes: [Recipe]
     var category: String
     
     var body: some View {
@@ -40,7 +40,7 @@ struct ContentView: View {
 //        [Recipe(recipeRank: 2, recipeName: "x", recipeType: "1"),
 //         Recipe(recipeRank: 1, recipeName: "y", recipeType: "B"),  //this is the list of recipes
 //         Recipe(recipeRank: 3, recipeName: "z", recipeType: "b")]
-    @Binding var RecipeArray : [Recipe]
+    /*@Binding */var RecipeArray : [Recipe]
     @State var CategoryRecipeArray: [Recipe] = []
     @State var selectedCategory: String? = nil
     @State var recipeSheetshowing: Bool = false
@@ -60,7 +60,7 @@ struct ContentView: View {
                     }
                 })
                 ScrollView{ // makes it scroll so there is an infinite amount of recipes
-                    RecipeList(Recipes: $RecipeArray, category: selectedCategory ?? "")
+                    RecipeList(Recipes: RecipeArray, category: selectedCategory ?? "")
 
                 }
                 

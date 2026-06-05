@@ -387,20 +387,28 @@ struct RankSheetView: View {
             Color.lightbrownbkgrnd
                 .ignoresSafeArea()
             VStack{
-                if isDone{
-                    Button(action: {rankclosureout(finalRank)}){
+                if(recipeList.count==0){
+                    Button(action: {rankclosureout(1)}){
                         Text("Confirm this new recipe")
                     }
-                    
-                }
-                else if !(sortedRecipe.count == 0){
-                    recipeComparison(oldrecipe: sortedRecipe[mid], newRecipe: newRecipe, betterRecipe: {
-                        recipepreffered in
-                        nextrecipes(preffered: recipepreffered)
-                    } )
                 }
                 else{
-                    ProgressView()
+                    if isDone{
+                        Button(action: {rankclosureout(finalRank)}){
+                            Text("Confirm this new recipe")
+                        }
+                        
+                    }
+                    else if !(sortedRecipe.count == 0){
+                        recipeComparison(oldrecipe: sortedRecipe[mid], newRecipe: newRecipe, betterRecipe: {
+                            recipepreffered in
+                            nextrecipes(preffered: recipepreffered)
+                        } )
+                    }
+                    else{
+                        ProgressView()
+                    }
+
                 }
             }
             .onAppear{

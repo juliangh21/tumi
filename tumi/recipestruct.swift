@@ -6,16 +6,23 @@
 //
 
 import SwiftUI
-
+import Firebase
+import FirebaseFirestore
     
 struct Recipe: Identifiable, Hashable, Codable{ //this is the recipe struct
-    var id = UUID()
+//    var id = UUID()
+    var id: String = UUID().uuidString
     var recipeRank: Int
     var recipeName: String
     var recipeType: String
     var datecreated: Date = Date()
     var Image: Data?
     var source: String = ""
+    enum CodingKeys: String, CodingKey {
+            case id, recipeRank, recipeName, recipeType, datecreated, source
+            // Image is intentionally omitted
+        }
+
     func getRank() -> Int{
         return recipeRank
     }

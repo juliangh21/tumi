@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import FirebaseAuth
 
 
 
@@ -14,13 +14,14 @@ import SwiftUI
 struct tumiApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject var router =  appRouter()
+    @StateObject var recipemanager  = RecipeManager()
     @State var selectedTab = 0
     @State var RecipeAddSheetPresented = false
     @State var SignInSheetPresented: Bool = true
-    @State var RecipeArray =
-    [Recipe(recipeRank: 2, recipeName: "2nd Recipe", recipeType: "2"),
-     Recipe(recipeRank: 1, recipeName: "1st Recipe", recipeType: "1"),  //this is the list of recipes
-     Recipe(recipeRank: 3, recipeName: "3rd Recipe", recipeType: "3")]
+//    @State var RecipeArray =
+//    [Recipe(recipeRank: 2, recipeName: "2nd Recipe", recipeType: "2"),
+//     Recipe(recipeRank: 1, recipeName: "1st Recipe", recipeType: "1"),  //this is the list of recipes
+//     Recipe(recipeRank: 3, recipeName: "3rd Recipe", recipeType: "3")]
     
     var body: some Scene {
         //        WindowGroup {
@@ -33,7 +34,7 @@ struct tumiApp: App {
                 TabView(selection: $selectedTab) {
                     Tab("Home", systemImage: "house", value: 0) {
                         
-                        ContentView(RecipeArray: $RecipeArray)
+                        ContentView(RecipeArray:recipemanager.recipes )
                     }
                     
                     
@@ -54,9 +55,11 @@ struct tumiApp: App {
                     }
                 }
                 .sheet(isPresented: $RecipeAddSheetPresented){
-                    AddRecipeSheet(RecipeList: RecipeArray, recipeAdded: { recipenew in
-                        RecipeArray.append(recipenew)
-                        RecipeArray = resortrecipe(list1: RecipeArray)
+                    AddRecipeSheet(RecipeList: recipemanager.recipes, recipeAdded: { recipenew in
+                        /*RecipeArray*/recipemanager.recipes.append(recipenew)
+                        recipemanager.recipes = resortrecipe(list1: recipemanager.recipes)
+                        // Task { await $recipemanager.saveRecipe(recipe: recipenew) }
+                        Task { await recipemanager.saveRecipes(recipenew) }
                         print("New Recipe added")
                         RecipeAddSheetPresented = false
                     })
@@ -65,37 +68,40 @@ struct tumiApp: App {
                 .navigationDestination(for: appRoute.self){ route in
                     switch route {
                     case .home:
-                        ContentView(RecipeArray: $RecipeArray)
+                        ContentView(RecipeArray: recipemanager.recipes /*$RecipeArray*/)
                     case .recipe(let recipe):
                         //                                    print("IMMA CRY")
-                        recipeView(recipeList:RecipeArray, theRecipe: recipe, newRecipe: {
+                        recipeView(recipeList:recipemanager.recipes, theRecipe: recipe, newRecipe: {
                             
                             bothrecipes in
                             print("IMMA CRY")
-                            let firstindex = RecipeArray.firstIndex(of: bothrecipes.getOldRecipe())
+                            let firstindex = recipemanager.recipes/*RecipeArray*/.firstIndex(of: bothrecipes.getOldRecipe())
                             print("WHY")
                             if(firstindex == nil){
                                 print("NO")
                                 //                            if(bothrecipes.getOldRecipe().getRank()==0){
-                                let oldindex = RecipeArray.firstIndex(of: bothrecipes.getOldRecipe())
+                                let oldindex = recipemanager.recipes/*RecipeArray*/.firstIndex(of: bothrecipes.getOldRecipe())
                                 let newindex = bothrecipes.getOldRecipe().getRank() - 1
-                                RecipeArray.insert(bothrecipes.getNewRecipe(), at: bothrecipes.getOldRecipe().getRank())
+                                /*RecipeArray*/recipemanager.recipes.insert(bothrecipes.getNewRecipe(), at: bothrecipes.getOldRecipe().getRank())
+                                Task { await recipemanager.saveRecipes(bothrecipes.getNewRecipe()) }
                                 if(oldindex==nil){
                                     
                                 }
                                 else if(newindex<oldindex!){
-                                    RecipeArray.insert(bothrecipes.getNewRecipe(), at: newindex)
-                                    RecipeArray[oldindex!+1].changeRank(newRank: -1)
+                                    /*RecipeArray*/recipemanager.recipes.insert(bothrecipes.getNewRecipe(), at: newindex)
+                                    /*RecipeArray*/recipemanager.recipes[oldindex!+1].changeRank(newRank: -1)
+                                    Task { await recipemanager.deleteRecipe( bothrecipes.getOldRecipe()) }
                                 }
                                 else if(oldindex!<newindex){
-                                    RecipeArray.insert(bothrecipes.getNewRecipe(), at: newindex)
-                                    RecipeArray[oldindex!].changeRank(newRank: -1)
+                                    /*RecipeArray*/recipemanager.recipes.insert(bothrecipes.getNewRecipe(), at: newindex)
+                                    /*RecipeArray*/recipemanager.recipes[oldindex!].changeRank(newRank: -1)
+                                    Task { await recipemanager.deleteRecipe( bothrecipes.getOldRecipe()) }
                                 }
-                                RecipeArray = resortrecipe(list1: RecipeArray)
+                                recipemanager.recipes = resortrecipe(list1: recipemanager.recipes)
                                 //                            }
                             }else{
                                 print("I LOVE")
-                                RecipeArray[firstindex!] = bothrecipes.getNewRecipe()
+                                recipemanager.recipes[firstindex!] = bothrecipes.getNewRecipe()
                                 print(bothrecipes)
                             }
                             
@@ -106,8 +112,15 @@ struct tumiApp: App {
                     
                 }
                 .environmentObject(router)
+                .environmentObject(recipemanager)
                 
             }// end of nav stack
+            .onChange(of: SignInSheetPresented){ oldval, newval in
+                
+                if let user = Auth.auth().currentUser {
+                            Task { await recipemanager.loadUser(uid: user.uid) }
+                        }
+            }
             .onAppear{
 //                let authuser = try? AuthenticationManager.shared.getAuthenticatedUser()
 //                self.SignInSheetPresented = authuser == nil
@@ -116,6 +129,9 @@ struct tumiApp: App {
                 VStack{
                     SignInEmailView(canmoveon: {
                         x in SignInSheetPresented = !x
+                        if let user = Auth.auth().currentUser {
+                                    Task { await recipemanager.loadUser(uid: user.uid) }
+                                }
                         
                     })
                     Text("SignInSheetPresented is \(SignInSheetPresented)")
