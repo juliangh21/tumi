@@ -42,8 +42,10 @@ struct tumiApp: App {
                         EmptyView()
                         
                     }
-                    Tab("Make account", systemImage: "person.circle", value: 2){
-                        SignInEmailView(canmoveon: {x in print(x)})
+                    Tab("Sign Out", systemImage: "person.circle", value: 2){
+                        Button(action:{Task{ try Auth.auth().signOut()};SignInSheetPresented.toggle()}){
+                            Text("Sign Out")
+                        }
                     }
 
                 }
@@ -102,6 +104,7 @@ struct tumiApp: App {
                             }else{
                                 print("I LOVE")
                                 recipemanager.recipes[firstindex!] = bothrecipes.getNewRecipe()
+                                Task { await recipemanager.deleteRecipe( bothrecipes.getOldRecipe()) }
                                 print(bothrecipes)
                             }
                             
@@ -115,13 +118,13 @@ struct tumiApp: App {
                 .environmentObject(recipemanager)
                 
             }// end of nav stack
-            .onChange(of: SignInSheetPresented){ oldval, newval in
-                
+            
+            .onAppear{
                 if let user = Auth.auth().currentUser {
                             Task { await recipemanager.loadUser(uid: user.uid) }
+                    SignInSheetPresented = false
                         }
-            }
-            .onAppear{
+            
 //                let authuser = try? AuthenticationManager.shared.getAuthenticatedUser()
 //                self.SignInSheetPresented = authuser == nil
             }
@@ -134,7 +137,6 @@ struct tumiApp: App {
                                 }
                         
                     })
-                    Text("SignInSheetPresented is \(SignInSheetPresented)")
                 }
                 
             }

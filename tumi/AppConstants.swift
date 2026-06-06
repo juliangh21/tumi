@@ -41,5 +41,6 @@ extension Color{
     static let darkbrownimpactfont = Color(hex: "#2E1A0F")
     static let secondaryfont = Color(hex: "#7A4F2A")
     static let brownfont = Color(hex: "#4A2E1A").opacity(1)
+    static let mutedgray =  Color(hex: "A69B94")
 }
     

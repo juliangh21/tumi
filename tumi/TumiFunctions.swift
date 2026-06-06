@@ -71,3 +71,14 @@ func ImageToData(image:UIImage) -> Data{
     
         
 }
+
+
+func getUniqueCategories(RecipeList: [Recipe]) -> [String]{
+    var categorys: [String] = []
+    for recipe in RecipeList{
+        if(!(categorys.contains(recipe.getType().lowercased()))){ //this sorts through all the diffrenrt categories and finds the unique ones. Then, it adds them to a list.
+            categorys.append(recipe.getType().lowercased())
+        }
+    }
+    return categorys
+}

@@ -54,6 +54,7 @@ final class RecipeManager: ObservableObject{
         guard let ref = collectionRef else{return}
         do{
             try await ref.document(recipe.id).delete()
+            
         }
         catch{
             print(error)

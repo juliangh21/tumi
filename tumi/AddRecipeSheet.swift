@@ -46,6 +46,7 @@ struct addSheet: View{
     @State var namecolor = Color.brownfont
     @State var canMoveOn1 = false
     
+    
     var canMoveOn: Bool{
         !recipename.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
         !recipeCategory.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && (selecetedImage != nil)
@@ -67,7 +68,7 @@ struct addSheet: View{
         }
         else if (isCreating){
             print("DON'T")
-            return Color.gray
+            return Color.mutedgray
         }
         else{
             return Color.accentorange
@@ -103,21 +104,7 @@ struct addSheet: View{
                             Text(helpuserform)
                                 .foregroundStyle(Color.secondaryfont)
                                 .multilineTextAlignment(.trailing)
-//                            ZStack{
-//                                RoundedRectangle(cornerRadius: 8)
-//                                    .fill(colorOfButton)
-//                                //                        /*.glassEffec*/t(/*.tint(Color.accentorange)*/)
-//                                
-//                                    .frame(width: CGFloat(80),height: 30)
-//                                if(isCreating){
-//                                    Text("Rank!")
-//                                        .foregroundStyle(Color.white)
-//                                }
-//                                else{
-//                                    Text("Done!")
-//                                        .foregroundStyle(Color.white)
-//                                }
-//                            }
+//
                             CompleteButton(colorOfButton: colorOfButton, input: isCreating ? "Rank!": "Done!")
                             .disabled(!canMoveOn)
                             .onChange(of: canMoveOn) {oldvalue, newvalue in
@@ -146,230 +133,7 @@ struct addSheet: View{
         }
     }
 }
-struct CompleteButton: View {
-    var colorOfButton: Color
-    var input: String
-    var widthheight =  [80,30]
-    var body: some View {
-        ZStack{
-            RoundedRectangle(cornerRadius: 8)
-                .fill(colorOfButton)
-                .frame(width: CGFloat(widthheight[0]),height: CGFloat(widthheight[1]))
-            Text(input)
-                .foregroundStyle(Color.white)
-        }
-        
-    }
-}
-struct PasteButton: View {
-    @State var text = ""
-    var pasted: (String) -> Void
-    @State var isPressed = false
-    var body: some View {
-        ZStack{
-//            Capsule()
-//                .fill(Color.gray)
-//                .frame(width: isPressed ? 70:0, height: isPressed ? 30: 0)
-//                .offset(y:isPressed ? -50:0)
-            
-            
-            Button(action: pasteFromClipboard){
-                Image(systemName: "document.on.clipboard.fill")
-                    .foregroundStyle(Color.accentorange)
-            }
-        }
-//        Button(action: pasteFromClipboard){
-//            Image(systemName: "document.on.clipboard.fill")
-//                .foregroundStyle(Color.accentorange)
-//        }
-        .onChange(of: text ){ oldval, newval in
-            pasted(newval)
-        }
-    }
-        
-    func pasteFromClipboard(){
-        isPressed.toggle()
-        if let string = UIPasteboard.general.string{
-            text = string
-        }
-    }
-}
 
-struct BigTextView: View {
-    var input: String
-    var body: some View {
-        Text(input)
-            .font(.system(size:50))
-            .foregroundStyle(Color.brownfont)
-            .lineLimit(3)
-            .allowsTightening(true)
-            .minimumScaleFactor(0.75)
-            .padding([.horizontal], 30)
-//            .frame(maxWidth: .infinity, alignment: .leading)
-    }
-}
-
-
-
-struct addButton<Content: View>: View {
-    var inputtype: String
-//    @Binding var input: String
-    var color: Color
-    @ViewBuilder let content: () -> Content
-    var body: some View {
-        HStack{
-            Text(inputtype + ":")
-                .foregroundStyle(Color.secondaryfont)
-            
-            ZStack{
-//                brownRectangle(width: 240, height: 45)
-                content()
-            }
-            
-        }
-        .padding(.horizontal)
-        .padding(.horizontal)
-        .frame(maxWidth: .infinity, alignment: .leading)
-    }
-}
-
-struct photoPickerView: View {
-    @State var selectedItem : PhotosPickerItem? // holds the selected image
-    @Binding var selecetedImage: UIImage?
-    @State var showtext = false// holds the photo
-    @State var widthheight = [240,45]
-    @State var buffer = 0
-    var body: some View {
-        ZStack{
-            brownRectangle(width: CGFloat(widthheight[0]+buffer), height: CGFloat(widthheight[1]+buffer))
-            if let newimage = selecetedImage{
-                ImageView(uiImage: newimage, Big:false, widthheight: {
-                    newval in
-                    widthheight = /*[Int(newimage.size.width), Int(newimage.size.width)]*/ newval
-                    
-                })
-            }
-                PhotosPicker(selection: $selectedItem, matching: .images, photoLibrary: .shared()){
-                    if(!(showtext)){
-                        Text("Select your photo")
-                            .foregroundStyle(Color.gray)
-                    }
-                    else{
-                        EmptyView()
-                    }
-                }
-                .onChange(of: selectedItem){oldvalue, newvalue in
-                    buffer = 12
-                    showtext = true
-            if let newvalue = newvalue{
-                        Task{
-                            if let data = try? await newvalue.loadTransferable(type: Data.self), let image = UIImage(data: data){
-                                selecetedImage = image
-                            }
-                        }
-                    }
-                    
-                }
-                
-            }
-        }
-        
-    }
-
-struct textInputField: View {
-    var inputtype: String
-    @Binding var input: String
-    var body: some View {
-        ZStack{
-            brownRectangle(width: 240, height: 45)
-            ZStack{
-                TextField(/*"Recipe " +*/ inputtype, text: $input)
-                    .padding(.horizontal)
-                    .frame(width: 240, height: 45)
-                HStack{
-                    Spacer()
-                    PasteButton(pasted: {
-                        newval in input = newval
-                    })
-                }
-                .frame(width: 220,height: 45)
-                
-            }
-            
-            
-        }
-    }
-}
-
-
-struct brownRectangle: View {
-    var width: CGFloat
-    var height: CGFloat
-    var body: some View {
-        RoundedRectangle(cornerRadius: 9)
-            .fill(Color.primarybrown)
-            .frame(width: width, height: height)
-            .overlay(
-                RoundedRectangle(cornerRadius: 9, style: .continuous)
-                    .strokeBorder(Color.brownfont, lineWidth: 1.3)
-            )
-    }
-}
-
-
-struct pickerButton: View {
-    @State var inputtype: String = "Pick Recipe Category"
-    @Binding var picked: String
-//    @State var CategoryLabel = "Pick Recipe Category"
-    var list: [Recipe]
-    @State var custom = false
-    var body: some View {
-        ZStack{
-            brownRectangle(width: 240, height: 45)
-            
-            if(!(custom)){
-                LabeledContent(inputtype){
-                    Picker("Category", selection: $picked){
-                        ForEach(categoryslist(list1: list), id: \.self) { recipe in //the id:\.self makes it indentifaible
-                            Text(recipe)
-                        }
-                        
-                    }
-                    .tint(Color.primarybrown)
-                    .colorMultiply(Color.primarybrown)
-                    .onChange(of: picked){
-                        inputtype = picked
-                        if(picked == "Custom Category" /*|| picked == inputtype*/){
-                            custom = true
-                            picked = ""
-                        }
-                    }
-                }
-                .padding(.horizontal)
-                .frame(width: 250, height: 45)
-                .foregroundStyle(Color.gray)
-                
-            }
-            else if(custom){
-                ZStack{
-                    textInputField(inputtype: inputtype, input: $picked)
-                    HStack{
-                        Spacer()
-                        Button(action:{ custom=false}){
-                            Image(systemName: "chevron.up.chevron.down")
-                                .foregroundStyle(Color.brown)
-                        }
-                    }
-                    .frame(width: 220,height: 45)
-                    
-
-                }
-                
-            }
-        }
-        
-    }
-}
 struct RankSheetView: View {
     var recipeList: [Recipe]
     var newRecipe: Recipe

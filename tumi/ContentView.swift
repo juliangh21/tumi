@@ -23,6 +23,7 @@ struct RecipeList: View{
                 }
                 else{
                     Ranker(theRecipe:card ,rank: card.getRank(), recipe_name: card.getName(), recipe_type: card.getType())
+//                        ./*shadow(color: Color.brownfont .opacity(0.25), radius: 5, x: 1, y: 1)*/
                         .analyticsScreen(name: "WORK HOLY CRAP")//this sorts through a list of recipes and will create a viewable list of recipes
 
                 }
@@ -53,7 +54,7 @@ struct ContentView: View {
                 .ignoresSafeArea()
             
             VStack{
-                listOfcategories(Recipes: RecipeArray, onTap: { selectedcategory in //this is the closure statement. From the listOfcategories struct, it grabs a value, and runs the code
+                listOfcategories(/*Recipes: RecipeArray*/ catList: getUniqueCategories(RecipeList: RecipeArray)  , onTap: { selectedcategory in //this is the closure statement. From the listOfcategories struct, it grabs a value, and runs the code
                     
                     if !(selectedCategory == selectedcategory){
                         selectedCategory = selectedcategory

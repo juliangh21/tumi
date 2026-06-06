@@ -91,6 +91,20 @@ struct RecipeViewStruct: Identifiable, Hashable{ //this is the recipe struct
         return newRecipe
     }
 }
+
+struct errorBoolStruct: Identifiable, Hashable{
+    let id = UUID()
+    var error: String
+    var boolean: Bool
+    
+    func getError() -> String{
+        return error
+    }
+    func getBoolean() -> Bool{
+        return boolean
+    }
+}
+
 //@/*ViewBuilder*/ //this returns the best recipe among two recipes
 //func betterrank(r1:Recipe, r2: Recipe)-> some View{
 //    if(r1.getRank()>r2.getRank()){

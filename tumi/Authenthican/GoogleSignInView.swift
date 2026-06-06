@@ -9,6 +9,7 @@ import SwiftUI
 import Firebase
 import GoogleSignIn
 import FirebaseCore
+import FirebaseFirestore
 
 //FirebaseApp.configure()
 
@@ -17,6 +18,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
   func application(_ application: UIApplication,didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
       FirebaseApp.configure()
+      let settings = FirestoreSettings()
+      settings.cacheSettings = PersistentCacheSettings(sizeBytes: 100 * 1024 * 1024 as NSNumber)
+      let db = Firestore.firestore()
+              db.settings = settings
+
       if FirebaseApp.app() != nil {
           print("✅ Firebase is successfully configured!")
       } else {

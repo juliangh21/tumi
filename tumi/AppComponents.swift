@@ -143,14 +143,36 @@ struct photoPickerView: View {
 struct textInputField: View {
     var inputtype: String
     @Binding var input: String
+    var isPassword: Bool = false
+    var isNewpassword: Bool = true
+    var isloggin: Bool = false
     var widthheigh=[240,45]
     var body: some View {
         ZStack{
             brownRectangle(width: CGFloat(widthheigh[0]), height: CGFloat(widthheigh[1]))
             ZStack{
-                TextField(/*"Recipe " +*/ inputtype, text: $input)
-                    .padding(.horizontal)
-                    .frame(width: CGFloat(widthheigh[0]), height: CGFloat(widthheigh[1]))
+                Group{
+                    if(isloggin){
+                        TextField(/*"Recipe " +*/ inputtype, text: $input)
+                            .textContentType(.emailAddress)
+                            .textContentType(.username)
+                    }
+                    else if isPassword{
+                        SecureField(inputtype, text: $input)
+                            .textContentType(isNewpassword  ? .newPassword : .password)
+    
+                        
+                    }
+                    else{
+                        TextField(/*"Recipe " +*/ inputtype, text: $input)
+                    }
+                }
+                .padding(.horizontal)
+                .autocorrectionDisabled()
+                .autocapitalization(.none)
+                .frame(width: CGFloat(widthheigh[0]), height: CGFloat(widthheigh[1]))
+                
+                
                 HStack{
                     Spacer()
                     PasteButton(pasted: {
