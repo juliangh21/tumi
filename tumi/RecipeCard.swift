@@ -47,15 +47,24 @@ struct infoView: View { // this is the view for the data from recipe. NOT THE RE
 //                .padding(.trailing)
 //                .frame(width: 340/5)
             Spacer() //spacer to make sure its in the left quarter
-            Text(recipe_name)
-                .font(.body)
-                .foregroundStyle(Color.brownfont)
+            VStack{
+                Text(recipe_name)
+                    .font(.body)
+                    .foregroundStyle(Color.brownfont)
+                    .bold()
+                Text(recipe_type)
+                //                .font(.footnote)
+                //                .foregroundStyle(Color.secondaryfont)
+            }
+//            Text(recipe_name)
+//                .font(.body)
+//                .foregroundStyle(Color.brownfont)
             Spacer()
             Spacer()
             Spacer()
-            Text(recipe_type)
-                .font(.footnote)
-                .foregroundStyle(Color.secondaryfont)
+//            Text(recipe_type)
+//                .font(.footnote)
+//                .foregroundStyle(Color.secondaryfont)
             
         }
         .frame(width: CGFloat((rect_width*0.85)), height: CGFloat((rect_height*0.8)))
@@ -100,6 +109,39 @@ struct ImageView: View {
     }
 }
 
+struct imageFancyView: View {
+//    var UIimage: UIImage
+    var body: some View {
+        ZStack{
+//            Image(uiImage:UIimage)
+//                .resizable()
+//                .scaledToFill()
+//                .clipShape(RoundedRectangle(cornerRadius: 16))
+//                .frame(width: 50,height: 50)
+            RoundedRectangle(cornerRadius: 16)
+                .frame(width:50, height: 50)
+                .offset(x: offsetAngle(angle: Angle.degrees(-51))[0],y: offsetAngle(angle: Angle.degrees(-51))[1])
+//            RoundedRectangle(cornerRadius: 16)
+//                .frame(width:50, height: 50)
+//                .foregroundStyle(.blue)
+//                .offset(x: offsetAngle(angle: Angle.degrees(-30))[0],y: offsetAngle(angle: Angle.degrees(-30))[1])
+            RoundedRectangle(cornerRadius: 16)
+                .foregroundStyle(.red)
+                .frame(width:50, height: 50)
+                .offset(x: offsetAngle(angle: Angle.degrees(-12))[0],y: offsetAngle(angle: Angle.degrees(-12))[1])
+            RoundedRectangle(cornerRadius: 16)
+                .frame(width:50, height: 50)
+                .foregroundStyle(.blue)
+                .offset(x: offsetAngle(angle: Angle.degrees(30      ))[0],y: offsetAngle(angle: Angle.degrees(3000))[1])
+        }
+        
+        
+    }
+}
+
+#Preview{
+    imageFancyView()
+}
 struct recipeView: View {
     var recipeList: [Recipe]
     @State var theRecipe: Recipe

@@ -5,6 +5,7 @@
 //  Created by Julian Garcia-Haugland on 5/27/26.
 //
 import SwiftUI
+import Foundation
 func sortRecipe(list1:[Recipe])->[Recipe]{
     let sortedRecipe = list1.sorted{ $0.getRank()<$1.getRank()}
     return sortedRecipe
@@ -72,7 +73,6 @@ func ImageToData(image:UIImage) -> Data{
         
 }
 
-
 func getUniqueCategories(RecipeList: [Recipe]) -> [String]{
     var categorys: [String] = []
     for recipe in RecipeList{
@@ -81,4 +81,12 @@ func getUniqueCategories(RecipeList: [Recipe]) -> [String]{
         }
     }
     return categorys
+}
+
+func offsetAngle(angle: Angle) -> [CGFloat]{
+    let radians = CGFloat(angle.radians)
+    let x = 10*cos(radians)
+    let y = 10*sin(radians)
+    return [x,y]
+    
 }
