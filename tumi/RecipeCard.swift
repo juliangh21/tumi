@@ -16,13 +16,13 @@ struct Ranker: View { // view for data from recipe and the rectangle. This is th
     var body: some View {
         Button(action: {print("tapped");router.goTo(to: .recipe(theRecipe)) }) {
 //            router.goTo(to: .recipe(theRecipe))
-            ZStack{
+            ZStack(alignment: .leading){
                 RoundedRectangle(cornerRadius: 9)
                     .fill(Color.primarybrown)
                     .frame(width: CGFloat(rectwidth),height: 80)
                     .analyticsScreen(name: "WORK DAMMIT")
-                infoView(rank: rank, recipe_name: recipe_name, recipe_type: recipe_type, rect_width: rectwidth, rect_height: 80)
-                    .padding(.leading)
+                infoView(theRecipe: theRecipe, rank: rank, recipe_name: recipe_name, recipe_type: recipe_type, rect_width: rectwidth, rect_height: 80)
+//                    .padding(.leading)
             }
             
         }
@@ -32,6 +32,7 @@ struct Ranker: View { // view for data from recipe and the rectangle. This is th
 }
 
 struct infoView: View { // this is the view for the data from recipe. NOT THE RECTANGLE variables are taken in as parameters and displatd
+    var theRecipe: Recipe
     var rank: Int
 //    var rank: Int
     var recipe_name: String
@@ -39,29 +40,47 @@ struct infoView: View { // this is the view for the data from recipe. NOT THE RE
     var rect_width: Double
     var rect_height: Double
     var body: some View {
-        HStack(){
+        HStack(alignment: .center){
+            Spacer()
             Text(String(rank)+".")
-                .font(.largeTitle)
+//                .font(.largeTitle)
+                .font(.system(size: 80))
 //                .font(.headline)
                 .foregroundStyle(Color.darkbrownimpactfont)
 //                .padding(.trailing)
 //                .frame(width: 340/5)
-            Spacer() //spacer to make sure its in the left quarter
-            VStack{
+//            Spacer() //spacer to make sure its in the left quarter
+            Spacer()
+                .frame(width:6)
+            VStack(alignment: .leading){
                 Text(recipe_name)
-                    .font(.body)
+//                    .font(.body)
+                    .font(.system(size:20))
                     .foregroundStyle(Color.brownfont)
                     .bold()
                 Text(recipe_type)
+                    .font(.system(size:12))
+                    .foregroundStyle(Color.secondaryfont)
                 //                .font(.footnote)
                 //                .foregroundStyle(Color.secondaryfont)
             }
 //            Text(recipe_name)
 //                .font(.body)
 //                .foregroundStyle(Color.brownfont)
+//            Spacer()
             Spacer()
-            Spacer()
-            Spacer()
+                .frame(width:20)
+//            Spacer()
+            if(theRecipe.hasImage()){
+                imageFancyView(UIimage1: theRecipe.getImage() )
+                    .offset(x:26, y:7)
+//                    .clipped(false, antialiased: true)
+            }
+            else{
+                turntRectangle()
+            }
+            
+//            Spacer()
 //            Text(recipe_type)
 //                .font(.footnote)
 //                .foregroundStyle(Color.secondaryfont)
@@ -110,7 +129,8 @@ struct ImageView: View {
 }
 
 struct imageFancyView: View {
-//    var UIimage: UIImage
+    var UIimage1: UIImage
+//    let x= [10,15,20,50,]
     var body: some View {
         ZStack{
 //            Image(uiImage:UIimage)
@@ -118,30 +138,51 @@ struct imageFancyView: View {
 //                .scaledToFill()
 //                .clipShape(RoundedRectangle(cornerRadius: 16))
 //                .frame(width: 50,height: 50)
-            RoundedRectangle(cornerRadius: 16)
-                .frame(width:50, height: 50)
-                .offset(x: offsetAngle(angle: Angle.degrees(-51))[0],y: offsetAngle(angle: Angle.degrees(-51))[1])
 //            RoundedRectangle(cornerRadius: 16)
-//                .frame(width:50, height: 50)
+//                .frame(width:86, height: 86)
+//                .rotationEffect(Angle(degrees: 50), anchor: .bottomTrailing)
+////                .offset(x: offsetAngle(angle: Angle.degrees(-51))[0],y: offsetAngle(angle: Angle.degrees(-51))[1])
+////            RoundedRectangle(cornerRadius: 16)
+////                .frame(width:50, height: 50)
+////                .foregroundStyle(.blue)
+////                .offset(x: offsetAngle(angle: Angle.degrees(-30))[0],y: offsetAngle(angle: Angle.degrees(-30))[1])
+//            RoundedRectangle(cornerRadius: 16)
+//                .foregroundStyle(.red)
+//                .frame(width:86, height: 86)
+//                .rotationEffect(Angle(degrees: 30), anchor: .bottomTrailing)
+//                .rotationEffect(Angle(degrees: -5,1), anchor: .bottomTrailing)
+            Image(uiImage: UIimage1)
+//            RoundedRectangle(cornerRadius: 16)
+                .resizable()
+                .scaledToFill()
+                .frame(width:86, height: 86)
+                .clipShape(RoundedRectangle(cornerRadius: 16))
 //                .foregroundStyle(.blue)
-//                .offset(x: offsetAngle(angle: Angle.degrees(-30))[0],y: offsetAngle(angle: Angle.degrees(-30))[1])
-            RoundedRectangle(cornerRadius: 16)
-                .foregroundStyle(.red)
-                .frame(width:50, height: 50)
-                .offset(x: offsetAngle(angle: Angle.degrees(-12))[0],y: offsetAngle(angle: Angle.degrees(-12))[1])
-            RoundedRectangle(cornerRadius: 16)
-                .frame(width:50, height: 50)
-                .foregroundStyle(.blue)
-                .offset(x: offsetAngle(angle: Angle.degrees(30      ))[0],y: offsetAngle(angle: Angle.degrees(3000))[1])
+                .rotationEffect(Angle(degrees: Double.random(in:-50...50)),anchor: .bottomTrailing)
+//                .rotationEffect(Angle(degrees: -51), anchor: .bottomTrailing)
+//                .offset(x: offsetAngle(angle: Angle.degrees(30      ))[0],y: offsetAngle(angle: Angle.degrees(3000))[1])
         }
         
         
     }
 }
-
-#Preview{
-    imageFancyView()
+struct turntRectangle: View {
+    var body: some View {
+        RoundedRectangle(cornerRadius: 16)
+            .frame(width:86, height: 86)
+            .rotationEffect(Angle(degrees: 50), anchor: .bottomTrailing)
+            .foregroundStyle(.clear)
+    }
 }
+//#Preview{
+//    
+//    ZStack(alignment: .leading){
+//        RoundedRectangle(cornerRadius: 9)
+//            .fill(Color.primarybrown)
+//            .frame(width: CGFloat(340),height: 80)
+//        infoView(, rank: 1, recipe_name: "Pico De Gallo", recipe_type: "Salad", rect_width: 340, rect_height: 80)
+//    }
+//}
 struct recipeView: View {
     var recipeList: [Recipe]
     @State var theRecipe: Recipe

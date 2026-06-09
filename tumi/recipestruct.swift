@@ -41,6 +41,9 @@ struct Recipe: Identifiable, Hashable, Codable{ //this is the recipe struct
     mutating func changeType(newType: String) -> (){
         recipeType=newType
     }
+    func hasImage() -> Bool{
+        return Image != nil
+    }
     func getRankwsuffix() -> String{
         if(recipeRank == 1){
             return (String(recipeRank) + "st")

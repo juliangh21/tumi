@@ -64,6 +64,7 @@ struct ContentView: View {
                     RecipeList(Recipes: RecipeArray, category: selectedCategory ?? "")
 
                 }
+                .scrollClipDisabled()
                 
 
                 }
