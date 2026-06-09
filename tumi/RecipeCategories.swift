@@ -23,23 +23,23 @@ struct categoryframe: View{
 
 
 struct listOfcategories: View{
-//    var Recipes: [Recipe]
+    var Recipes: [Recipe]
     var catList: [String]
     var onTap: (String?) -> Void
     @State var selectedcategory: String? = nil
-//    var uniqueCategories: [String] {
-//            var categorys: [String] = []
-//            for recipe in Recipes{
-//                if(!(categorys.contains(recipe.getType().lowercased()))){ //this sorts through all the diffrenrt categories and finds the unique ones. Then, it adds them to a list.
-//                    categorys.append(recipe.getType().lowercased())
-//                }
-//            }
-//            return categorys
-//    }
+    var uniqueCategories: [String] {
+            var categorys: [String] = []
+            for recipe in Recipes{
+                if(!(categorys.contains(recipe.getType().lowercased()))){ //this sorts through all the diffrenrt categories and finds the unique ones. Then, it adds them to a list.
+                    categorys.append(recipe.getType().lowercased())
+                }
+            }
+            return categorys
+    }
     var body: some View{
             ScrollView(.horizontal, showsIndicators: false){
                 HStack{
-                    ForEach(catList, id: \.self){category in
+                    ForEach(uniqueCategories, id: \.self){category in
                         Button(action: {
                             print("Cat tapped")
                             if (selectedcategory==category){//if button is double tapped, unpress

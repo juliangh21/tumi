@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseAuth
 import FirebaseFirestore
+import FirebaseStorage
 import Combine
 
 @MainActor
@@ -43,8 +44,14 @@ final class RecipeManager: ObservableObject{
     }
     func saveRecipes(_ recipe: Recipe) async{
         guard let ref = collectionRef else{return}
+        var recipetosave = recipe
+        if let imageData = recipe.Image{
+            recipetosave.imageURL = await uploadImage(imageData: imageData, recipeId: recipe.id)
+        }
         do{
-            try ref.document(recipe.id).setData(from: recipe)
+                
+            try ref.document(recipe.id).setData(from: recipetosave)
+            
         }
         catch{
             print(error)
@@ -59,6 +66,25 @@ final class RecipeManager: ObservableObject{
         catch{
             print(error)
         }
+    }
+    func uploadImage(imageData: Data, recipeId: String) async -> String?{
+        let ref = Storage.storage().reference()
+            .child("users/\(uid ?? "")/recipes/\(recipeId).jpg")
+        do{
+            guard let compressed = UIImage(data: imageData)?
+                .jpegData(compressionQuality: 0.5) else{return nil}
+            _ = try await ref.putDataAsync(compressed)
+            let url = try await ref.downloadURL()
+            return url.absoluteString
+        }
+        catch{
+            print("ERROR :\(error) ")
+            return nil
+        }
+            
+            
+            
+        
     }
     
 }

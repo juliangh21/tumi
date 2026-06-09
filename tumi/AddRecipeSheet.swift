@@ -124,6 +124,7 @@ struct addSheet: View{
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 addButton(inputtype: "Name", /*input: $recipename,*/ color: namemoveon ? Color.brownfont:Color.red, content: {textInputField(inputtype: isCreating ? "Recipe Name": theRecipe.getName() , input: $recipename)})
+                addButton(inputtype: "Category", /*input: $recipename,*/ color: namemoveon ? Color.brownfont:Color.red, content: {textInputField(inputtype: isCreating ? "Recipe Name": theRecipe.getType() , input: $recipeCategory)})
                 addButton(inputtype: "Category", /*input: $recipeCategory,*/ color: catmoveon ? Color.brownfont:Color.red, content: {pickerButton(inputtype: isCreating ? "Recipe Category": theRecipe.getType(), picked: $recipeCategory, list: recipelist)})
                 addButton(inputtype: "Image", /*input: $selecetedImage,*/ color: Color.brownfont, content: {photoPickerView(selecetedImage: $selecetedImage)})
                 addButton(inputtype: "Source", color: Color.brown, content: {textInputField(inputtype: isCreating ? "Recipe Source": theRecipe.getSourceString(), input: $recipeSource)})

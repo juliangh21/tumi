@@ -39,6 +39,7 @@ struct infoView: View { // this is the view for the data from recipe. NOT THE RE
     var recipe_type: String
     var rect_width: Double
     var rect_height: Double
+    @State var theImage: UIImage?
     var body: some View {
         HStack(alignment: .center){
             Spacer()
@@ -71,8 +72,8 @@ struct infoView: View { // this is the view for the data from recipe. NOT THE RE
             Spacer()
                 .frame(width:20)
 //            Spacer()
-            if(theRecipe.hasImage()){
-                imageFancyView(UIimage1: theRecipe.getImage() )
+            if(theImage != nil){
+                imageFancyView(UIimage1: theImage! )
                     .offset(x:26, y:7)
 //                    .clipped(false, antialiased: true)
             }
@@ -85,6 +86,23 @@ struct infoView: View { // this is the view for the data from recipe. NOT THE RE
 //                .font(.footnote)
 //                .foregroundStyle(Color.secondaryfont)
             
+        }
+        .task {
+            if let imageData = theRecipe.Image {
+                theImage = UIImage(data: theRecipe.Image!)
+                
+            } else if let urlString = theRecipe.imageURL,
+                      let url = URL(string: urlString) {
+                do{
+                    let (data, _) = try await URLSession.shared.data(from: url)
+                    theImage = UIImage(data: data)
+                }
+                catch{
+                    print("Error \(error)")
+                }
+                
+                }
+            theImage = nil
         }
         .frame(width: CGFloat((rect_width*0.85)), height: CGFloat((rect_height*0.8)))
     }

@@ -16,10 +16,11 @@ struct Recipe: Identifiable, Hashable, Codable{ //this is the recipe struct
     var recipeName: String
     var recipeType: String
     var datecreated: Date = Date()
-    var Image: Data?
+    var Image: Data? = nil
+    var imageURL: String? = nil
     var source: String = ""
     enum CodingKeys: String, CodingKey {
-            case id, recipeRank, recipeName, recipeType, datecreated, source
+            case id, recipeRank, recipeName, recipeType, datecreated, imageURL, source
             // Image is intentionally omitted
         }
 

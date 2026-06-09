@@ -170,7 +170,7 @@ struct textInputField: View {
                 .padding(.horizontal)
                 .autocorrectionDisabled()
                 .autocapitalization(.none)
-                .frame(width: CGFloat(widthheigh[0]), height: CGFloat(widthheigh[1]))
+                .frame(width: max(100,CGFloat(widthheigh[0])), height: max(20,CGFloat(widthheigh[1])))
                 
                 
                 HStack{
@@ -179,7 +179,7 @@ struct textInputField: View {
                         newval in input = newval
                     })
                 }
-                .frame(width: CGFloat(widthheigh[0])-10,height: CGFloat(widthheigh[1])-10)
+                .frame(width: max(90,CGFloat(widthheigh[0])-10),height: max(10,CGFloat(widthheigh[1])-10))
                 
             }
             
@@ -206,10 +206,25 @@ struct brownRectangle: View {
 
 struct pickerButton: View {
     @State var inputtype: String = "Pick Recipe Category"
+    @State var custom = false
     @Binding var picked: String
 //    @State var CategoryLabel = "Pick Recipe Category"
     var list: [Recipe]
-    @State var custom = false
+    
+    var catRecipes: [String]{
+        var x: [String] = []
+        for recipe in list {
+            if(!(x.contains(recipe.getType()))){
+                
+            }
+            else{
+                x.append(recipe.getType())
+            }
+                
+        }
+        x.append("Custom Category")
+        return x
+    }
     var body: some View {
         ZStack{
             brownRectangle(width: 240, height: 45)
@@ -217,7 +232,7 @@ struct pickerButton: View {
             if(!(custom) || list.count != 0){
                 LabeledContent(inputtype){
                     Picker("Category", selection: $picked){
-                        ForEach(categoryslist(list1: list), id: \.self) { recipe in //the id:\.self makes it indentifaible
+                        ForEach(catRecipes, id: \.self) { recipe in //the id:\.self makes it indentifaible
                             Text(recipe)
                         }
                         

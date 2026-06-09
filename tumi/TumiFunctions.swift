@@ -51,17 +51,18 @@ func deleteRecipe(list1: [Recipe], recipe: Recipe){
 
 
 func categoryslist(list1:[Recipe])-> [String]{
-    var catlist: [String] = []
-    for i in list1.indices{
-        catlist.append(list1[i].getType())
-    }
-    for i in catlist.indices{
-        if (!(catlist.firstIndex(of: catlist[i])==i)){
-            catlist.remove(at: i)
-        }
-    }
-    catlist.append("Custom Category")
-    return catlist
+//    var catlist: [String] = []
+//    for i in list1.indices{
+//        catlist.append(list1[i].getType())
+//    }
+//    for i in catlist.indices{
+//        if (!(catlist.firstIndex(of: catlist[i])==i)){
+//            catlist.remove(at: i)
+//        }
+//    }
+//    catlist.append("Custom Category")
+//    return catlist
+    return []
 }
 
 func ImageToData(image:UIImage) -> Data{

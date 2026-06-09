@@ -45,7 +45,19 @@ struct ContentView: View {
     @State var CategoryRecipeArray: [Recipe] = []
     @State var selectedCategory: String? = nil
     @State var recipeSheetshowing: Bool = false
-    
+    var catRecipes: [String]{
+        var x: [String] = []
+        for recipe in RecipeArray {
+            if(!(x.contains(recipe.getType()))){
+                
+            }
+            else{
+                x.append(recipe.getType())
+            }
+                
+        }
+        return x
+    }
     var body: some View{
         
         ZStack{
@@ -54,7 +66,7 @@ struct ContentView: View {
                 .ignoresSafeArea()
             
             VStack{
-                listOfcategories(/*Recipes: RecipeArray*/ catList: getUniqueCategories(RecipeList: RecipeArray)  , onTap: { selectedcategory in //this is the closure statement. From the listOfcategories struct, it grabs a value, and runs the code
+                listOfcategories(/*Recipes: RecipeArray*/ Recipes: RecipeArray, catList: catRecipes  , onTap: { selectedcategory in //this is the closure statement. From the listOfcategories struct, it grabs a value, and runs the code
                     
                     if !(selectedCategory == selectedcategory){
                         selectedCategory = selectedcategory

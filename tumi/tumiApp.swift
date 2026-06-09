@@ -22,7 +22,19 @@ struct tumiApp: App {
 //    [Recipe(recipeRank: 2, recipeName: "2nd Recipe", recipeType: "2"),
 //     Recipe(recipeRank: 1, recipeName: "1st Recipe", recipeType: "1"),  //this is the list of recipes
 //     Recipe(recipeRank: 3, recipeName: "3rd Recipe", recipeType: "3")]
-    
+    var catRecipes: [String]{
+        var x: [String] = []
+        for recipe in recipemanager.recipes {
+            if(!(x.contains(recipe.getType()))){
+                
+            }
+            else{
+                x.append(recipe.getType())
+            }
+                
+        }
+        return x
+    }
     var body: some Scene {
         //        WindowGroup {
         ////            ContentView(Recipes: ListOfRecipes)
