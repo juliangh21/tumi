@@ -214,7 +214,7 @@ struct pickerButton: View {
     var catRecipes: [String]{
         var x: [String] = []
         for recipe in list {
-            if(!(x.contains(recipe.getType()))){
+            if(x.contains(recipe.getType())){
                 
             }
             else{

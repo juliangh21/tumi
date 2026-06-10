@@ -79,9 +79,9 @@ struct addSheet: View{
         case(true, true, false): return "Recipe image needed"
         case (true, false, true): return "Recipe category needed"
         case (false, true, true) : return "Recipe name needed"
-        case(true, false, false): return "Recipe name and image needed"
+        case(true, false, false): return "Recipe category and image needed"
         case(false, false, true): return "Recipe name and category needed"
-        case(false, true, false): return "Recipe category and image needed"
+        case(false, true, false): return "Recipe name and image needed"
         case(false, false, false):return "Recipe name, category, and image needed"
         default: return ""
         }

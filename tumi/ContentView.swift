@@ -65,21 +65,30 @@ struct ContentView: View {
             Color.lightbrownbkgrnd
                 .ignoresSafeArea()
             
-            VStack{
-                listOfcategories(/*Recipes: RecipeArray*/ Recipes: RecipeArray, catList: catRecipes  , onTap: { selectedcategory in //this is the closure statement. From the listOfcategories struct, it grabs a value, and runs the code
-                    
-                    if !(selectedCategory == selectedcategory){
-                        selectedCategory = selectedcategory
-                    }
-                })
+//            VStack{
+//                listOfcategories(/*Recipes: RecipeArray*/ Recipes: RecipeArray, catList: catRecipes  , onTap: { selectedcategory in //this is the closure statement. From the listOfcategories struct, it grabs a value, and runs the code
+//                    
+//                    if !(selectedCategory == selectedcategory){
+//                        selectedCategory = selectedcategory
+//                    }
+//                })
                 ScrollView{ // makes it scroll so there is an infinite amount of recipes
-                    RecipeList(Recipes: RecipeArray, category: selectedCategory ?? "")
+                    VStack{
+                        listOfcategories(/*Recipes: RecipeArray*/ Recipes: RecipeArray, catList: catRecipes  , onTap: { selectedcategory in //this is the closure statement. From the listOfcategories struct, it grabs a value, and runs the code
+                            
+                            if !(selectedCategory == selectedcategory){
+                                selectedCategory = selectedcategory
+                            }
+                        })
+                        RecipeList(Recipes: RecipeArray, category: selectedCategory ?? "")
+                    }
+                    
 
                 }
                 .scrollClipDisabled()
                 
 
-                }
+//                }
                 
             
             

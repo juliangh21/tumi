@@ -220,132 +220,143 @@ struct recipeView: View {
     @State var editsheetshowing = false
     @State var ranksheetshowing = false
     @State var recipeImage: UIImage?
+    @State var fulleditsheetshowing = false
     var newRecipe: (RecipeViewStruct) -> Void
     
-//    var oldrecipeIndex: (String) -> Void
+    //    var oldrecipeIndex: (String) -> Void
     var body: some View {
-            ZStack{
-                Color.lightbrownbkgrnd.ignoresSafeArea()
-                ScrollView{
-                    VStack(spacing: 1 ){
-                        Button(action: {editsheetshowing=true}){
-                            ZStack{
-                                    RoundedRectangle(cornerRadius: 8)
-                                    .fill(Color.accentorange)
-                                    .frame(width: CGFloat(80),height: 30)
-                                    Text("Edit")
-                                    .foregroundStyle(Color.white)
-                                    .analyticsScreen(name: "WORK HOLY CRAP")
-                                }
-
+        ZStack{
+            Color.lightbrownbkgrnd.ignoresSafeArea()
+            ScrollView{
+                VStack(spacing: 1 ){
+                    Button(action: {fulleditsheetshowing=true}){
+                        
+                        //                            ZStack{
+                        //                                    RoundedRectangle(cornerRadius: 8)
+                        //                                    .fill(Color.accentorange)
+                        //                                    .frame(width: CGFloat(80),height: 30)
+                        //                                    Text("Edit")
+                        //                                    .foregroundStyle(Color.white)
+                        //                                    .analyticsScreen(name: "WORK HOLY CRAP")
+                        //                                }
+                        
+                        overarchingButtonView()
+                    }
+                    .confirmationDialog("Edit your Recipe", isPresented: $fulleditsheetshowing, titleVisibility: .hidden){
+                        Button("Edit Recipe", action: {editsheetshowing=true;fulleditsheetshowing=false})
+                        Button("Rerank Recipe", action: {ranksheetshowing=true;fulleditsheetshowing=false})
+                        Button("Cancel",role: .cancel){
+                            fulleditsheetshowing = false
                         }
-                        .frame(maxWidth:.infinity, alignment: .trailing)
+                    }
+                    .frame(maxWidth:.infinity, alignment: .trailing)
+                    .padding(.horizontal)
+                    .sheet(isPresented: $editsheetshowing ){
+                        addSheet(theRecipe: theRecipe, isCreating: false, recipelist: recipeList, recipeAdded: { recipenew in
+                            let oldRecipe = theRecipe
+                            theRecipe = recipenew
+                            editsheetshowing = false
+                            let bothRecipes = RecipeViewStruct(newRecipe: recipenew, oldRecipe: oldRecipe)
+                            newRecipe(bothRecipes)
+                        })
+                        .presentationDetents([.medium, .large])
+                    }
+                    .presentationDetents([.medium, .large])
+                    
+                    if(theRecipe.getSourceString() != ""){
+                        HStack(spacing:1){
+                            Link(destination: URL(string: theRecipe.getSourceString())!,){
+                                BigTextView(input: theRecipe.recipeName)
+                                    .padding([.horizontal], -30)
+                            }
+                            Image(systemName: "link")
+                                .font(.system(size:40))
+                                .foregroundStyle(Color.brownfont)
+                        }
+                        .padding([.horizontal], 30)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    else{
+                        BigTextView(input: theRecipe.recipeName)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    if (recipeImage != nil){
+                        ImageView(uiImage: recipeImage!, Big: true, widthheight: {newval in print(newval)})
+                        //                            Image(uiImage: theRecipe.getImage())
+                        //                                .resizable()
+                        //                                .scaledToFill()
+                        //                                .clipShape(RoundedRectangle(cornerRadius: 9))
+                        //                                .frame(width: 100, height: 250)
+                    }
+                    Text("Made on " + String(theRecipe.datecreated.formatted()))
                         .padding(.horizontal)
-                        .sheet(isPresented: $editsheetshowing ){
-                            addSheet(theRecipe: theRecipe, isCreating: false, recipelist: recipeList, recipeAdded: { recipenew in
+                        .padding(.horizontal)
+                        .padding(.horizontal)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.vertical)
+                        .foregroundStyle(Color.secondaryfont)
+                    HStack(spacing: 5){
+                        Text("Currently ranked " + theRecipe.getRankwsuffix()+".")
+                            .foregroundStyle(Color.secondaryfont)
+                        Button(action: {ranksheetshowing=true}){
+                            Text("Change that")
+                                .underline()
+                                .foregroundStyle(Color.secondaryfont)
+                        }
+                        .sheet(isPresented: $ranksheetshowing){
+                            RankSheetView(recipeList: recipeList, newRecipe: theRecipe, rankclosureout: {
+                                finalRank in
+                                //                                    theRecipe.changeRank(newRank: finalRank)
                                 let oldRecipe = theRecipe
-                                theRecipe = recipenew
-                                editsheetshowing = false
-                                let bothRecipes = RecipeViewStruct(newRecipe: recipenew, oldRecipe: oldRecipe)
+                                theRecipe.changeRank(newRank: finalRank)
+                                print(finalRank)
+                                print(theRecipe.getRankwsuffix())
+                                ranksheetshowing = false
+                                let bothRecipes = RecipeViewStruct(newRecipe: theRecipe, oldRecipe: oldRecipe)
                                 newRecipe(bothRecipes)
                             })
                             .presentationDetents([.medium, .large])
                         }
                         .presentationDetents([.medium, .large])
+                    }
+                    .padding(.horizontal)
+                    .padding(.horizontal)
+                    .padding(.horizontal)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .task {
+                    print("Task started")
+                    if let imageData = theRecipe.Image {
+                        recipeImage = UIImage(data: theRecipe.Image!)
+                        print("image is new")
                         
-                            if(theRecipe.getSourceString() != ""){
-                                HStack(spacing:1){
-                                    Link(destination: URL(string: theRecipe.getSourceString())!,){
-                                        BigTextView(input: theRecipe.recipeName)
-                                            .padding([.horizontal], -30)
-                                    }
-                                    Image(systemName: "link")
-                                        .font(.system(size:40))
-                                        .foregroundStyle(Color.brownfont)
-                                }
-                                .padding([.horizontal], 30)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            }
-                            else{
-                                BigTextView(input: theRecipe.recipeName)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                            }
-                        if (recipeImage != nil){
-                            ImageView(uiImage: recipeImage!, Big: true, widthheight: {newval in print(newval)})
-//                            Image(uiImage: theRecipe.getImage())
-//                                .resizable()
-//                                .scaledToFill()
-//                                .clipShape(RoundedRectangle(cornerRadius: 9))
-//                                .frame(width: 100, height: 250)
+                    } else if let urlString = theRecipe.imageURL,
+                              
+                                let url = URL(string: urlString) {
+                        print("Image recieved")
+                        do{
+                            print("Image loaded")
+                            let (data, _) = try await URLSession.shared.data(from: url)
+                            recipeImage = UIImage(data: data)
                         }
-                        Text("Made on " + String(theRecipe.datecreated.formatted()))
-                            .padding(.horizontal)
-                            .padding(.horizontal)
-                            .padding(.horizontal)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.vertical)
-                            .foregroundStyle(Color.secondaryfont)
-                        HStack(spacing: 5){
-                            Text("Currently ranked " + theRecipe.getRankwsuffix()+".")
-                                .foregroundStyle(Color.secondaryfont)
-                            Button(action: {ranksheetshowing=true}){
-                                Text("Change that")
-                                    .underline()
-                                    .foregroundStyle(Color.secondaryfont)
-                            }
-                            .sheet(isPresented: $ranksheetshowing){
-                                RankSheetView(recipeList: recipeList, newRecipe: theRecipe, rankclosureout: {
-                                    finalRank in
-//                                    theRecipe.changeRank(newRank: finalRank)
-                                    let oldRecipe = theRecipe
-                                    theRecipe.changeRank(newRank: finalRank)
-                                    print(finalRank)
-                                    print(theRecipe.getRankwsuffix())
-                                    ranksheetshowing = false
-                                    let bothRecipes = RecipeViewStruct(newRecipe: theRecipe, oldRecipe: oldRecipe)
-                                    newRecipe(bothRecipes)
-                                })
-                                .presentationDetents([.medium, .large])
-                            }
-                            .presentationDetents([.medium, .large])
+                        catch{
+                            print("Error \(error)")
                         }
-                        .padding(.horizontal)
-                        .padding(.horizontal)
-                        .padding(.horizontal)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        
                     }
-                    .task {
-                        print("Task started")
-                        if let imageData = theRecipe.Image {
-                            recipeImage = UIImage(data: theRecipe.Image!)
-                            print("image is new")
-                            
-                        } else if let urlString = theRecipe.imageURL,
-                                  
-                                  let url = URL(string: urlString) {
-                            print("Image recieved")
-                            do{
-                                print("Image loaded")
-                                let (data, _) = try await URLSession.shared.data(from: url)
-                                recipeImage = UIImage(data: data)
-                            }
-                            catch{
-                                print("Error \(error)")
-                            }
-                            
-                            }
-            //            theImage = nil
-                        print("WHAT IS happening")
-                    }
+                    //            theImage = nil
+                    print("WHAT IS happening")
+                }
                     
                     
                 }
-//                .frame(maxWidth: .infinity, maxHeight:.infinity)
+                //                .frame(maxWidth: .infinity, maxHeight:.infinity)
             }
             
-        
+            
+        }
     }
-}
+    
 
 
 //func loadImage(@Binding recipeImage: UIImage?, theRecipe: Recipe){
