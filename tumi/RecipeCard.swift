@@ -17,10 +17,15 @@ struct Ranker: View { // view for data from recipe and the rectangle. This is th
         Button(action: {print("tapped");router.goTo(to: .recipe(theRecipe)) }) {
 //            router.goTo(to: .recipe(theRecipe))
             ZStack(alignment: .leading){
-                RoundedRectangle(cornerRadius: 9)
+                    RoundedRectangle(cornerRadius: 9)
                     .fill(Color.primarybrown)
                     .frame(width: CGFloat(rectwidth),height: 80)
-                    .analyticsScreen(name: "WORK DAMMIT")
+                Text(String(theRecipe.getRank())+".")
+    //                .font(.largeTitle)
+                    .font(.system(size: 80))
+                    .frame(width: 100, height: 0)
+    //                .font(.headline)
+                    .foregroundStyle(Color.darkbrownimpactfont)
                 infoView(theRecipe: theRecipe, rank: rank, recipe_name: recipe_name, recipe_type: recipe_type, rect_width: rectwidth, rect_height: 80)
 //                    .padding(.leading)
             }
@@ -43,16 +48,18 @@ struct infoView: View { // this is the view for the data from recipe. NOT THE RE
     var body: some View {
         HStack(alignment: .center){
             Spacer()
-            Text(String(rank)+".")
-//                .font(.largeTitle)
-                .font(.system(size: 80))
-//                .font(.headline)
-                .foregroundStyle(Color.darkbrownimpactfont)
-//                .padding(.trailing)
-//                .frame(width: 340/5)
-//            Spacer() //spacer to make sure its in the left quarter
+                .frame(width:90, height:0)
+//            Text(String(rank)+".")
+////                .font(.largeTitle)
+//                .font(.system(size: 80))
+//                .frame(width: 90)
+////                .font(.headline)
+//                .foregroundStyle(Color.darkbrownimpactfont)
+////                .padding(.trailing)
+////                .frame(width: 340/5)
+////            Spacer() //spacer to make sure its in the left quarter
             Spacer()
-                .frame(width:6)
+                .frame(width:6, height: 0)
             VStack(alignment: .leading){
                 Text(recipe_name)
 //                    .font(.body)
@@ -88,12 +95,17 @@ struct infoView: View { // this is the view for the data from recipe. NOT THE RE
             
         }
         .task {
+            print("Task started")
             if let imageData = theRecipe.Image {
                 theImage = UIImage(data: theRecipe.Image!)
+                print("image is new")
                 
             } else if let urlString = theRecipe.imageURL,
+                      
                       let url = URL(string: urlString) {
+                print("Image recieved")
                 do{
+                    print("Image loaded")
                     let (data, _) = try await URLSession.shared.data(from: url)
                     theImage = UIImage(data: data)
                 }
@@ -102,7 +114,8 @@ struct infoView: View { // this is the view for the data from recipe. NOT THE RE
                 }
                 
                 }
-            theImage = nil
+//            theImage = nil
+            print("WHAT IS happening")
         }
         .frame(width: CGFloat((rect_width*0.85)), height: CGFloat((rect_height*0.8)))
     }
@@ -176,7 +189,7 @@ struct imageFancyView: View {
                 .frame(width:86, height: 86)
                 .clipShape(RoundedRectangle(cornerRadius: 16))
 //                .foregroundStyle(.blue)
-                .rotationEffect(Angle(degrees: Double.random(in:-50...50)),anchor: .bottomTrailing)
+                .rotationEffect(Angle(degrees: Double.random(in:-25...25)),anchor: .bottomTrailing)
 //                .rotationEffect(Angle(degrees: -51), anchor: .bottomTrailing)
 //                .offset(x: offsetAngle(angle: Angle.degrees(30      ))[0],y: offsetAngle(angle: Angle.degrees(3000))[1])
         }
@@ -206,7 +219,9 @@ struct recipeView: View {
     @State var theRecipe: Recipe
     @State var editsheetshowing = false
     @State var ranksheetshowing = false
+    @State var recipeImage: UIImage?
     var newRecipe: (RecipeViewStruct) -> Void
+    
 //    var oldrecipeIndex: (String) -> Void
     var body: some View {
             ZStack{
@@ -255,11 +270,8 @@ struct recipeView: View {
                                 BigTextView(input: theRecipe.recipeName)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                             }
-                                
-                        
-                        
-                        if (theRecipe.Image != nil){
-                            ImageView(uiImage: theRecipe.getImage(), Big: true, widthheight: {newval in print(newval)})
+                        if (recipeImage != nil){
+                            ImageView(uiImage: recipeImage!, Big: true, widthheight: {newval in print(newval)})
 //                            Image(uiImage: theRecipe.getImage())
 //                                .resizable()
 //                                .scaledToFill()
@@ -273,7 +285,6 @@ struct recipeView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.vertical)
                             .foregroundStyle(Color.secondaryfont)
-
                         HStack(spacing: 5){
                             Text("Currently ranked " + theRecipe.getRankwsuffix()+".")
                                 .foregroundStyle(Color.secondaryfont)
@@ -303,12 +314,60 @@ struct recipeView: View {
                         .padding(.horizontal)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     }
+                    .task {
+                        print("Task started")
+                        if let imageData = theRecipe.Image {
+                            recipeImage = UIImage(data: theRecipe.Image!)
+                            print("image is new")
+                            
+                        } else if let urlString = theRecipe.imageURL,
+                                  
+                                  let url = URL(string: urlString) {
+                            print("Image recieved")
+                            do{
+                                print("Image loaded")
+                                let (data, _) = try await URLSession.shared.data(from: url)
+                                recipeImage = UIImage(data: data)
+                            }
+                            catch{
+                                print("Error \(error)")
+                            }
+                            
+                            }
+            //            theImage = nil
+                        print("WHAT IS happening")
+                    }
+                    
                     
                 }
 //                .frame(maxWidth: .infinity, maxHeight:.infinity)
-                
             }
             
         
     }
 }
+
+
+//func loadImage(@Binding recipeImage: UIImage?, theRecipe: Recipe){
+//    print("Task started")
+//    if let imageData = theRecipe.Image {
+//        recipeImage = UIImage(data: theRecipe.Image!)
+//        print("image is new")
+//        
+//    } else if let urlString = theRecipe.imageURL,
+//              
+//              let url = URL(string: urlString) {
+//        print("Image recieved")
+//        do{
+//            print("Image loaded")
+//            let (data, _) = try await URLSession.shared.data(from: url)
+//            recipeImage = UIImage(data: data)
+//        }
+//        catch{
+//            print("Error \(error)")
+//        }
+//        
+//        }
+////            theImage = nil
+//    print("WHAT IS happening")
+//}

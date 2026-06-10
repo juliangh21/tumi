@@ -229,7 +229,7 @@ struct pickerButton: View {
         ZStack{
             brownRectangle(width: 240, height: 45)
             
-            if(!(custom) || list.count != 0){
+            if(!(custom) /*|| list.count != 0*/){ // don't uncomment list.count != 0. THis breaks everything. no clue why. 
                 LabeledContent(inputtype){
                     Picker("Category", selection: $picked){
                         ForEach(catRecipes, id: \.self) { recipe in //the id:\.self makes it indentifaible
