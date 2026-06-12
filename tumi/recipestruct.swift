@@ -115,7 +115,27 @@ struct errorBoolStruct: Identifiable, Hashable{
         return boolean
     }
 }
-
+struct userProfile:Identifiable, Hashable, Codable{
+    var id: String = UUID().uuidString
+    var username: String
+    var emailAddress: String
+    var profilePic: Data? = nil
+    var imageURL: String? = nil
+    var dateCreated: Date = Date()
+    enum CodingKeys: String, CodingKey {
+            case id, username, emailAddress, imageURL, dateCreated
+            // Image is intentionally omitted
+        }
+    func getUsername() ->String{
+        return username
+    }
+    func getEmailaddress() -> String{
+        return emailAddress
+    }
+    func getDateCreated() -> Date{
+        return dateCreated
+    }
+}
 //@/*ViewBuilder*/ //this returns the best recipe among two recipes
 //func betterrank(r1:Recipe, r2: Recipe)-> some View{
 //    if(r1.getRank()>r2.getRank()){

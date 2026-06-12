@@ -135,6 +135,10 @@ struct addSheet: View{
     }
 }
 
+#Preview{
+    var RecipeList = [Recipe(recipeRank: 2, recipeName: "theverge", recipeType: "poop")]
+    addSheet(isCreating:true, recipelist: RecipeList, recipeAdded: {x in})
+}
 struct RankSheetView: View {
     var recipeList: [Recipe]
     var newRecipe: Recipe

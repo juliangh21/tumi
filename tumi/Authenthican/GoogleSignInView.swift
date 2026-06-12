@@ -42,7 +42,7 @@ struct SignInView: View {
         VStack{
             NavigationLink{
                 //                    brownRectangle(width: 240, height: 45)
-                SignInEmailView(canmoveon: {x in})
+                SignInEmailView(canmoveon: {x in}, email: {x in})
 
             }label:{
                 ZStack{
@@ -61,13 +61,6 @@ struct SignInView: View {
     }
 }
 
-//struct SignInView_Preview: PreviewProvider{
-//    static var previews: some View{
-//        NavigationStack{
-//            SignInView()
-//        }
-//    }
-//}
 
 #Preview{
     

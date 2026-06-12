@@ -82,9 +82,9 @@ struct addButton<Content: View>: View {
     @ViewBuilder let content: () -> Content
     var body: some View {
         HStack{
-            Text(inputtype + ":")
-                .foregroundStyle(Color.secondaryfont)
-            
+//            Text(inputtype + ":")
+//                .foregroundStyle(Color.secondaryfont)
+//            
             ZStack{
 //                brownRectangle(width: 240, height: 45)
                 content()
@@ -104,8 +104,9 @@ struct photoPickerView: View {
     @State var widthheight = [240,45]
     @State var buffer = 0
     var body: some View {
-        ZStack{
-            brownRectangle(width: CGFloat(widthheight[0]+buffer), height: CGFloat(widthheight[1]+buffer))
+        ZStack(alignment:.leading){
+            brownRectangle(width: .infinity/*CGFloat(widthheight[0]+buffer)*/, height: CGFloat(widthheight[1]+buffer))
+//                .padding(.horizontal) // idk why no padding expect thats what we got to do
             if let newimage = selecetedImage{
                 ImageView(uiImage: newimage, Big:false, widthheight: {
                     newval in
@@ -115,9 +116,15 @@ struct photoPickerView: View {
             }
                 PhotosPicker(selection: $selectedItem, matching: .images, photoLibrary: .shared()){
                     if(!(showtext)){
-                        Text("Select your photo")
-                            .foregroundStyle(Color.mutedgray)
-                    }
+                        HStack(spacing: -4){
+                            Text("Select your photo")
+                                .foregroundStyle(Color.mutedgray)
+                                .frame(width: .infinity)
+                                .padding(.horizontal)
+                            Image(systemName: "photo")
+                                .foregroundStyle(Color.mutedgray)
+                        }
+                                            }
                     else{
                         EmptyView()
                     }
@@ -147,13 +154,15 @@ struct textInputField: View {
     var isNewpassword: Bool = true
     var isloggin: Bool = false
     var widthheigh=[240,45]
+    var width: CGFloat = .infinity
     var body: some View {
         ZStack{
-            brownRectangle(width: CGFloat(widthheigh[0]), height: CGFloat(widthheigh[1]))
+            brownRectangle(width: /*CGFloat(widthheigh[0])*/.infinity, height: CGFloat(widthheigh[1]))
             ZStack{
                 Group{
                     if(isloggin){
                         TextField(/*"Recipe " +*/ inputtype, text: $input)
+                            .foregroundStyle(Color.mutedgray)
                             .textContentType(.emailAddress)
                             .textContentType(.username)
                     }
@@ -170,7 +179,7 @@ struct textInputField: View {
                 .padding(.horizontal)
                 .autocorrectionDisabled()
                 .autocapitalization(.none)
-                .frame(width: max(100,CGFloat(widthheigh[0])), height: max(20,CGFloat(widthheigh[1])))
+                .frame(width: max(1,/*CGFloat(widthheigh[0]))*/.infinity), height: max(20,CGFloat(widthheigh[1])))
                 
                 
                 HStack{
@@ -179,7 +188,9 @@ struct textInputField: View {
                         newval in input = newval
                     })
                 }
-                .frame(width: max(90,CGFloat(widthheigh[0])-10),height: max(10,CGFloat(widthheigh[1])-10))
+                .frame(width: max(90,/*CGFloat(widthheigh[0])-10)*/ .infinity),height: max(10,CGFloat(widthheigh[1])-10))
+                    .padding(.horizontal)
+                
                 
             }
             
@@ -205,8 +216,9 @@ struct brownRectangle: View {
 
 
 struct pickerButton: View {
-    @State var inputtype: String = "Pick Recipe Category"
+    @State var inputtype: String = " ecipe Category"
     @State var custom = false
+    @State var pickershowing = false
     @Binding var picked: String
 //    @State var CategoryLabel = "Pick Recipe Category"
     var list: [Recipe]
@@ -226,19 +238,52 @@ struct pickerButton: View {
         return x
     }
     var body: some View {
-        ZStack{
-            brownRectangle(width: 240, height: 45)
-            
-            if(!(custom) /*|| list.count != 0*/){ // don't uncomment list.count != 0. THis breaks everything. no clue why. 
-                LabeledContent(inputtype){
-                    Picker("Category", selection: $picked){
-                        ForEach(catRecipes, id: \.self) { recipe in //the id:\.self makes it indentifaible
-                            Text(recipe)
+        ZStack(alignment: .leading){
+            brownRectangle(width: .infinity, height: 45)
+//                .padding(.horizontal)
+            Button(action:{pickershowing = true}){
+                Text(inputtype)
+                    .foregroundStyle(Color.mutedgray)
+                
+            }
+            .padding(.horizontal)
+            .confirmationDialog("Pick your category", isPresented: $pickershowing, titleVisibility: .hidden){
+                ForEach(catRecipes, id: \.self){ recipecat in
+                    Button(action: {picked = recipecat;
+                        if picked == "Custom Category"{
+                            custom = true
                         }
-                        
+                    }){
+                        Text(recipecat)
                     }
-                    .tint(Color.primarybrown)
-                    .colorMultiply(Color.primarybrown)
+                }
+//                Button("Edit Recipe", action: {editsheetshowing=true;fulleditsheetshowing=false})
+//                Button("Rerank Recipe", action: {ranksheetshowing=true;fulleditsheetshowing=false})
+////                        Button("Delete Recipe", role:.destructive){
+////                            theRecipe.changeRank(newRank: -1)
+////                        }
+//                Button("Cancel",role: .cancel){
+//                    fulleditsheetshowing = false
+                
+            }
+            if(!(custom) /*|| list.count != 0*/){// don't uncomment list.count != 0. THis breaks everything. no clue why.
+                Button(action:{pickershowing = true}){
+//                    Text("Recipe Category")
+//                        .foregroundStyle(Color.mutedgray)
+                    
+                }
+                .padding(.horizontal)
+                .confirmationDialog("Pick your category", isPresented: $pickershowing, titleVisibility: .hidden){
+                    ForEach(catRecipes, id: \.self){ recipecat in
+                        Button(action: {picked = recipecat}){
+//                            HStack{
+                                Text(recipecat)
+//                                Image(systemName: "chevron.up.chevron.down")
+//                                    .foregroundStyle(Color.mutedgray)
+//                            }
+                            
+                        }
+                    }
                     .onChange(of: picked){
                         inputtype = picked
                         if(picked == "Custom Category" /*|| picked == inputtype*/){
@@ -246,9 +291,19 @@ struct pickerButton: View {
                             picked = ""
                         }
                     }
+//                LabeledContent(inputtype){
+//                    Picker("Category", selection: $picked){
+//                        ForEach(catRecipes, id: \.self) { recipe in //the id:\.self makes it indentifaible
+//                            Text(recipe)
+//                        }
+//                        
+//                    }
+//                    .tint(Color.primarybrown)
+//                    .colorMultiply(Color.primarybrown)
+                    
                 }
                 .padding(.horizontal)
-                .frame(width: 250, height: 45)
+                .frame(width: .infinity, height: 45)
                 .foregroundStyle(Color.mutedgray)
                 
             }
@@ -257,8 +312,8 @@ struct pickerButton: View {
                     textInputField(inputtype: inputtype, input: $picked)
                     HStack{
                         Spacer()
-                        Button(action:{ custom=false}){
-                            Image(systemName: "chevron.up.chevron.down")
+                        Button(action:{ custom=false; pickershowing = true;inputtype="Recipe Category"}){
+                            Image(systemName: "arrow.uturn.backward")
                                 .foregroundStyle(Color.brown)
                         }
                     }

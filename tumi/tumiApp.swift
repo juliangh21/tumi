@@ -18,6 +18,7 @@ struct tumiApp: App {
     @State var selectedTab = 0
     @State var RecipeAddSheetPresented = false
     @State var SignInSheetPresented: Bool = true
+    @State var username = ""
 //    @State var RecipeArray =
 //    [Recipe(recipeRank: 2, recipeName: "2nd Recipe", recipeType: "2"),
 //     Recipe(recipeRank: 1, recipeName: "1st Recipe", recipeType: "1"),  //this is the list of recipes
@@ -55,7 +56,7 @@ struct tumiApp: App {
                         
                     }
                     Tab("Profile Out", systemImage: "person.circle", value: 2){
-                        ProfileView(username: Auth.auth().getUserID() , signedout: {x in
+                        ProfileView(username: username , signedout: {x in
                             if x{
                                 SignInSheetPresented = true
                             }
@@ -150,7 +151,10 @@ struct tumiApp: App {
                                     Task { await recipemanager.loadUser(uid: user.uid) }
                                 }
                         
+                    }, email:{ email in username = email
+                        
                     })
+                    
                 }
                 
             }

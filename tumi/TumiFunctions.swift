@@ -107,3 +107,20 @@ func offsetAngle(angle: Angle) -> [CGFloat]{
     return [x,y]
     
 }
+
+func getPrettyErrorCode(error: String) -> String{
+    var fullerrorcode = "Error: "
+    var onewasswitched = false
+    if error.contains("Code=17020"){
+        fullerrorcode += " Network error (such as timeout, interrupted connection or unreachable host) has occurred."
+        onewasswitched = true
+    }
+    if error.contains("Code=-1003"){
+        fullerrorcode += " A server with the specified hostname could not be found."
+        onewasswitched = true
+    }
+    if(!onewasswitched){
+        return error
+    }
+    return fullerrorcode
+}

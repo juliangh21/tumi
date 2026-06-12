@@ -78,6 +78,7 @@ struct SignInEmailView: View {
         return false
     }
     var canmoveon: (Bool) -> Void
+    var email: (String) -> Void
     var body: some View {
         GeometryReader{ screen in
             let screenwidth = screen.size.width
@@ -96,7 +97,8 @@ struct SignInEmailView: View {
                         .shadow(color: Color.brownfont .opacity(0.25), radius: 5, x: 1, y: 1)
                     HStack{
                         if(errorText){
-                            Text(error)
+                            Text(getPrettyErrorCode(error: error))
+                                .padding()
                         }
                         else{
                             EmptyView()
@@ -104,6 +106,7 @@ struct SignInEmailView: View {
                         Button(action: {Task{
                             let success = await ViewModel.signIn()
                             error = success.error
+                            email(getUserName())
                             canmoveon(success.getBoolean())
                         }}){
                             CompleteButton(colorOfButton: Color.accentorange, input: "Login!", widthheight: [130, 30])
@@ -126,12 +129,15 @@ struct SignInEmailView: View {
         }
         
     }
+    func getUserName() -> String{
+        return ViewModel.email
+    }
     
 }
 
-#Preview {
-    SignInEmailView( canmoveon: {x in})
-}
+//#Preview {
+//    SignInEmailView( canmoveon: {x in})
+//}
 
 
 final class AuthenticationManager{
