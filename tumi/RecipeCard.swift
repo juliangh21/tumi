@@ -80,7 +80,7 @@ struct infoView: View { // this is the view for the data from recipe. NOT THE RE
                 .frame(width:20)
 //            Spacer()
             if(theImage != nil){
-                imageFancyView(UIimage1: theImage! )
+                imageFancyView(UIimage1: theImage!, randomAngle: theRecipe.getAngleRandom() )
                     .offset(x:26, y:7)
 //                    .clipped(false, antialiased: true)
             }
@@ -162,6 +162,7 @@ struct ImageView: View {
 struct imageFancyView: View {
     var UIimage1: UIImage
 //    let x= [10,15,20,50,]
+    var randomAngle: Double
     var body: some View {
         ZStack{
 //            Image(uiImage:UIimage)
@@ -189,7 +190,7 @@ struct imageFancyView: View {
                 .frame(width:86, height: 86)
                 .clipShape(RoundedRectangle(cornerRadius: 16))
 //                .foregroundStyle(.blue)
-                .rotationEffect(Angle(degrees: Double.random(in:-25...25)),anchor: .bottomTrailing)
+                .rotationEffect(Angle(degrees: randomAngle), anchor: .bottomTrailing)
 //                .rotationEffect(Angle(degrees: -51), anchor: .bottomTrailing)
 //                .offset(x: offsetAngle(angle: Angle.degrees(30      ))[0],y: offsetAngle(angle: Angle.degrees(3000))[1])
         }
@@ -245,6 +246,9 @@ struct recipeView: View {
                     .confirmationDialog("Edit your Recipe", isPresented: $fulleditsheetshowing, titleVisibility: .hidden){
                         Button("Edit Recipe", action: {editsheetshowing=true;fulleditsheetshowing=false})
                         Button("Rerank Recipe", action: {ranksheetshowing=true;fulleditsheetshowing=false})
+//                        Button("Delete Recipe", role:.destructive){
+//                            theRecipe.changeRank(newRank: -1)
+//                        }
                         Button("Cancel",role: .cancel){
                             fulleditsheetshowing = false
                         }

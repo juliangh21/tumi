@@ -54,10 +54,12 @@ struct tumiApp: App {
                         EmptyView()
                         
                     }
-                    Tab("Sign Out", systemImage: "person.circle", value: 2){
-                        Button(action:{Task{ try Auth.auth().signOut()};SignInSheetPresented.toggle()}){
-                            Text("Sign Out")
-                        }
+                    Tab("Profile Out", systemImage: "person.circle", value: 2){
+                        ProfileView(username: Auth.auth().getUserID() , signedout: {x in
+                            if x{
+                                SignInSheetPresented = true
+                            }
+                            })
                     }
 
                 }

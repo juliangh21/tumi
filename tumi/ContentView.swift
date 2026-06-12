@@ -16,8 +16,9 @@ struct RecipeList: View{
     
     var body: some View {
         var sortedrecipe = resortrecipe(list1: catrecipeonly(list1: Recipes, SelectedCategory: category))
+//        let x1 = catrecipeonly(list1: sortedrecipe, SelectedCategory: category)
         VStack{
-            ForEach(sortRecipe(list1: sortedrecipe)) {card in
+            ForEach(sortRecipe(list1: sortedrecipe, category )) {card in
                 if(card.getRank() == -1){
                     //                    print("not today")
                 }

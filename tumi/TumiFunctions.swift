@@ -6,13 +6,14 @@
 //
 import SwiftUI
 import Foundation
-func sortRecipe(list1:[Recipe])->[Recipe]{
+func sortRecipe(list1:[Recipe], _ SelectedCategory: String?)->[Recipe]{
     let sortedRecipe = list1.sorted{ $0.getRank()<$1.getRank()}
-    return sortedRecipe
+    let sr1 = catrecipeonly(list1: sortedRecipe, SelectedCategory: SelectedCategory)
+    return sr1
 }
 
 func resortrecipe(list1:[Recipe])->[Recipe] {
-    var r1 = sortRecipe(list1: list1)
+    var r1 = sortRecipe(list1: list1, nil)
     NicePrintRecipe(list1: r1)
     for i in r1.indices{
         r1[i].changeRank(newRank: i+1)
@@ -32,15 +33,30 @@ func catrecipeonly(list1:[Recipe], SelectedCategory: String?)->[Recipe]{ //this 
     if(SelectedCategory==nil || SelectedCategory == ""){//if not selected category: no change
         return list1
     }
-    for recipe in list1 {
-        if (recipe.getRank( ) == -1){
-            print("NOPE")
-            
+    if(SelectedCategory == "Date" || SelectedCategory == "Alphabetically"){
+        if(SelectedCategory == "Date"){
+            print("date selected....trying to filter")
+            let dateSortedRecipe = list1.sorted{$0.getDate() < $1.getDate()}
+            print(dateSortedRecipe)
+            return dateSortedRecipe
         }
-        else if (recipe.getType().lowercased() == SelectedCategory?.lowercased()){
-            goodRecipes.append(recipe)
+        else{
+            let alphasortedrecipe = list1.sorted{$0.getName() < $1.getName()}
+            return alphasortedrecipe
         }
     }
+    else{
+        for recipe in list1 {
+            if (recipe.getRank( ) == -1){
+                print("NOPE")
+                
+            }
+            else if (recipe.getType().lowercased() == SelectedCategory?.lowercased()){
+                goodRecipes.append(recipe)
+            }
+        }
+    }
+    
     return goodRecipes
 }
 func deleteRecipe(list1: [Recipe], recipe: Recipe){

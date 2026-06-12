@@ -25,16 +25,18 @@ struct categoryframe: View{
 struct listOfcategories: View{
     var Recipes: [Recipe]
     var catList: [String]
-    var onTap: (String?) -> Void
+    var onTap: (String?) -> Void //this is the category that is selected, and the category that is going to be filted
     @State var selectedcategory: String? = nil
     var uniqueCategories: [String] {
-            var categorys: [String] = []
-            for recipe in Recipes{
-                if(!(categorys.contains(recipe.getType().lowercased()))){ //this sorts through all the diffrenrt categories and finds the unique ones. Then, it adds them to a list.
-                    categorys.append(recipe.getType().lowercased())
-                }
+        var categorys: [String] = []
+        categorys.append("Date")
+        categorys.append("A-Z")
+        for recipe in Recipes{
+            if(!(categorys.contains(recipe.getType().lowercased()))){ //this sorts through all the diffrenrt categories and finds the unique ones. Then, it adds them to a list.
+                categorys.append(recipe.getType().lowercased())
             }
-            return categorys
+        }
+        return categorys
     }
     var body: some View{
             ScrollView(.horizontal, showsIndicators: false){

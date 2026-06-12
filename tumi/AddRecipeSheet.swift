@@ -177,7 +177,7 @@ struct RankSheetView: View {
                 }
             }
             .onAppear{
-                sortedRecipe = sortRecipe(list1: recipeList)
+                sortedRecipe = sortRecipe(list1: recipeList, nil)
                 low = 0
                 mid = (high+low)/2
                 high = sortedRecipe.count - 1
