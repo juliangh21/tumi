@@ -103,13 +103,15 @@ struct photoPickerView: View {
     @State var showtext = false// holds the photo
     @State var widthheight = [240,45]
     @State var buffer = 0
+    @State var rectChange = false
     var body: some View {
-        ZStack(alignment:.leading){
-            brownRectangle(width: .infinity/*CGFloat(widthheight[0]+buffer)*/, height: CGFloat(widthheight[1]+buffer))
+        ZStack(alignment: rectChange ? .center : .leading){
+            brownRectangle(width: rectChange ? CGFloat(widthheight[0] + 10): .infinity/*CGFloat(widthheight[0]+buffer)*/, height: CGFloat(widthheight[1]+buffer))
 //                .padding(.horizontal) // idk why no padding expect thats what we got to do
             if let newimage = selecetedImage{
                 ImageView(uiImage: newimage, Big:false, widthheight: {
                     newval in
+                    rectChange = true
                     widthheight = /*[Int(newimage.size.width), Int(newimage.size.width)]*/ newval
                     
                 })
@@ -216,7 +218,7 @@ struct brownRectangle: View {
 
 
 struct pickerButton: View {
-    @State var inputtype: String = " ecipe Category"
+    @State var inputtype: String = "Recipe Category"
     @State var custom = false
     @State var pickershowing = false
     @Binding var picked: String

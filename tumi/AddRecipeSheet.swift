@@ -53,7 +53,7 @@ struct addSheet: View{
 
     }
     var catmoveon: Bool{
-        !recipeCategory.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty/* && canMoveOn1 && !(recipename == "")*/ /*&&*/ /*(selecetedImage != nil)*/
+        !recipeCategory.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || recipeCategory == "Recipe Category"/* && canMoveOn1 && !(recipename == "")*/ /*&&*/ /*(selecetedImage != nil)*/
     }
     var namemoveon: Bool{
         !recipename.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
