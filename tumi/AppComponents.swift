@@ -105,14 +105,14 @@ struct photoPickerView: View {
     @State var buffer = 0
     @State var rectChange = false
     var body: some View {
-        ZStack(alignment: rectChange ? .center : .leading){
-            brownRectangle(width: rectChange ? CGFloat(widthheight[0] /*+ 10*/): .infinity/*CGFloat(widthheight[0]+buffer)*/, height: CGFloat(widthheight[1] + 10))
+        ZStack(alignment: /*rectChange ? .center :*/ .leading){
+            brownRectangle(width: rectChange ? CGFloat(widthheight[0] + 10): .infinity/*CGFloat(widthheight[0]+buffer)*/, height: rectChange ? (CGFloat(widthheight[1] + 10)): CGFloat(widthheight[1]))
 //                .padding(.horizontal) // idk why no padding expect thats what we got to do
             if let newimage = selecetedImage{
                 HStack
                 {
                     Spacer()
-                        .frame(width: 2)
+                        .frame(width: 4)
                     ImageView(uiImage: newimage, Big:false, widthheight: {
                         newval in
                         rectChange = true
@@ -120,10 +120,12 @@ struct photoPickerView: View {
                         
                     })
                     VStack{
-                        Button(action:{selectedItem=nil;selectedItem=nil;showtext=false; rectChange=false; widthheight = [240,45]}){
+                        
+                        Button(action:{selectedItem=nil;selecetedImage=nil;showtext=false; rectChange=false; widthheight = [240,45]}){
                             Image(systemName: "arrow.uturn.backward")
                                 .foregroundStyle(Color.brown)
                         }
+                        .padding(.vertical)
                         Spacer()
                         
                     }
@@ -131,17 +133,14 @@ struct photoPickerView: View {
             }
                 PhotosPicker(selection: $selectedItem, matching: .images, photoLibrary: .shared()){
                     if(!(showtext)){
-                        HStack(spacing: -4){
-                            Text("Select your photo")
-                                .foregroundStyle(Color.mutedgray)
-                                .frame(width: .infinity)
-                                .padding(.horizontal)
-                            Image(systemName: "photo")
-                                .foregroundStyle(Color.mutedgray)
-                        }
-                                            }
+                        selectYourPhoto()
+                    }
                     else{
                         EmptyView()
+                        if(rectChange==false){
+                            selectYourPhoto()
+                        }
+                        
                     }
                 }
                 .onChange(of: selectedItem){oldvalue, newvalue in
@@ -161,7 +160,18 @@ struct photoPickerView: View {
         }
         
     }
-
+struct selectYourPhoto: View {
+    var body: some View {
+        HStack(spacing: -4){
+            Text("Select your photo")
+                .foregroundStyle(Color.mutedgray)
+                .frame(width: .infinity)
+                .padding(.horizontal)
+            Image(systemName: "photo")
+                .foregroundStyle(Color.mutedgray)
+        }
+    }
+}
 struct textInputField: View {
     var inputtype: String
     @Binding var input: String
@@ -229,11 +239,20 @@ struct brownRectangle: View {
     }
 }
 
-
+struct sfSymbolImage: View {
+    var imageName: String
+    var imageColor: Color
+    var body: some View {
+        Image(systemName: imageName)
+            .foregroundStyle(imageColor)
+        
+    }
+}
 struct pickerButton: View {
     @State var inputtype: String = "Recipe Category"
     @State var custom = false
     @State var pickershowing = false
+    @State var catpicked = false
     @Binding var picked: String
 //    @State var CategoryLabel = "Pick Recipe Category"
     var list: [Recipe]
@@ -257,8 +276,11 @@ struct pickerButton: View {
             brownRectangle(width: .infinity, height: 45)
 //                .padding(.horizontal)
             Button(action:{pickershowing = true}){
-                Text(inputtype)
-                    .foregroundStyle(Color.mutedgray)
+                HStack{
+                    Text(inputtype)
+                        .foregroundStyle(Color.mutedgray)
+                    if(catpicked){sfSymbolImage(imageName: "arrow.uturn.backward", imageColor: Color.brown)}
+                }
                 
             }
             .padding(.horizontal)
@@ -270,6 +292,7 @@ struct pickerButton: View {
                         }
                     }){
                         Text(recipecat)
+                        
                     }
                 }
 //                Button("Edit Recipe", action: {editsheetshowing=true;fulleditsheetshowing=false})
@@ -301,6 +324,7 @@ struct pickerButton: View {
                     }
                     .onChange(of: picked){
                         inputtype = picked
+                        catpicked = true
                         if(picked == "Custom Category" /*|| picked == inputtype*/){
                             custom = true
                             picked = ""
@@ -328,8 +352,7 @@ struct pickerButton: View {
                     HStack{
                         Spacer()
                         Button(action:{ custom=false; pickershowing = true;inputtype="Recipe Category"}){
-                            Image(systemName: "arrow.uturn.backward")
-                                .foregroundStyle(Color.brown)
+                            sfSymbolImage(imageName: "arrow.uturn.backward", imageColor: Color.brown)
                         }
                     }
                     .frame(width: 220,height: 45)
