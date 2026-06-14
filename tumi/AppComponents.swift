@@ -99,22 +99,35 @@ struct addButton<Content: View>: View {
 
 struct photoPickerView: View {
     @State var selectedItem : PhotosPickerItem? // holds the selected image
-    @Binding var selecetedImage: UIImage?
-    @State var showtext = false// holds the photo
+    @Binding var selecetedImage: UIImage?// holds the photo
+    @State var showtext = false
     @State var widthheight = [240,45]
     @State var buffer = 0
     @State var rectChange = false
     var body: some View {
         ZStack(alignment: rectChange ? .center : .leading){
-            brownRectangle(width: rectChange ? CGFloat(widthheight[0] + 10): .infinity/*CGFloat(widthheight[0]+buffer)*/, height: CGFloat(widthheight[1]+buffer))
+            brownRectangle(width: rectChange ? CGFloat(widthheight[0] /*+ 10*/): .infinity/*CGFloat(widthheight[0]+buffer)*/, height: CGFloat(widthheight[1] + 10))
 //                .padding(.horizontal) // idk why no padding expect thats what we got to do
             if let newimage = selecetedImage{
-                ImageView(uiImage: newimage, Big:false, widthheight: {
-                    newval in
-                    rectChange = true
-                    widthheight = /*[Int(newimage.size.width), Int(newimage.size.width)]*/ newval
-                    
-                })
+                HStack
+                {
+                    Spacer()
+                        .frame(width: 2)
+                    ImageView(uiImage: newimage, Big:false, widthheight: {
+                        newval in
+                        rectChange = true
+                        widthheight = /*[Int(newimage.size.width), Int(newimage.size.width)]*/ newval
+                        
+                    })
+                    VStack{
+                        Button(action:{selectedItem=nil;selectedItem=nil;showtext=false; rectChange=false; widthheight = [240,45]}){
+                            Image(systemName: "arrow.uturn.backward")
+                                .foregroundStyle(Color.brown)
+                        }
+                        Spacer()
+                        
+                    }
+                }
             }
                 PhotosPicker(selection: $selectedItem, matching: .images, photoLibrary: .shared()){
                     if(!(showtext)){
