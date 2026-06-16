@@ -62,6 +62,11 @@ struct tumiApp: App {
                             }
                             })
                     }
+                    Tab("Camera", systemImage: "Camera", value: 3){
+                        theCameraView(theImage: {x in})
+                        
+                    }
+                    
 
                 }
 
@@ -76,7 +81,11 @@ struct tumiApp: App {
                         /*RecipeArray*/recipemanager.recipes.append(recipenew)
                         recipemanager.recipes = resortrecipe(list1: recipemanager.recipes)
                         // Task { await $recipemanager.saveRecipe(recipe: recipenew) }
-                        Task { await recipemanager.saveRecipes(recipenew) }
+                        Task {
+                            await recipemanager.saveRecipes(recipenew)
+                            await recipemanager.savePubRecipes(recipe: recipenew)
+                        }
+                        
                         print("New Recipe added")
                         RecipeAddSheetPresented = false
                     })
@@ -136,7 +145,7 @@ struct tumiApp: App {
             
             .onAppear{
                 if let user = Auth.auth().currentUser {
-                            Task { await recipemanager.loadUser(uid: user.uid) }
+                            Task { await recipemanager.loadUser(uid: user.uid, username: username) }
                     SignInSheetPresented = false
                         }
             
@@ -148,7 +157,7 @@ struct tumiApp: App {
                     SignInEmailView(canmoveon: {
                         x in SignInSheetPresented = !x
                         if let user = Auth.auth().currentUser {
-                                    Task { await recipemanager.loadUser(uid: user.uid) }
+                            Task { await recipemanager.loadUser(uid: user.uid, username: username) }
                                 }
                         
                     }, email:{ email in username = email

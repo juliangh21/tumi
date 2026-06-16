@@ -145,3 +145,38 @@ struct userProfile:Identifiable, Hashable, Codable{
 //        Ranker(rank: r2.getRank(), recipe_name: r2.getName(), recipe_type: r2.getType())
 //    }
 //}
+struct publicRecipe: Identifiable, Hashable, Codable{ //this is the recipe struct
+//    var id = UUID()
+    var id: String
+    var uid: String
+    var recipeName: String
+    var recipeType: String
+
+    var datecreated: Date
+//    var Image: Data? = nil
+//    var imageURL: String? = nil
+    var source: String = ""
+    var authorName: String
+    var recipeNameLower: String
+    enum CodingKeys: String, CodingKey {
+            case id, uid, recipeName, recipeType, datecreated, source, authorName, recipeNameLower
+            // Image is intentionally omitted
+        }
+
+    func getName() -> String{
+        return recipeName
+    }
+    func getType() -> String{
+        return recipeType
+    }
+    func getSourceString() -> String{
+        return source
+    }
+    func getDate() -> Date{
+        return datecreated
+    }
+    func getAuthorUserName() -> String{
+        return authorName
+    }
+    
+}

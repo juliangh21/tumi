@@ -16,14 +16,16 @@ import Combine
 final class RecipeManager: ObservableObject{
     @Published var recipes: [Recipe] = []
     private var uid: String?
+    private var username: String = ""
     private let db = Firestore.firestore()
     
     private var collectionRef: CollectionReference?{
         guard let uid  else {return nil}
         return db.collection("users").document(uid).collection("recipes")
     }
-    func loadUser(uid: String) async{
+    func loadUser(uid: String, username: String) async{
         self.uid = uid
+        self.username = username
         await fetchRecipes()
     }
     func clearUser(){
@@ -42,6 +44,50 @@ final class RecipeManager: ObservableObject{
         }
         
     }
+    
+    func savePubRecipes( recipe: Recipe) async{
+        guard let uid else{return }//if user isn't logged in, quit
+        let pub = publicRecipe(id: recipe.id, uid: uid, recipeName: recipe.getName(), recipeType: recipe.getType(), datecreated: recipe.getDate(), authorName: username,recipeNameLower: recipe.getName().lowercased())
+        do{
+            try db.collection("Public Recipes").document(recipe.id).setData(from:pub) // goes into the database, find the collection called "Public Recipes", then at document recipe.id.sets the recipe
+            
+        }
+        catch{
+            print("Save publicrecipeerror:  \(error)")
+        }
+        
+    }
+    func deletePrivateRecipe(recipe: Recipe) async{
+        guard let uid else{return}
+        do{
+            try await db.collection("Public Recipes").document(recipe.id).delete()
+        }
+        catch{
+            print("Delete public recipe error: \(error)")
+        }
+    }
+    
+    func fetchPublicRecipes(search: String = "" ) async -> [publicRecipe]{
+        var query: Query = db.collection("public recipes")
+            .order(by: "datecreated", descending: true)
+            .limit(to: 50)
+        if !search.isEmpty{
+            let lower = search.lowercased()
+            query = db.collection("Public Recipes")
+                .whereField("recipeNameLower", isGreaterThanOrEqualTo: lower)
+                .whereField("recipeNameLower", isLessThan: lower)
+                .limit(to: 50) //only 50 results are shwoed
+        }
+        do{
+            let snapshot = try await query.getDocuments()
+            return try snapshot.documents.compactMap({try $0.data(as: publicRecipe.self)})
+        }
+        catch{
+            print("Searcherror: \(error)")
+            return []
+        }
+    }
+    
     func saveRecipes(_ recipe: Recipe) async{
         guard let ref = collectionRef else{return}
         var recipetosave = recipe

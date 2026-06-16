@@ -5,15 +5,19 @@
 //  Created by Julian Garcia-Haugland on 6/7/26.
 //
 
-import Foundation
-import AVFoundation
-import Combine
+import MijickCamera
 import SwiftUI
 
-//class CameraManager: NSObject{
-//    private let captureSession = AVCaptureSession()
-//    private var deviceInput = AVCaptureDeviceInput?
-//    private var videoInput = AVCaptureVideoDataOutput?
-//    private let systemPreferedCamera = AVCaptureDevice.default(for: .video)
-//    private var sessionQueue = DispatchQueue(label: "video.preview.sesion")
-//}
+
+struct theCameraView: View {
+    var theImage: (UIImage?) -> Void
+    var body: some View {
+        MCamera()
+            .onImageCaptured{
+                image, controller in
+                controller.closeMCamera()
+                theImage(image)
+            }
+            .startSession()
+    }
+}

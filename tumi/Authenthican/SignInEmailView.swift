@@ -162,6 +162,7 @@ final class AuthenticationManager{
         try Auth.auth().signOut()
     }
     
+    
 }
 
 

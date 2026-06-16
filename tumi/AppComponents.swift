@@ -104,6 +104,9 @@ struct photoPickerView: View {
     @State var widthheight = [240,45]
     @State var buffer = 0
     @State var rectChange = false
+    @State var libraryorImageCD = false
+    @State var liborphoto: Bool? = nil//if true, lib, if false, photo
+    @State var showcamera = false
     var body: some View {
         ZStack(alignment: /*rectChange ? .center :*/ .leading){
             brownRectangle(width: rectChange ? CGFloat(widthheight[0] + 10): .infinity/*CGFloat(widthheight[0]+buffer)*/, height: rectChange ? (CGFloat(widthheight[1] + 10)): CGFloat(widthheight[1]))
@@ -129,37 +132,66 @@ struct photoPickerView: View {
                         Spacer()
                         
                     }
+                    .frame(height: CGFloat(widthheight[1] + 10))
                 }
             }
-                PhotosPicker(selection: $selectedItem, matching: .images, photoLibrary: .shared()){
-                    if(!(showtext)){
-                        selectYourPhoto()
+            if(!rectChange && liborphoto == nil){ // ie, if an image hasn't been selected, and a photo or camera hasn't been seelected, show
+                Button(action:{libraryorImageCD.toggle()}){
+                    selectYourPhoto()
+                }
+                .confirmationDialog("Choose a photo or a take a photo", isPresented: $libraryorImageCD){
+                    Button(action:{libraryorImageCD.toggle();liborphoto=true}){
+                        Text("Choose a photo from your library")
                     }
-                    else{
-                        EmptyView()
-                        if(rectChange==false){
-                            selectYourPhoto()
-                        }
+                    Button(action:{libraryorImageCD.toggle();showcamera = true; }){
+                        Text("Take a photo")
+                    }
+                }
+            }
+            
+            
+            if let x  = liborphoto {
+                if(x && !rectChange){
+                    PhotosPicker(selection: $selectedItem, matching: .images, photoLibrary: .shared()){
+                        if(!(showtext)){
+                                selectYourPhoto()
+                    }
+                        
+//                        if(rectChange==false){
+//                                selectYourPhoto()
+//                            }
+                                
                         
                     }
                 }
-                .onChange(of: selectedItem){oldvalue, newvalue in
-                    buffer = 12
-                    showtext = true
-            if let newvalue = newvalue{
-                        Task{
-                            if let data = try? await newvalue.loadTransferable(type: Data.self), let image = UIImage(data: data){
-                                selecetedImage = image
-                            }
+            }
+                
+        }
+        .fullScreenCover(isPresented: $showcamera){
+            theCameraView(theImage: {x in
+                selecetedImage = x
+                showcamera=false
+            })
+        }
+        .onChange(of: selectedItem){oldvalue, newvalue in
+                buffer = 12
+                showtext = true
+                libraryorImageCD = false
+                liborphoto = nil
+                if let newvalue = newvalue{
+                    
+                    Task{
+                        if let data = try? await newvalue.loadTransferable(type: Data.self), let image = UIImage(data: data){
+                            selecetedImage = image
                         }
                     }
-                    
                 }
-                
+                    
             }
+
         }
-        
-    }
+                
+}
 struct selectYourPhoto: View {
     var body: some View {
         HStack(spacing: -4){
@@ -170,6 +202,7 @@ struct selectYourPhoto: View {
             Image(systemName: "photo")
                 .foregroundStyle(Color.mutedgray)
         }
+        
     }
 }
 struct textInputField: View {

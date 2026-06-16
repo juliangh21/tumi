@@ -19,6 +19,7 @@
 		B9679F562FD2407D00BBB1E4 /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = B9679F552FD2407D00BBB1E4 /* FirebaseFirestoreCombine-Community */; };
 		B9679F582FD2407D00BBB1E4 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = B9679F572FD2407D00BBB1E4 /* FirebaseStorage */; };
 		B9679F5A2FD2407D00BBB1E4 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = B9679F592FD2407D00BBB1E4 /* FirebaseStorageCombine-Community */; };
+		B9A185152FE04C9100CE0F23 /* MijickCamera in Frameworks */ = {isa = PBXBuildFile; productRef = B9A185142FE04C9100CE0F23 /* MijickCamera */; };
 		B9AF381F2FD076E10028B692 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B9AF381E2FD076E10028B692 /* FirebaseAuth */; };
 		B9C22EDE2FCDFAB400FB269B /* tumi_share.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B9C22ED42FCDFAB400FB269B /* tumi_share.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -97,6 +98,7 @@
 				B908F53B2FCE2F32001E4980 /* GoogleSignInSwift in Frameworks */,
 				B908F5452FCE30D9001E4980 /* FirebaseAnalyticsCore in Frameworks */,
 				B9679F5A2FD2407D00BBB1E4 /* FirebaseStorageCombine-Community in Frameworks */,
+				B9A185152FE04C9100CE0F23 /* MijickCamera in Frameworks */,
 				B908F5472FCE30D9001E4980 /* FirebaseAnalyticsIdentitySupport in Frameworks */,
 				B908F5392FCE2F32001E4980 /* GoogleSignIn in Frameworks */,
 				B9679F582FD2407D00BBB1E4 /* FirebaseStorage in Frameworks */,
@@ -180,6 +182,7 @@
 				B9679F552FD2407D00BBB1E4 /* FirebaseFirestoreCombine-Community */,
 				B9679F572FD2407D00BBB1E4 /* FirebaseStorage */,
 				B9679F592FD2407D00BBB1E4 /* FirebaseStorageCombine-Community */,
+				B9A185142FE04C9100CE0F23 /* MijickCamera */,
 			);
 			productName = tumi;
 			productReference = B972AA582F5CDE650031DAD5 /* tumi.app */;
@@ -237,6 +240,7 @@
 			packageReferences = (
 				B908F5372FCE2F32001E4980 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				B908F5502FCE31D4001E4980 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				B9A185132FE04C9100CE0F23 /* XCRemoteSwiftPackageReference "Camera" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B972AA592F5CDE650031DAD5 /* Products */;
@@ -434,6 +438,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = tumi/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses to camera to take photos of your recipe";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app uses the microphone so your videos can have audio. ";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need to access your photo libray to add images to recipes";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -492,6 +497,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = tumi/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses to camera to take photos of your recipe";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app uses the microphone so your videos can have audio. ";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need to access your photo libray to add images to recipes";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -634,6 +640,14 @@
 				minimumVersion = 12.14.0;
 			};
 		};
+		B9A185132FE04C9100CE0F23 /* XCRemoteSwiftPackageReference "Camera" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Mijick/Camera.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -694,6 +708,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B908F5502FCE31D4001E4980 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseStorageCombine-Community";
+		};
+		B9A185142FE04C9100CE0F23 /* MijickCamera */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B9A185132FE04C9100CE0F23 /* XCRemoteSwiftPackageReference "Camera" */;
+			productName = MijickCamera;
 		};
 		B9AF381E2FD076E10028B692 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
