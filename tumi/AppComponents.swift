@@ -132,12 +132,13 @@ struct photoPickerView: View {
                         Spacer()
                         
                     }
-                    .frame(height: CGFloat(widthheight[1] + 10))
+                    
                 }
+                .frame(height: CGFloat(widthheight[1] + 10))
             }
             if(!rectChange && liborphoto == nil){ // ie, if an image hasn't been selected, and a photo or camera hasn't been seelected, show
                 Button(action:{libraryorImageCD.toggle()}){
-                    selectYourPhoto()
+                    selectYourPhoto(alrselected: false)
                 }
                 .confirmationDialog("Choose a photo or a take a photo", isPresented: $libraryorImageCD){
                     Button(action:{libraryorImageCD.toggle();liborphoto=true}){
@@ -154,7 +155,7 @@ struct photoPickerView: View {
                 if(x && !rectChange){
                     PhotosPicker(selection: $selectedItem, matching: .images, photoLibrary: .shared()){
                         if(!(showtext)){
-                                selectYourPhoto()
+                            selectYourPhoto(alrselected: true)
                     }
                         
 //                        if(rectChange==false){
@@ -193,9 +194,10 @@ struct photoPickerView: View {
                 
 }
 struct selectYourPhoto: View {
+    var alrselected: Bool
     var body: some View {
         HStack(spacing: -4){
-            Text("Select your photo")
+            Text( alrselected ? "Open photo library": "Select your photo")
                 .foregroundStyle(Color.mutedgray)
                 .frame(width: .infinity)
                 .padding(.horizontal)
