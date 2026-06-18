@@ -19,6 +19,7 @@
 		B9679F562FD2407D00BBB1E4 /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = B9679F552FD2407D00BBB1E4 /* FirebaseFirestoreCombine-Community */; };
 		B9679F582FD2407D00BBB1E4 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = B9679F572FD2407D00BBB1E4 /* FirebaseStorage */; };
 		B9679F5A2FD2407D00BBB1E4 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = B9679F592FD2407D00BBB1E4 /* FirebaseStorageCombine-Community */; };
+		B9690AE62FE2F67D00F6316C /* SearchBar in Frameworks */ = {isa = PBXBuildFile; productRef = B9690AE52FE2F67D00F6316C /* SearchBar */; };
 		B9A185152FE04C9100CE0F23 /* MijickCamera in Frameworks */ = {isa = PBXBuildFile; productRef = B9A185142FE04C9100CE0F23 /* MijickCamera */; };
 		B9AF381F2FD076E10028B692 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B9AF381E2FD076E10028B692 /* FirebaseAuth */; };
 		B9C22EDE2FCDFAB400FB269B /* tumi_share.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B9C22ED42FCDFAB400FB269B /* tumi_share.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -102,6 +103,7 @@
 				B908F5472FCE30D9001E4980 /* FirebaseAnalyticsIdentitySupport in Frameworks */,
 				B908F5392FCE2F32001E4980 /* GoogleSignIn in Frameworks */,
 				B9679F582FD2407D00BBB1E4 /* FirebaseStorage in Frameworks */,
+				B9690AE62FE2F67D00F6316C /* SearchBar in Frameworks */,
 				B9679F562FD2407D00BBB1E4 /* FirebaseFirestoreCombine-Community in Frameworks */,
 				B9AF381F2FD076E10028B692 /* FirebaseAuth in Frameworks */,
 				B9679F522FD2404B00BBB1E4 /* FirebaseFirestore in Frameworks */,
@@ -183,6 +185,7 @@
 				B9679F572FD2407D00BBB1E4 /* FirebaseStorage */,
 				B9679F592FD2407D00BBB1E4 /* FirebaseStorageCombine-Community */,
 				B9A185142FE04C9100CE0F23 /* MijickCamera */,
+				B9690AE52FE2F67D00F6316C /* SearchBar */,
 			);
 			productName = tumi;
 			productReference = B972AA582F5CDE650031DAD5 /* tumi.app */;
@@ -241,6 +244,7 @@
 				B908F5372FCE2F32001E4980 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				B908F5502FCE31D4001E4980 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				B9A185132FE04C9100CE0F23 /* XCRemoteSwiftPackageReference "Camera" */,
+				B9690AE42FE2F65C00F6316C /* XCRemoteSwiftPackageReference "SearchBar" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B972AA592F5CDE650031DAD5 /* Products */;
@@ -640,6 +644,14 @@
 				minimumVersion = 12.14.0;
 			};
 		};
+		B9690AE42FE2F65C00F6316C /* XCRemoteSwiftPackageReference "SearchBar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SzpakKamil/SearchBar";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.7;
+			};
+		};
 		B9A185132FE04C9100CE0F23 /* XCRemoteSwiftPackageReference "Camera" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Mijick/Camera.git";
@@ -708,6 +720,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B908F5502FCE31D4001E4980 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseStorageCombine-Community";
+		};
+		B9690AE52FE2F67D00F6316C /* SearchBar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B9690AE42FE2F65C00F6316C /* XCRemoteSwiftPackageReference "SearchBar" */;
+			productName = SearchBar;
 		};
 		B9A185142FE04C9100CE0F23 /* MijickCamera */ = {
 			isa = XCSwiftPackageProductDependency;

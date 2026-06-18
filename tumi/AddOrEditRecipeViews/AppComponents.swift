@@ -215,6 +215,7 @@ struct textInputField: View {
     var isloggin: Bool = false
     var widthheigh=[240,45]
     var width: CGFloat = .infinity
+    var notSearching: Bool = true
     var body: some View {
         ZStack{
             brownRectangle(width: /*CGFloat(widthheigh[0])*/.infinity, height: CGFloat(widthheigh[1]))
@@ -241,15 +242,18 @@ struct textInputField: View {
                 .autocapitalization(.none)
                 .frame(width: max(1,/*CGFloat(widthheigh[0]))*/.infinity), height: max(20,CGFloat(widthheigh[1])))
                 
-                
-                HStack{
-                    Spacer()
-                    PasteButton(pasted: {
-                        newval in input = newval
-                    })
+                if(notSearching){
+                    HStack{
+                        Spacer()
+                        PasteButton(pasted: {
+                            newval in input = newval
+                        })
+                    }
+                    .frame(width: max(90,/*CGFloat(widthheigh[0])-10)*/ .infinity),height: max(10,CGFloat(widthheigh[1])-10))
+                        .padding(.horizontal)
                 }
-                .frame(width: max(90,/*CGFloat(widthheigh[0])-10)*/ .infinity),height: max(10,CGFloat(widthheigh[1])-10))
-                    .padding(.horizontal)
+                
+                
                 
                 
             }

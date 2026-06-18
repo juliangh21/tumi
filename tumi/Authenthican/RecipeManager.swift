@@ -49,7 +49,8 @@ final class RecipeManager: ObservableObject{
         guard let uid else{return }//if user isn't logged in, quit
         let pub = publicRecipe(id: recipe.id, uid: uid, recipeName: recipe.getName(), recipeType: recipe.getType(), datecreated: recipe.getDate(), authorName: username,recipeNameLower: recipe.getName().lowercased())
         do{
-            try db.collection("Public Recipes").document(recipe.id).setData(from:pub) // goes into the database, find the collection called "Public Recipes", then at document recipe.id.sets the recipe
+            try db.collection("publicRecipes").document(recipe.id).setData(from:pub) // goes into the database, find the collection called "Public Recipes", then at document recipe.id.sets the recipe
+            print("pub recipe saved")
             
         }
         catch{
@@ -60,7 +61,7 @@ final class RecipeManager: ObservableObject{
     func deletePrivateRecipe(recipe: Recipe) async{
         guard let uid else{return}
         do{
-            try await db.collection("Public Recipes").document(recipe.id).delete()
+            try await db.collection("publicRecipes").document(recipe.id).delete()
         }
         catch{
             print("Delete public recipe error: \(error)")
@@ -68,14 +69,14 @@ final class RecipeManager: ObservableObject{
     }
     
     func fetchPublicRecipes(search: String = "" ) async -> [publicRecipe]{
-        var query: Query = db.collection("public recipes")
+        var query: Query = db.collection("publicRecipes")
             .order(by: "datecreated", descending: true)
             .limit(to: 50)
         if !search.isEmpty{
             let lower = search.lowercased()
-            query = db.collection("Public Recipes")
+            query = db.collection("publicRecipes")
                 .whereField("recipeNameLower", isGreaterThanOrEqualTo: lower)
-                .whereField("recipeNameLower", isLessThan: lower)
+                .whereField("recipeNameLower", isLessThan: lower+"\u{f8ff}")
                 .limit(to: 50) //only 50 results are shwoed
         }
         do{

@@ -5,6 +5,19 @@
 //  Created by Julian Garcia-Haugland on 3/7/26.
 //
 
+
+
+
+//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//SOFTWARE.
+
+
+
 import SwiftUI
 import FirebaseAuth
 
@@ -62,8 +75,8 @@ struct tumiApp: App {
                             }
                             })
                     }
-                    Tab("Camera", systemImage: "Camera", value: 3){
-                        theCameraView(theImage: {x in})
+                    Tab("AllRecipes", systemImage: "list.star", value: 3){
+                        searchRecipeBar()
                         
                     }
                     
