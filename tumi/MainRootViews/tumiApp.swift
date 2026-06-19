@@ -75,10 +75,10 @@ struct tumiApp: App {
                             }
                             })
                     }
-                    Tab("AllRecipes", systemImage: "list.star", value: 3){
-                        searchRecipeBar()
-                        
-                    }
+//                    Tab("AllRecipes", systemImage: "list.star", value: 3){
+//                        searchRecipeBar(recipeOut: {x in})
+//                        
+//                    }
                     
 
                 }
@@ -89,7 +89,7 @@ struct tumiApp: App {
                         selectedTab = /*oldValue*/ 0
                     }
                 }
-                .sheet(isPresented: $RecipeAddSheetPresented){
+                .fullScreenCover(isPresented: $RecipeAddSheetPresented){
                     AddRecipeSheet(RecipeList: recipemanager.recipes, recipeAdded: { recipenew in
                         /*RecipeArray*/recipemanager.recipes.append(recipenew)
                         recipemanager.recipes = resortrecipe(list1: recipemanager.recipes)

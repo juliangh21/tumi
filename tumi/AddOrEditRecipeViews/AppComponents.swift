@@ -82,9 +82,11 @@ struct addButton<Content: View>: View {
     @ViewBuilder let content: () -> Content
     var body: some View {
         HStack{
-//            Text(inputtype + ":")
-//                .foregroundStyle(Color.secondaryfont)
-//            
+            Text(inputtype + ":")
+                .foregroundStyle(Color.secondaryfont)
+               
+            Spacer()
+                .frame(width:10)
             ZStack{
 //                brownRectangle(width: 240, height: 45)
                 content()
@@ -242,16 +244,22 @@ struct textInputField: View {
                 .autocapitalization(.none)
                 .frame(width: max(1,/*CGFloat(widthheigh[0]))*/.infinity), height: max(20,CGFloat(widthheigh[1])))
                 
-                if(notSearching){
-                    HStack{
-                        Spacer()
+                
+                HStack{
+                    Spacer()
+                    if(notSearching){
                         PasteButton(pasted: {
                             newval in input = newval
                         })
+
                     }
-                    .frame(width: max(90,/*CGFloat(widthheigh[0])-10)*/ .infinity),height: max(10,CGFloat(widthheigh[1])-10))
-                        .padding(.horizontal)
+                    else{
+                        sfSymbolImage(imageName: "magnifyingglass", imageColor: Color.primarybrown)
+                    }
                 }
+                .frame(width: max(90,/*CGFloat(widthheigh[0])-10)*/ .infinity),height: max(10,CGFloat(widthheigh[1])-10))
+                        .padding(.horizontal)
+                
                 
                 
                 
@@ -325,8 +333,9 @@ struct pickerButton: View {
             .padding(.horizontal)
             .confirmationDialog("Pick your category", isPresented: $pickershowing, titleVisibility: .hidden){
                 ForEach(catRecipes, id: \.self){ recipecat in
-                    Button(action: {picked = recipecat;
+                    Button(action: {picked = recipecat;inputtype = recipecat;
                         if picked == "Custom Category"{
+                            
                             custom = true
                         }
                     }){

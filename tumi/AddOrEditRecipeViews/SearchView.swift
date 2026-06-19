@@ -14,25 +14,30 @@ struct searchRecipeBar: View {
     @State var searchedrecipes: [publicRecipe] = []
     @State var recipeOut: (Recipe) -> Void
     var body: some View {
-        VStack{
-            textInputField(inputtype: "Search all recipes... ", input: $searchedtext,notSearching: <#T##Bool#>)
-
-            List(searchedrecipes, id: \.self){recipe in
-                Button(action:{recipeOut(Recipe(recipeRank: -1, recipeName: recipe.getName(), recipeType: recipe.getType()))}){
-                    RecipePreview(recipeName: recipe.getName(), recipeCategory: recipe.getType())
+        ZStack{
+            Color.lightbrownbkgrnd
+                .ignoresSafeArea()
+            VStack{
+                textInputField(inputtype: "Search all recipes... ", input: $searchedtext,notSearching: false)
+                    .padding()
+                List(searchedrecipes, id: \.self){recipe in
+                    Button(action:{recipeOut(Recipe(recipeRank: -1, recipeName: recipe.getName(), recipeType: recipe.getType()))}){
+                        RecipePreview(recipeName: recipe.getName(), recipeCategory: recipe.getType())
+                    }
+                    
+                    
+                }
+            }
+            .onChange(of: searchedtext){old, new in
+                Task{
+                    searchedrecipes =  await recipemanager.fetchPublicRecipes(search: new)
                 }
                 
                 
+                
             }
         }
-        .onChange(of: searchedtext){old, new in
-            Task{
-                searchedrecipes =  await recipemanager.fetchPublicRecipes(search: new)
-            }
-            
-            
-            
-        }
+        
 //        SearchBar(
 //        
     }

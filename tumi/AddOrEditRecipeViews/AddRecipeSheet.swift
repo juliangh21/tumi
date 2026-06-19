@@ -91,57 +91,69 @@ struct addSheet: View{
     @State var recipeCategory = ""
     @State var selecetedImage: UIImage?
     @State var recipeSource = ""
+    @State var isSearchPresented = false
     var recipeAdded: (Recipe) -> Void
     var body: some View {
         ZStack{
             Color.lightbrownbkgrnd
                 .ignoresSafeArea()
-            VStack{
-                Button(action: {let recipenew = Recipe(recipeRank: 2, recipeName: recipename, recipeType: recipeCategory, Image: ImageToData(image: selecetedImage! /*?? UIImage(systemName: "gear")*/))
-                    recipeAdded(recipenew);canMoveOn1.toggle()}){
-                        
-                        HStack{
-                            Text(helpuserform)
-                                .foregroundStyle(Color.secondaryfont)
-                                .multilineTextAlignment(.trailing)
-//
-                            CompleteButton(colorOfButton: colorOfButton, input: isCreating ? "Rank!": "Done!")
-                            .disabled(!canMoveOn)
-                            .onChange(of: canMoveOn) {oldvalue, newvalue in
-                                print("changed")
+//            ScrollView{
+
+                VStack{
+                    Button(action: {let recipenew = Recipe(recipeRank: 2, recipeName: recipename, recipeType: recipeCategory, Image: ImageToData(image: selecetedImage! /*?? UIImage(systemName: "gear")*/))
+                        recipeAdded(recipenew);canMoveOn1.toggle()}){
+                            
+                            HStack{
+                                Text(helpuserform)
+                                    .foregroundStyle(Color.secondaryfont)
+                                    .multilineTextAlignment(.trailing)
+                                //
+                                CompleteButton(colorOfButton: colorOfButton, input: isCreating ? "Rank!": "Done!")
+                                    .disabled(!canMoveOn)
+                                    .onChange(of: canMoveOn) {oldvalue, newvalue in
+                                        print("changed")
+                                    }
+                                
+                            }
                         }
-                        
+                        .frame(maxWidth:.infinity, alignment: .trailing)
+                        .padding(.horizontal)
+                    if(isCreating){
+                        BigTextView(input: "Add your Recipe.")
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        Button(action:{isSearchPresented.toggle()}){
+                            CompleteButton(colorOfButton: Color.darkbrownimpactfont, input: "Search all Recipes...", widthheight: [300,45])
+                        }
                     }
+                    else{
+                        BigTextView(input: "Edit your Recipe.")
+                            .frame(maxWidth: .infinity, alignment: .leading)
                     }
-                    .frame(maxWidth:.infinity, alignment: .trailing)
-                    .padding(.horizontal)
-                if(isCreating){
-                    BigTextView(input: "Add your Recipe.")
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                    addButton(inputtype: "Name", /*input: $recipename,*/ color: namemoveon ? Color.brownfont:Color.red, content: {textInputField(inputtype: isCreating ? "Recipe Name": theRecipe.getName() , input: $recipename)})
+                    //                addButton(inputtype: "Category", /*input: $recipename,*/ color: namemoveon ? Color.brownfont:Color.red, content: {textInputField(inputtype: isCreating ? "Recipe Name": theRecipe.getType() , input: $recipeCategory)})
+                    addButton(inputtype: "Category", /*input: $recipeCategory,*/ color: catmoveon ? Color.brownfont:Color.red, content: {pickerButton(inputtype: isCreating ? "Recipe Category": theRecipe.getType(), picked: $recipeCategory, list: recipelist)})
+                    addButton(inputtype: "Image", /*input: $selecetedImage,*/ color: Color.brownfont, content: {photoPickerView(selecetedImage: $selecetedImage)})
+                    Text(" - - - - - Optional - - - - - ")
+                        .foregroundStyle(Color.mutedgray)
+                        .padding(.vertical)
+                    addButton(inputtype: "Source", color: Color.brown, content: {textInputField(inputtype: isCreating ? "Recipe Source": theRecipe.getSourceString(), input: $recipeSource)})
                 }
-                else{
-                    BigTextView(input: "Edit your Recipe.")
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                }
-                addButton(inputtype: "Name", /*input: $recipename,*/ color: namemoveon ? Color.brownfont:Color.red, content: {textInputField(inputtype: isCreating ? "Recipe Name": theRecipe.getName() , input: $recipename)})
-//                addButton(inputtype: "Category", /*input: $recipename,*/ color: namemoveon ? Color.brownfont:Color.red, content: {textInputField(inputtype: isCreating ? "Recipe Name": theRecipe.getType() , input: $recipeCategory)})
-                addButton(inputtype: "Category", /*input: $recipeCategory,*/ color: catmoveon ? Color.brownfont:Color.red, content: {pickerButton(inputtype: isCreating ? "Recipe Category": theRecipe.getType(), picked: $recipeCategory, list: recipelist)})
-                addButton(inputtype: "Image", /*input: $selecetedImage,*/ color: Color.brownfont, content: {photoPickerView(selecetedImage: $selecetedImage)})
-                Text(" - - - - - Optional - - - - - ")
-                    .foregroundStyle(Color.mutedgray)
-                    .padding(.vertical)
-                addButton(inputtype: "Source", color: Color.brown, content: {textInputField(inputtype: isCreating ? "Recipe Source": theRecipe.getSourceString(), input: $recipeSource)})
+                .padding(.top)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                .sheet(isPresented: $isSearchPresented){
+                    searchRecipeBar(recipeOut: {recipe in
+                        recipename = recipe.getName()
+                        recipeCategory = recipe.getType()
+                        isSearchPresented.toggle()
+                })
+                .presentationDetents([.medium, .large])
+                
             }
-            .padding(.top)
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         }
     }
 }
 
-#Preview{
-    var RecipeList = [Recipe(recipeRank: 2, recipeName: "theverge", recipeType: "poop")]
-    addSheet(isCreating:true, recipelist: RecipeList, recipeAdded: {x in})
-}
+
 struct RankSheetView: View {
     var recipeList: [Recipe]
     var newRecipe: Recipe
