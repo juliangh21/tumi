@@ -343,13 +343,7 @@ struct pickerButton: View {
                         
                     }
                 }
-//                Button("Edit Recipe", action: {editsheetshowing=true;fulleditsheetshowing=false})
-//                Button("Rerank Recipe", action: {ranksheetshowing=true;fulleditsheetshowing=false})
-////                        Button("Delete Recipe", role:.destructive){
-////                            theRecipe.changeRank(newRank: -1)
-////                        }
-//                Button("Cancel",role: .cancel){
-//                    fulleditsheetshowing = false
+//
                 
             }
             if(!(custom) /*|| list.count != 0*/){// don't uncomment list.count != 0. THis breaks everything. no clue why.
@@ -378,15 +372,7 @@ struct pickerButton: View {
                             picked = ""
                         }
                     }
-//                LabeledContent(inputtype){
-//                    Picker("Category", selection: $picked){
-//                        ForEach(catRecipes, id: \.self) { recipe in //the id:\.self makes it indentifaible
-//                            Text(recipe)
-//                        }
-//                        
-//                    }
-//                    .tint(Color.primarybrown)
-//                    .colorMultiply(Color.primarybrown)
+
                     
                 }
                 .padding(.horizontal)
@@ -409,6 +395,9 @@ struct pickerButton: View {
                 }
                 
             }
+        }
+        .onChange(of:picked){old, new in
+            inputtype = picked
         }
         
     }

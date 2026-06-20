@@ -86,6 +86,23 @@ struct addSheet: View{
         default: return ""
         }
     }
+    var canMoveOne: Bool{
+//        switch (namemoveon, catmoveon, imagemoveon){
+//        case(true, true, false): return false
+//        case (true, false, true): return false
+//        case (false, true, true) : return false
+//        case(true, false, false): return false
+//        case(false, false, true): return false
+//        case(false, true, false): return false
+//        case(false, false, false):return false
+//        default: return true
+//        }
+        
+        if(namemoveon && catmoveon && imagemoveon){
+            return true
+        }
+        return false
+    }
     var recipelist: [Recipe]
     @State var recipename  = ""
     @State var recipeCategory = ""
@@ -109,13 +126,13 @@ struct addSheet: View{
                                     .multilineTextAlignment(.trailing)
                                 //
                                 CompleteButton(colorOfButton: colorOfButton, input: isCreating ? "Rank!": "Done!")
-                                    .disabled(!canMoveOn)
                                     .onChange(of: canMoveOn) {oldvalue, newvalue in
                                         print("changed")
                                     }
                                 
                             }
                         }
+                        .disabled(canMoveOn == false)
                         .frame(maxWidth:.infinity, alignment: .trailing)
                         .padding(.horizontal)
                     if(isCreating){
@@ -146,7 +163,7 @@ struct addSheet: View{
                         recipeCategory = recipe.getType()
                         isSearchPresented.toggle()
                 })
-                .presentationDetents([.medium, .large])
+                    .presentationDetents([.fraction(0.15), .medium])
                 
             }
         }

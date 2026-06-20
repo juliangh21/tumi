@@ -89,7 +89,7 @@ struct tumiApp: App {
                         selectedTab = /*oldValue*/ 0
                     }
                 }
-                .fullScreenCover(isPresented: $RecipeAddSheetPresented){
+                .sheet(isPresented: $RecipeAddSheetPresented){
                     AddRecipeSheet(RecipeList: recipemanager.recipes, recipeAdded: { recipenew in
                         /*RecipeArray*/recipemanager.recipes.append(recipenew)
                         recipemanager.recipes = resortrecipe(list1: recipemanager.recipes)
@@ -102,7 +102,7 @@ struct tumiApp: App {
                         print("New Recipe added")
                         RecipeAddSheetPresented = false
                     })
-                    .presentationDetents([.medium, .large])
+//                    .presentationDetents([.medium, .large])
                 }
                 .navigationDestination(for: appRoute.self){ route in
                     switch route {

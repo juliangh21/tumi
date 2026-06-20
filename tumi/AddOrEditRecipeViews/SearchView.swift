@@ -24,9 +24,9 @@ struct searchRecipeBar: View {
                     Button(action:{recipeOut(Recipe(recipeRank: -1, recipeName: recipe.getName(), recipeType: recipe.getType()))}){
                         RecipePreview(recipeName: recipe.getName(), recipeCategory: recipe.getType())
                     }
-                    
-                    
                 }
+                .scrollContentBackground(.hidden)
+                .listRowBackground(Color.lightbrownbkgrnd)
             }
             .onChange(of: searchedtext){old, new in
                 Task{

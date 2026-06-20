@@ -23,7 +23,7 @@ struct Ranker: View { // view for data from recipe and the rectangle. This is th
                 Text(String(theRecipe.getRank())+".")
     //                .font(.largeTitle)
                     .font(.system(size: 80))
-                    .frame(width: 100, height: 0)
+                    .frame(width: 120, height: 0)
     //                .font(.headline)
                     .foregroundStyle(Color.darkbrownimpactfont)
                 infoView(theRecipe: theRecipe, rank: rank, recipe_name: recipe_name, recipe_type: recipe_type, rect_width: rectwidth, rect_height: 80)
@@ -47,7 +47,7 @@ struct infoView: View { // this is the view for the data from recipe. NOT THE RE
     var body: some View {
         HStack(alignment: .center){
             Spacer()
-                .frame(width:90, height:0)
+                .frame(width:115, height:0)
 //
             Spacer()
                 .frame(width:6, height: 0)
@@ -64,7 +64,7 @@ struct infoView: View { // this is the view for the data from recipe. NOT THE RE
             }
 
             Spacer()
-                .frame(width:20)
+                .frame(width:1)
 //            Spacer()
             if(theImage != nil){
                 imageFancyView(UIimage1: theImage!, randomAngle: theRecipe.getAngleRandom() )
