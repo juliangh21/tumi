@@ -81,11 +81,17 @@ func categoryslist(list1:[Recipe])-> [String]{
     return []
 }
 
-func ImageToData(image:UIImage) -> Data{
-    let data = image.pngData()
-//    let data = image?.jpegData(compressionQuality: 0.9)
+func ImageToData(image:UIImage?) -> Data?{
+    if (image == nil){
+        return nil
+    }
+    else{
+        let data = image!.pngData()
+    //    let data = image?.jpegData(compressionQuality: 0.9)
+        
+        return data!
+    }
     
-    return data!
     
         
 }
@@ -123,4 +129,10 @@ func getPrettyErrorCode(error: String) -> String{
         return error
     }
     return fullerrorcode
+}
+
+
+func recipeSources() -> [String]{
+    return ["Website", "Youtube Video", "TikTok", "Magazine", "Book", "Personal"]
+    
 }

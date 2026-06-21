@@ -58,8 +58,8 @@ struct addSheet: View{
     var namemoveon: Bool{
         !recipename.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
-    var imagemoveon: Bool{
-        selecetedImage != nil
+    var sourcemoveOn: Bool{
+        recipeSource != ""
     }
     var colorOfButton: Color{
         if (canMoveOn){
@@ -75,30 +75,19 @@ struct addSheet: View{
         }
     }
     var helpuserform: String{
-        switch (namemoveon, catmoveon, imagemoveon){
-        case(true, true, false): return "Recipe image needed"
+        switch (namemoveon, catmoveon, sourcemoveOn){
+        case(true, true, false): return "Recipe source needed"
         case (true, false, true): return "Recipe category needed"
         case (false, true, true) : return "Recipe name needed"
-        case(true, false, false): return "Recipe category and image needed"
+        case(true, false, false): return "Recipe category and source needed"
         case(false, false, true): return "Recipe name and category needed"
-        case(false, true, false): return "Recipe name and image needed"
-        case(false, false, false):return "Recipe name, category, and image needed"
+        case(false, true, false): return "Recipe name and source needed"
+        case(false, false, false):return "Recipe name, category, and source needed"
         default: return ""
         }
     }
     var canMoveOne: Bool{
-//        switch (namemoveon, catmoveon, imagemoveon){
-//        case(true, true, false): return false
-//        case (true, false, true): return false
-//        case (false, true, true) : return false
-//        case(true, false, false): return false
-//        case(false, false, true): return false
-//        case(false, true, false): return false
-//        case(false, false, false):return false
-//        default: return true
-//        }
-        
-        if(namemoveon && catmoveon && imagemoveon){
+        if(namemoveon && catmoveon && sourcemoveOn){
             return true
         }
         return false
@@ -117,7 +106,7 @@ struct addSheet: View{
 //            ScrollView{
 
                 VStack{
-                    Button(action: {let recipenew = Recipe(recipeRank: 2, recipeName: recipename, recipeType: recipeCategory, Image: ImageToData(image: selecetedImage! /*?? UIImage(systemName: "gear")*/))
+                    Button(action: {let recipenew = Recipe(recipeRank: 2, recipeName: recipename, recipeType: recipeCategory, Image: ImageToData(image: selecetedImage ?? nil /*?? UIImage(systemName: "gear")*/))
                         recipeAdded(recipenew);canMoveOn1.toggle()}){
                             
                             HStack{
@@ -149,11 +138,13 @@ struct addSheet: View{
                     addButton(inputtype: "Name", /*input: $recipename,*/ color: namemoveon ? Color.brownfont:Color.red, content: {textInputField(inputtype: isCreating ? "Recipe Name": theRecipe.getName() , input: $recipename)})
                     //                addButton(inputtype: "Category", /*input: $recipename,*/ color: namemoveon ? Color.brownfont:Color.red, content: {textInputField(inputtype: isCreating ? "Recipe Name": theRecipe.getType() , input: $recipeCategory)})
                     addButton(inputtype: "Category", /*input: $recipeCategory,*/ color: catmoveon ? Color.brownfont:Color.red, content: {pickerButton(inputtype: isCreating ? "Recipe Category": theRecipe.getType(), picked: $recipeCategory, list: recipelist)})
-                    addButton(inputtype: "Image", /*input: $selecetedImage,*/ color: Color.brownfont, content: {photoPickerView(selecetedImage: $selecetedImage)})
+                    addButton(inputtype: "Source", color: Color.brown, content: {textInputField(inputtype: isCreating ? "Recipe Source": theRecipe.getSourceString(), input: $recipeSource)})
                     Text(" - - - - - Optional - - - - - ")
                         .foregroundStyle(Color.mutedgray)
                         .padding(.vertical)
-                    addButton(inputtype: "Source", color: Color.brown, content: {textInputField(inputtype: isCreating ? "Recipe Source": theRecipe.getSourceString(), input: $recipeSource)})
+                    addButton(inputtype: "Image", /*input: $selecetedImage,*/ color: Color.brownfont, content: {photoPickerView(selecetedImage: $selecetedImage)})
+
+                    
                 }
                 .padding(.top)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)

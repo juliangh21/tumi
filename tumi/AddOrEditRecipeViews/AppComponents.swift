@@ -303,20 +303,26 @@ struct pickerButton: View {
     @Binding var picked: String
 //    @State var CategoryLabel = "Pick Recipe Category"
     var list: [Recipe]
-    
+    var isSource = false
     var catRecipes: [String]{
-        var x: [String] = []
-        for recipe in list {
-            if(x.contains(recipe.getType())){
-                
-            }
-            else{
-                x.append(recipe.getType())
-            }
-                
+        if(isSource){
+            return AddRecipeSheet()
         }
-        x.append("Custom Category")
-        return x
+        else{
+            var x: [String] = []
+                    for recipe in list {
+                        if(x.contains(recipe.getType())){
+                            
+                        }
+                        else{
+                            x.append(recipe.getType())
+                        }
+                            
+                    }
+                    x.append("Custom Category")
+                    return x
+        }
+        
     }
     var body: some View {
         ZStack(alignment: .leading){
