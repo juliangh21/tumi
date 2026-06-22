@@ -20,8 +20,9 @@ struct Recipe: Identifiable, Hashable, Codable{ //this is the recipe struct
     var imageURL: String? = nil
     var source: String = ""
     var angleRandom = Double.random(in:-25...25)
+    var recipeSourceType: String
     enum CodingKeys: String, CodingKey {
-            case id, recipeRank, recipeName, recipeType, datecreated, imageURL, source, angleRandom
+            case id, recipeRank, recipeName, recipeType, datecreated, imageURL, source, angleRandom, recipeSourceType
             // Image is intentionally omitted
         }
 
@@ -80,6 +81,9 @@ struct Recipe: Identifiable, Hashable, Codable{ //this is the recipe struct
     }
     func getAngleRandom()-> Double{
         return angleRandom
+    }
+    func getRecipeSourceType() -> String{
+        return recipeSourceType
     }
 }
 

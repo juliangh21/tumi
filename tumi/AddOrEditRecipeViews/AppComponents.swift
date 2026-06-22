@@ -301,12 +301,13 @@ struct pickerButton: View {
     @State var pickershowing = false
     @State var catpicked = false
     @Binding var picked: String
+    @Binding var SourceType: String
 //    @State var CategoryLabel = "Pick Recipe Category"
     var list: [Recipe]
     var isSource = false
     var catRecipes: [String]{
         if(isSource){
-            return AddRecipeSheet()
+            return recipeSources()
         }
         else{
             var x: [String] = []
@@ -375,6 +376,11 @@ struct pickerButton: View {
                         catpicked = true
                         if(picked == "Custom Category" /*|| picked == inputtype*/){
                             custom = true
+                            picked = ""
+                        }
+                        else if(isSource){
+                            custom = true
+                            SourceType = picked
                             picked = ""
                         }
                     }

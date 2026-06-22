@@ -16,7 +16,7 @@ enum addrankconfirm{
 struct AddRecipeSheet: View {
     var RecipeList: [Recipe]
     var recipeAdded: (Recipe) -> Void
-    @State var newRecipe = Recipe(recipeRank: 0, recipeName: "", recipeType: " ")
+    @State var newRecipe = Recipe(recipeRank: 0, recipeName: "", recipeType: " ", recipeSourceType: "")
     @State var currentPage: addrankconfirm = .add
     @State var finalrank = -1
     var body: some View{
@@ -40,7 +40,7 @@ struct AddRecipeSheet: View {
     }
 }
 struct addSheet: View{
-    var theRecipe:Recipe = Recipe(recipeRank: -1, recipeName: "", recipeType: "")
+    var theRecipe:Recipe = Recipe(recipeRank: -1, recipeName: "", recipeType: "", recipeSourceType: "")
     var isCreating: Bool
     @State var catcolor = Color.brownfont
     @State var namecolor = Color.brownfont
@@ -98,6 +98,8 @@ struct addSheet: View{
     @State var selecetedImage: UIImage?
     @State var recipeSource = ""
     @State var isSearchPresented = false
+    @State var SourceType =  ""
+    @State var catSourceType: String = ""
     var recipeAdded: (Recipe) -> Void
     var body: some View {
         ZStack{
@@ -106,7 +108,7 @@ struct addSheet: View{
 //            ScrollView{
 
                 VStack{
-                    Button(action: {let recipenew = Recipe(recipeRank: 2, recipeName: recipename, recipeType: recipeCategory, Image: ImageToData(image: selecetedImage ?? nil /*?? UIImage(systemName: "gear")*/))
+                    Button(action: {let recipenew = Recipe(recipeRank: 2, recipeName: recipename, recipeType: recipeCategory, Image: ImageToData(image: selecetedImage ?? nil /*?? UIImage(systemName: "gear")*/), recipeSourceType: SourceType)
                         recipeAdded(recipenew);canMoveOn1.toggle()}){
                             
                             HStack{
@@ -137,12 +139,13 @@ struct addSheet: View{
                     }
                     addButton(inputtype: "Name", /*input: $recipename,*/ color: namemoveon ? Color.brownfont:Color.red, content: {textInputField(inputtype: isCreating ? "Recipe Name": theRecipe.getName() , input: $recipename)})
                     //                addButton(inputtype: "Category", /*input: $recipename,*/ color: namemoveon ? Color.brownfont:Color.red, content: {textInputField(inputtype: isCreating ? "Recipe Name": theRecipe.getType() , input: $recipeCategory)})
-                    addButton(inputtype: "Category", /*input: $recipeCategory,*/ color: catmoveon ? Color.brownfont:Color.red, content: {pickerButton(inputtype: isCreating ? "Recipe Category": theRecipe.getType(), picked: $recipeCategory, list: recipelist)})
-                    addButton(inputtype: "Source", color: Color.brown, content: {textInputField(inputtype: isCreating ? "Recipe Source": theRecipe.getSourceString(), input: $recipeSource)})
+                    addButton(inputtype: "Category", /*input: $recipeCategory,*/ color: catmoveon ? Color.brownfont:Color.red, content: {pickerButton(inputtype: isCreating ? "Recipe Category": theRecipe.getType(), picked: $recipeCategory, SourceType: $catSourceType, list: recipelist)})
+                    addButton(inputtype: "Source", color: Color.brown, content: {pickerButton(inputtype: isCreating ? "Recipe Source": theRecipe.getSourceString(), picked: $recipeSource, SourceType: $SourceType, list: recipelist, isSource: true  )})
                     Text(" - - - - - Optional - - - - - ")
                         .foregroundStyle(Color.mutedgray)
                         .padding(.vertical)
                     addButton(inputtype: "Image", /*input: $selecetedImage,*/ color: Color.brownfont, content: {photoPickerView(selecetedImage: $selecetedImage)})
+                    
 
                     
                 }
