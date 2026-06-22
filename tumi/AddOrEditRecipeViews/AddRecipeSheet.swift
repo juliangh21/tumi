@@ -48,8 +48,12 @@ struct addSheet: View{
     
     
     var canMoveOn: Bool{
-        !recipename.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
-        !recipeCategory.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && (selecetedImage != nil)
+        if(helpuserform != ""){
+            return false
+        }
+        else{
+            return true
+        }
 
     }
     var catmoveon: Bool{
@@ -86,12 +90,12 @@ struct addSheet: View{
         default: return ""
         }
     }
-    var canMoveOne: Bool{
-        if(namemoveon && catmoveon && sourcemoveOn){
-            return true
-        }
-        return false
-    }
+//    var canMoveOne: Bool{
+//        if(namemoveon && catmoveon && sourcemoveOn){
+//            return true
+//        }
+//        return false
+//    }
     var recipelist: [Recipe]
     @State var recipename  = ""
     @State var recipeCategory = ""

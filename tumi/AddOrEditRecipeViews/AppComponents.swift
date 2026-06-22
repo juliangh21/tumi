@@ -372,13 +372,17 @@ struct pickerButton: View {
                         }
                     }
                     .onChange(of: picked){
-                        inputtype = picked
-                        catpicked = true
+//                        inputtype = picked
+//                        catpicked = true
                         if(picked == "Custom Category" /*|| picked == inputtype*/){
+                            inputtype = picked
+                            catpicked = true
                             custom = true
                             picked = ""
                         }
                         else if(isSource){
+                            inputtype = "Type your source (of \(picked)) "
+                            print("custom source selected")
                             custom = true
                             SourceType = picked
                             picked = ""
@@ -409,7 +413,9 @@ struct pickerButton: View {
             }
         }
         .onChange(of:picked){old, new in
-            inputtype = picked
+            if !new.isEmpty {
+                    inputtype = new
+                }
         }
         
     }

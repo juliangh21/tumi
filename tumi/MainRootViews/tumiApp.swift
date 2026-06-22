@@ -8,16 +8,6 @@
 
 
 
-//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-//SOFTWARE.
-
-
-
 import SwiftUI
 import FirebaseAuth
 
@@ -32,6 +22,7 @@ struct tumiApp: App {
     @State var RecipeAddSheetPresented = false
     @State var SignInSheetPresented: Bool = true
     @State var username = ""
+    @State private var authListener: AuthStateDidChangeListenerHandle?
 //    @State var RecipeArray =
 //    [Recipe(recipeRank: 2, recipeName: "2nd Recipe", recipeType: "2"),
 //     Recipe(recipeRank: 1, recipeName: "1st Recipe", recipeType: "1"),  //this is the list of recipes
@@ -156,21 +147,27 @@ struct tumiApp: App {
                 
             }// end of nav stack
             
-            .onAppear{
-                if let user = Auth.auth().currentUser {
-                            Task { await recipemanager.loadUser(uid: user.uid, username: username) }
-                    SignInSheetPresented = false
-                        }
-            
+            .onAppear {
+                authListener = Auth.auth().addStateDidChangeListener { auth, user in
+                    if let user {
+                        Task { await recipemanager.loadUser(uid: user.uid/*, username: username*/) }
+                        SignInSheetPresented = false
+                    } else {
+                        SignInSheetPresented = true
+                    }
+                }
+            }
+                
+                
 //                let authuser = try? AuthenticationManager.shared.getAuthenticatedUser()
 //                self.SignInSheetPresented = authuser == nil
-            }
+//            }
             .fullScreenCover(isPresented: $SignInSheetPresented){
                 VStack{
                     SignInEmailView(canmoveon: {
                         x in SignInSheetPresented = !x
                         if let user = Auth.auth().currentUser {
-                            Task { await recipemanager.loadUser(uid: user.uid, username: username) }
+                            Task { await recipemanager.loadUser(uid: user.uid/*, username: username*/) }
                                 }
                         
                     }, email:{ email in username = email

@@ -19,7 +19,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
   func application(_ application: UIApplication,didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
       FirebaseApp.configure()
       let settings = FirestoreSettings()
-      settings.cacheSettings = PersistentCacheSettings(sizeBytes: 100 * 1024 * 1024 as NSNumber)
+      settings.cacheSettings = PersistentCacheSettings(sizeBytes: 200 * 1024 * 1024 as NSNumber)
       let db = Firestore.firestore()
               db.settings = settings
 
@@ -37,7 +37,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 
 struct SignInView: View {
-    @State var browhat = false
+    	@State var browhat = false
     var body: some View {
         VStack{
             NavigationLink{

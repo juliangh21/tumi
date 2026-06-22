@@ -23,9 +23,9 @@ final class RecipeManager: ObservableObject{
         guard let uid  else {return nil}
         return db.collection("users").document(uid).collection("recipes")
     }
-    func loadUser(uid: String, username: String) async{
+    func loadUser(uid: String) async{
         self.uid = uid
-        self.username = username
+//        self.username = username
         await fetchRecipes()
     }
     func clearUser(){
@@ -40,14 +40,14 @@ final class RecipeManager: ObservableObject{
             recipes = resortrecipe(list1: recipes)
         }
         catch{
-            print(error)
+            print("Fetching recipes error: \(error)")
         }
         
     }
     
     func savePubRecipes( recipe: Recipe) async{
         guard let uid else{return }//if user isn't logged in, quit
-        let pub = publicRecipe(id: recipe.id, uid: uid, recipeName: recipe.getName(), recipeType: recipe.getType(), datecreated: recipe.getDate(), authorName: username,recipeNameLower: recipe.getName().lowercased())
+        let pub = publicRecipe(id: recipe.id, uid: uid, recipeName: recipe.getName(), recipeType: recipe.getType(), datecreated: recipe.getDate(), authorName: "username",recipeNameLower: recipe.getName().lowercased())
         do{
             try db.collection("publicRecipes").document(recipe.id).setData(from:pub) // goes into the database, find the collection called "Public Recipes", then at document recipe.id.sets the recipe
             print("pub recipe saved")

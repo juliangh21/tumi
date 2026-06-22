@@ -11,7 +11,7 @@ import FirebaseFirestore
     
 struct Recipe: Identifiable, Hashable, Codable{ //this is the recipe struct
 //    var id = UUID()
-    var id: String = UUID().uuidString
+    var id: String = UUID().uuidString // NOTE: If you add non optional things to the recipe struct, new recipes won't load anymore because they won't work. EVERYTHING OPTIONAL.
     var recipeRank: Int
     var recipeName: String
     var recipeType: String
@@ -20,7 +20,7 @@ struct Recipe: Identifiable, Hashable, Codable{ //this is the recipe struct
     var imageURL: String? = nil
     var source: String = ""
     var angleRandom = Double.random(in:-25...25)
-    var recipeSourceType: String
+    var recipeSourceType: String?
     enum CodingKeys: String, CodingKey {
             case id, recipeRank, recipeName, recipeType, datecreated, imageURL, source, angleRandom, recipeSourceType
             // Image is intentionally omitted
@@ -83,7 +83,12 @@ struct Recipe: Identifiable, Hashable, Codable{ //this is the recipe struct
         return angleRandom
     }
     func getRecipeSourceType() -> String{
-        return recipeSourceType
+        if recipeSourceType != nil {
+            return recipeSourceType!
+        }
+        else{
+            return "No recipe source."
+        }
     }
 }
 

@@ -21,7 +21,7 @@ struct searchRecipeBar: View {
                 textInputField(inputtype: "Search all recipes... ", input: $searchedtext,notSearching: false)
                     .padding()
                 List(searchedrecipes, id: \.self){recipe in
-                    Button(action:{recipeOut(Recipe(recipeRank: -1, recipeName: recipe.getName(), recipeType: recipe.getType()))}){
+                    Button(action:{recipeOut(Recipe(recipeRank: -1, recipeName: recipe.getName(), recipeType: recipe.getType(), recipeSourceType: recipe.getSourceString()))}){
                         RecipePreview(recipeName: recipe.getName(), recipeCategory: recipe.getType())
                     }
                 }
