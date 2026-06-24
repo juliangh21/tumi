@@ -304,12 +304,31 @@ struct pickerButton: View {
     @Binding var SourceType: String
 //    @State var CategoryLabel = "Pick Recipe Category"
     var list: [Recipe]
-    var isSource = false
-    var catRecipes: [String]{
-        if(isSource){
-            return recipeSources()
+    var isSource : Bool?{
+        if(pickerType == "Source"){
+            return true
+        }
+        else if(pickerType == "Meal Type"){
+            return false
         }
         else{
+            return nil
+        }
+    }
+    var pickerType: String
+    var catRecipes: [String]{
+        if(isSource != nil && isSource!){
+            print("not recipe meal type. Source")
+            return recipeSources()
+            
+        }
+        else if(isSource != nil && !isSource!){
+            print("REcipe meal type source")
+            return recipeMealType()
+        }
+        else{
+            print("bad boy")
+            print(isSource)
             var x: [String] = []
                     for recipe in list {
                         if(x.contains(recipe.getType())){
@@ -380,7 +399,7 @@ struct pickerButton: View {
                             custom = true
                             picked = ""
                         }
-                        else if(isSource){
+                        else if(isSource! && isSource != nil){
                             inputtype = "Type your source (of \(picked)) "
                             print("custom source selected")
                             custom = true

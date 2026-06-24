@@ -136,3 +136,16 @@ func recipeSources() -> [String]{
     return ["Website", "Youtube Video", "TikTok", "Magazine", "Book", "Personal"]
     
 }
+func recipeMealType() -> [String]{
+    return  ["Breakfast", "Lunch", "Dinner", "Brunch", "Appetizer", "Snack" ]
+}
+
+
+func checkIfNil(variable: String?, niltext: String) -> String{
+    if variable != nil {
+        return variable!
+    }
+    else{
+        return "No \(niltext) found."
+    }
+}

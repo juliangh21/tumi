@@ -21,8 +21,10 @@ struct Recipe: Identifiable, Hashable, Codable{ //this is the recipe struct
     var source: String = ""
     var angleRandom = Double.random(in:-25...25)
     var recipeSourceType: String?
+    var recipeMeal: String?
+    var recipeNotes: String?
     enum CodingKeys: String, CodingKey {
-            case id, recipeRank, recipeName, recipeType, datecreated, imageURL, source, angleRandom, recipeSourceType
+            case id, recipeRank, recipeName, recipeType, datecreated, imageURL, source, angleRandom, recipeSourceType, recipeMeal, recipeNotes
             // Image is intentionally omitted
         }
 
@@ -83,13 +85,18 @@ struct Recipe: Identifiable, Hashable, Codable{ //this is the recipe struct
         return angleRandom
     }
     func getRecipeSourceType() -> String{
-        if recipeSourceType != nil {
-            return recipeSourceType!
-        }
-        else{
-            return "No recipe source."
-        }
+        checkIfNil(variable: recipeSourceType, niltext: "Recipe source type")
     }
+    func getRecipeMealTime() -> String{
+        checkIfNil(variable: recipeMeal, niltext: "Recipe meal")
+    }
+    func getRecipeNotes() -> String{
+        checkIfNil(variable: recipeNotes, niltext: "Recipe Notes")
+    }
+    func isRecipeMealTimePresent() -> Bool{
+        return recipeMeal != nil
+    }
+    
 }
 
 struct RecipeViewStruct: Identifiable, Hashable{ //this is the recipe struct

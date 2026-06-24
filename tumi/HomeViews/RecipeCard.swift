@@ -177,17 +177,11 @@ struct recipeView: View {
             ScrollView{
                 VStack(spacing: 1 ){
                     Button(action: {fulleditsheetshowing=true}){
-                        
-                        //
-                        
                         overarchingButtonView()
                     }
                     .confirmationDialog("Edit your Recipe", isPresented: $fulleditsheetshowing, titleVisibility: .hidden){
                         Button("Edit Recipe", action: {editsheetshowing=true;fulleditsheetshowing=false})
                         Button("Rerank Recipe", action: {ranksheetshowing=true;fulleditsheetshowing=false})
-//                        Button("Delete Recipe", role:.destructive){
-//                            theRecipe.changeRank(newRank: -1)
-//                        }
                         Button("Cancel",role: .cancel){
                             fulleditsheetshowing = false
                         }
@@ -262,6 +256,10 @@ struct recipeView: View {
                     .padding(.horizontal)
                     .padding(.horizontal)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    Text("Recipe Source:" + theRecipe.getSourceString() + "from a " + theRecipe.getRecipeSourceType())
+                    if(theRecipe.isRecipeMealTimePresent()){
+                        Text("Recipe meal type: " + theRecipe.getRecipeMealTime())
+                    }
                 }
                 .task {
                     print("Task started")

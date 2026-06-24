@@ -104,6 +104,8 @@ struct addSheet: View{
     @State var isSearchPresented = false
     @State var SourceType =  ""
     @State var catSourceType: String = ""
+    @State var recipeMealTime = ""
+    @State var recipeNotes: String =  ""
     var recipeAdded: (Recipe) -> Void
     var body: some View {
         ZStack{
@@ -143,14 +145,15 @@ struct addSheet: View{
                     }
                     addButton(inputtype: "Name", /*input: $recipename,*/ color: namemoveon ? Color.brownfont:Color.red, content: {textInputField(inputtype: isCreating ? "Recipe Name": theRecipe.getName() , input: $recipename)})
                     //                addButton(inputtype: "Category", /*input: $recipename,*/ color: namemoveon ? Color.brownfont:Color.red, content: {textInputField(inputtype: isCreating ? "Recipe Name": theRecipe.getType() , input: $recipeCategory)})
-                    addButton(inputtype: "Category", /*input: $recipeCategory,*/ color: catmoveon ? Color.brownfont:Color.red, content: {pickerButton(inputtype: isCreating ? "Recipe Category": theRecipe.getType(), picked: $recipeCategory, SourceType: $catSourceType, list: recipelist)})
-                    addButton(inputtype: "Source", color: Color.brown, content: {pickerButton(inputtype: isCreating ? "Recipe Source": theRecipe.getSourceString(), picked: $recipeSource, SourceType: $SourceType, list: recipelist, isSource: true  )})
+                    addButton(inputtype: "Category", /*input: $recipeCategory,*/ color: catmoveon ? Color.brownfont:Color.red, content: {pickerButton(inputtype: isCreating ? "Recipe Category": theRecipe.getType(), picked: $recipeCategory, SourceType: $catSourceType, list: recipelist, pickerType: "Category")})
+                    addButton(inputtype: "Source", color: Color.brown, content: {pickerButton(inputtype: isCreating ? "Recipe Source": theRecipe.getSourceString(), picked: $recipeSource, SourceType: $SourceType, list: recipelist,  pickerType: "Source"  )})
                     Text(" - - - - - Optional - - - - - ")
                         .foregroundStyle(Color.mutedgray)
                         .padding(.vertical)
                     addButton(inputtype: "Image", /*input: $selecetedImage,*/ color: Color.brownfont, content: {photoPickerView(selecetedImage: $selecetedImage)})
-                    
-
+                    addButton(inputtype: "Meal Type", color: Color.brown, content: {pickerButton(inputtype: isCreating ? "Recipe Meal Time": theRecipe.getRecipeMealTime(), picked: $recipeMealTime, SourceType: $SourceType, list: recipelist, pickerType: "Meal Type"  )})
+                    addButton(inputtype: "Notes", color: Color.brown, content: {textInputField(inputtype: "Recipe Notes:", input: $recipeNotes, widthheigh: [240,90])})
+                        
                     
                 }
                 .padding(.top)
