@@ -259,7 +259,13 @@ struct recipeView: View {
                     Text("Recipe Source:" + theRecipe.getSourceString() + "from a " + theRecipe.getRecipeSourceType())
                     if(theRecipe.isRecipeMealTimePresent()){
                         Text("Recipe meal type: " + theRecipe.getRecipeMealTime())
+                            .foregroundStyle(Color.secondaryfont)
                     }
+                    Text("Notes")
+                        .foregroundStyle(Color.secondaryfont)
+                    Text(theRecipe.getRecipeNotes())
+                        .foregroundStyle(Color.secondaryfont)
+                    basicText(input: <#T##String#>, color: <#T##Color#>)
                 }
                 .task {
                     print("Task started")
@@ -294,7 +300,14 @@ struct recipeView: View {
         }
     }
     
-
+struct basicText:View {
+    var input:String
+    var color: Color
+    var body: some View {
+        Text(input)
+            .foregroundStyle(Color)
+    }
+}
 
 //func loadImage(@Binding recipeImage: UIImage?, theRecipe: Recipe){
 //    print("Task started")
