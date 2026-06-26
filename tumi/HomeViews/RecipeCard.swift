@@ -251,21 +251,20 @@ struct recipeView: View {
                             .presentationDetents([.medium, .large])
                         }
                         .presentationDetents([.medium, .large])
+                        
+                        
                     }
                     .padding(.horizontal)
                     .padding(.horizontal)
                     .padding(.horizontal)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    Text("Recipe Source:" + theRecipe.getSourceString() + "from a " + theRecipe.getRecipeSourceType())
+//                    Text("Recipe Source:" + theRecipe.getSourceString() + "from a " + theRecipe.getRecipeSourceType())    
+                    basicText(input: ("Recipe " + theRecipe.getSourceString() + "from a " + theRecipe.getRecipeSourceType()), color: Color.secondaryfont)
                     if(theRecipe.isRecipeMealTimePresent()){
-                        Text("Recipe meal type: " + theRecipe.getRecipeMealTime())
-                            .foregroundStyle(Color.secondaryfont)
+                        basicText(input: ("Recipe meal type: " + theRecipe.getRecipeMealTime()), color: Color.secondaryfont)
                     }
-                    Text("Notes")
-                        .foregroundStyle(Color.secondaryfont)
-                    Text(theRecipe.getRecipeNotes())
-                        .foregroundStyle(Color.secondaryfont)
-                    basicText(input: <#T##String#>, color: <#T##Color#>)
+                    
+                    basicText(input: ("Notes: " + theRecipe.getRecipeNotes()), color: Color.secondaryfont)
                 }
                 .task {
                     print("Task started")
@@ -304,8 +303,15 @@ struct basicText:View {
     var input:String
     var color: Color
     var body: some View {
-        Text(input)
-            .foregroundStyle(Color)
+        HStack{
+            Spacer()
+            Text(input)
+                .foregroundStyle(color)
+            Spacer()
+            Spacer()
+            Spacer()
+        }
+        
     }
 }
 

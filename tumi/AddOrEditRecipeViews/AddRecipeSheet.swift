@@ -114,7 +114,7 @@ struct addSheet: View{
 //            ScrollView{
 
                 VStack{
-                    Button(action: {let recipenew = Recipe(recipeRank: 2, recipeName: recipename, recipeType: recipeCategory, Image: ImageToData(image: selecetedImage ?? nil /*?? UIImage(systemName: "gear")*/), recipeSourceType: SourceType)
+                    Button(action: {let recipenew = Recipe(recipeRank: 2, recipeName: recipename, recipeType: recipeCategory, Image: ImageToData(image: selecetedImage ?? nil /*?? UIImage(systemName: "gear")*/), recipeSourceType: SourceType,recipeMeal: recipeMealTime, recipeNotes: recipeNotes )
                         recipeAdded(recipenew);canMoveOn1.toggle()}){
                             
                             HStack{

@@ -399,7 +399,7 @@ struct pickerButton: View {
                             custom = true
                             picked = ""
                         }
-                        else if(isSource! && isSource != nil){
+                        else if(isSource != nil && isSource! ){
                             inputtype = "Type your source (of \(picked)) "
                             print("custom source selected")
                             custom = true
