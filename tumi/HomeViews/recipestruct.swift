@@ -91,7 +91,13 @@ struct Recipe: Identifiable, Hashable, Codable{ //this is the recipe struct
         checkIfNil(variable: recipeMeal, niltext: "Recipe meal")
     }
     func getRecipeNotes() -> String{
-        checkIfNil(variable: recipeNotes, niltext: "Recipe Notes")
+//        checkIfNil(variable: recipeNotes, niltext: "Recipe Notes")
+        if recipeNotes != nil {
+            return recipeNotes!
+        }
+        else{
+            return " "
+        }
     }
     func isRecipeMealTimePresent() -> Bool{
         return recipeMeal != nil

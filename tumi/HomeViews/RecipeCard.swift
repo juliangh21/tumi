@@ -175,7 +175,7 @@ struct recipeView: View {
         ZStack{
             Color.lightbrownbkgrnd.ignoresSafeArea()
             ScrollView{
-                VStack(spacing: 1 ){
+                VStack(alignment: .leading, spacing: 1){
                     Button(action: {fulleditsheetshowing=true}){
                         overarchingButtonView()
                     }
@@ -218,7 +218,13 @@ struct recipeView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                     if (recipeImage != nil){
-                        ImageView(uiImage: recipeImage!, Big: true, widthheight: {newval in print(newval)})
+                        HStack{
+                            Spacer()
+                            ImageView(uiImage: recipeImage!, Big: true, widthheight: {newval in print(newval)})
+                            Spacer()
+
+                        }
+                        
                         //
                     }
                     Text("Made on " + String(theRecipe.datecreated.formatted()))
@@ -259,12 +265,14 @@ struct recipeView: View {
                     .padding(.horizontal)
                     .frame(maxWidth: .infinity, alignment: .leading)
 //                    Text("Recipe Source:" + theRecipe.getSourceString() + "from a " + theRecipe.getRecipeSourceType())    
-                    basicText(input: ("Recipe " + theRecipe.getSourceString() + "from a " + theRecipe.getRecipeSourceType()), color: Color.secondaryfont)
-                    if(theRecipe.isRecipeMealTimePresent()){
-                        basicText(input: ("Recipe meal type: " + theRecipe.getRecipeMealTime()), color: Color.secondaryfont)
-                    }
-                    
+                    basicText(input: ( theRecipe.getRecipeMealTime() + " recipe. From: " + theRecipe.getSourceString() + "(" + theRecipe.getRecipeSourceType() +  ")"), color: Color.secondaryfont)
+                        .padding(.horizontal)
+                        .padding(.horizontal)
+                        .padding(.horizontal)
                     basicText(input: ("Notes: " + theRecipe.getRecipeNotes()), color: Color.secondaryfont)
+                        .padding(.horizontal)
+                        .padding(.horizontal)
+                        .padding(.horizontal)
                 }
                 .task {
                     print("Task started")
@@ -304,12 +312,12 @@ struct basicText:View {
     var color: Color
     var body: some View {
         HStack{
-            Spacer()
+//            Spacer()
             Text(input)
                 .foregroundStyle(color)
-            Spacer()
-            Spacer()
-            Spacer()
+//            Spacer()
+//            Spacer()
+//            Spacer()
         }
         
     }
