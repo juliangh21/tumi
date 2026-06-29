@@ -364,6 +364,9 @@ struct pickerButton: View {
                             
                             custom = true
                         }
+                        else if(isSource != nil && isSource!){
+                            custom = true
+                        }
                     }){
                         Text(recipecat)
                         
@@ -390,7 +393,7 @@ struct pickerButton: View {
                             
                         }
                     }
-                    .onChange(of: picked){
+                    .onChange(of: picked){ old, new in
 //                        inputtype = picked
 //                        catpicked = true
                         if(picked == "Custom Category" /*|| picked == inputtype*/){
@@ -398,14 +401,20 @@ struct pickerButton: View {
                             catpicked = true
                             custom = true
                             picked = ""
+                            print("Custom cat")
                         }
                         else if(isSource != nil && isSource! ){
+                            custom = true
                             inputtype = "Type your source (of \(picked)) "
                             print("custom source selected")
                             custom = true
                             SourceType = picked
-                            picked = ""
+//                            picked = ""
                         }
+                        else{
+                            print("chat it didn't work(source name obv)")
+                        }
+//                        if
                     }
 
                     
@@ -431,11 +440,11 @@ struct pickerButton: View {
                 
             }
         }
-        .onChange(of:picked){old, new in
-            if !new.isEmpty {
-                    inputtype = new
-                }
-        }
+//        .onChange(of:picked){old, new in
+//            if !new.isEmpty {
+//                    inputtype = new
+//                }
+//        }
         
     }
 }
