@@ -41,7 +41,7 @@ func catrecipeonly(list1:[Recipe], SelectedCategory: String?)->[Recipe]{ //this 
             return dateSortedRecipe
         }
         else{
-            let alphasortedrecipe = list1.sorted{$0.getName() < $1.getName()}
+            let alphasortedrecipe = list1.sorted{$0.getName() > $1.getName()}
             return alphasortedrecipe
         }
     }

@@ -27,8 +27,10 @@ struct listOfcategories: View{
     var catList: [String]
     var onTap: (String?) -> Void //this is the category that is selected, and the category that is going to be filted
     @State var selectedcategory: String? = nil
+    @State var searchRecipeShowing: Bool = false
     var uniqueCategories: [String] {
         var categorys: [String] = []
+        categorys.append("Search Recipe")
         categorys.append("Date")
         categorys.append("A-Z")
         for recipe in Recipes{
@@ -44,8 +46,17 @@ struct listOfcategories: View{
                     ForEach(uniqueCategories, id: \.self){category in
                         Button(action: {
                             print("Cat tapped")
-                            if (selectedcategory==category){//if button is double tapped, unpress
+                            if(selectedcategory == "Search Recipe" && !searchRecipeShowing){
                                 selectedcategory = nil
+                                searchRecipeShowing = false
+                            }
+                            else if(selectedcategory == "Search Recipe" && searchRecipeShowing){
+                                selectedcategory = nil
+                                searchRecipeShowing = true
+                            }
+                            else if (selectedcategory==category){//if button is double tapped, unpress
+                                selectedcategory = nil
+                                searchRecipeShowing = false
                             }
                             else{
                                 selectedcategory=category
@@ -73,13 +84,65 @@ struct listOfcategories: View{
                         
                 }
             }
+            
             .padding(.leading, 35)
             .padding(.trailing, 35)
         }
+            .sheet(isPresented: $searchRecipeShowing, onDismiss: {selectedcategory=nil; searchRecipeShowing = false}){
+                searchRecipesView(recipeList: Recipes)
+            }
     }
 }
 
-
+struct searchRecipesView: View {
+    var recipeList: [Recipe]
+    @State var searchResults: [Recipe] = []
+    @State var searchQuery: String = ""
+    var isSearching: Bool{
+        searchQuery != ""
+    }
+    var body: some View {
+        NavigationStack{
+            List{
+                if(isSearching){
+                    ForEach(searchResults){ recipe in
+                        Text(recipe.getName())
+                    }
+                }
+                else{
+                    ForEach(recipeList){ recipe in
+                        Text(recipe.getName())
+                        
+                    }
+                }
+                
+            }
+            .navigationTitle("Recipes")
+        }
+        .searchable(text: $searchQuery, prompt: "Recipe Name")
+        .textInputAutocapitalization(.never)
+        .onChange(of: searchQuery){
+            self.fetchSearchResults(for: searchQuery)
+        }
+        .overlay(){
+            if isSearching&&searchResults.isEmpty{
+                ContentUnavailableView(
+                    "Recipe not found",
+                    systemImage: "magnifyingglass",
+                    description: Text("No results for **\(searchQuery)**")
+                )
+            }
+        }
+    }
+    private func fetchSearchResults(for query: String){
+        searchResults = recipeList.filter{ recipe in
+            recipe.getName()
+                .lowercased()
+                .contains(searchQuery) // later maybe add something to the app so people can search recipe names, categorys, etc
+                
+        }
+    }
+}
 
 struct allRecipeComponents: View {
     var Recipes: [Recipe]
