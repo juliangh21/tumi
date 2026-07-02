@@ -202,3 +202,27 @@ struct publicRecipe: Identifiable, Hashable, Codable{ //this is the recipe struc
     }
     
 }
+
+
+struct filterRecipes: Identifiable, Hashable{
+    let id = UUID() // this makes it identifiable
+    var recipe: Recipe? = nil
+    var isFilteringCats = true
+    var catFiltered: String?  = nil
+    
+    func getRecipeName() -> String?{
+        if !isFilteringCats{
+            return recipe!.getName()
+        }
+        return nil
+    }
+    func getcatFiltered() -> String?{
+        if isFilteringCats{
+            return catFiltered!
+        }
+        return nil
+    }
+    func getisFilteringCats() -> Bool{
+        return isFilteringCats
+    }
+}

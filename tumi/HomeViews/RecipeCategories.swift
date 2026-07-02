@@ -46,17 +46,20 @@ struct listOfcategories: View{
                     ForEach(uniqueCategories, id: \.self){category in
                         Button(action: {
                             print("Cat tapped")
-                            if(selectedcategory == "Search Recipe" && !searchRecipeShowing){
-                                selectedcategory = nil
+                            if(category == "Search Recipe" && searchRecipeShowing){ // ie, if search recipe is selcted and search recipe showing
                                 searchRecipeShowing = false
-                            }
-                            else if(selectedcategory == "Search Recipe" && searchRecipeShowing){
+                                print("search not showing")
                                 selectedcategory = nil
+                            }
+                            else if(category == "Search Recipe" && !searchRecipeShowing){
+                                print("search showing")
                                 searchRecipeShowing = true
+                                selectedcategory = nil
+
                             }
                             else if (selectedcategory==category){//if button is double tapped, unpress
                                 selectedcategory = nil
-                                searchRecipeShowing = false
+//                                searc/hRecipeShowing = false
                             }
                             else{
                                 selectedcategory=category
@@ -89,7 +92,7 @@ struct listOfcategories: View{
             .padding(.trailing, 35)
         }
             .sheet(isPresented: $searchRecipeShowing, onDismiss: {selectedcategory=nil; searchRecipeShowing = false}){
-                searchRecipesView(recipeList: Recipes)
+                searchRecipesView(recipeList: Recipes, recipeOut: {recipe in  })
             }
     }
 }
@@ -101,17 +104,24 @@ struct searchRecipesView: View {
     var isSearching: Bool{
         searchQuery != ""
     }
+    var recipeOut: (Recipe) -> Void
     var body: some View {
         NavigationStack{
             List{
                 if(isSearching){
                     ForEach(searchResults){ recipe in
-                        Text(recipe.getName())
+                        Button(action:{recipeOut(recipe)}){
+                            Text(recipe.getName())
+                        }
+                        
                     }
                 }
                 else{
                     ForEach(recipeList){ recipe in
-                        Text(recipe.getName())
+                        Button(action:{recipeOut(recipe)}){
+                            Text(recipe.getName())
+                        }
+                        
                         
                     }
                 }
