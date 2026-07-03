@@ -13,6 +13,7 @@ struct RecipeList: View{
     //    @Binding var Recipes: [Recipe]
     /*@Binding*/ var Recipes: [Recipe]
     var category: String
+    var recipe: Recipe? = nil
     
     var body: some View {
         var sortedrecipe = resortrecipe(list1: catrecipeonly(list1: Recipes, SelectedCategory: category))
@@ -46,6 +47,7 @@ struct ContentView: View {
     @State var CategoryRecipeArray: [Recipe] = []
     @State var selectedCategory: String? = nil
     @State var recipeSheetshowing: Bool = false
+    @State var recipesearched:Recipe? = nil
     var catRecipes: [String]{
         var x: [String] = []
         for recipe in RecipeArray {
@@ -75,13 +77,19 @@ struct ContentView: View {
 //                })
                 ScrollView{ // makes it scroll so there is an infinite amount of recipes
                     VStack{
-                        listOfcategories(/*Recipes: RecipeArray*/ Recipes: RecipeArray, catList: catRecipes  , onTap: { selectedcategory in //this is the closure statement. From the listOfcategories struct, it grabs a value, and runs the code
-                            
-                            if !(selectedCategory == selectedcategory){
-                                selectedCategory = selectedcategory
+                        listOfcategories(/*Recipes: RecipeArray*/ Recipes: RecipeArray, catList: catRecipes  , onTap: { recipepluscategory in //this is the closure statement. From the listOfcategories struct, it grabs a value, and runs the code
+                            if(recipepluscategory.getisFilteringCats()){
+                                let selectedcategory: String? = recipepluscategory.getcatFiltered()
+                                if !(selectedCategory == selectedcategory){
+                                    selectedCategory = selectedcategory
+                                }
                             }
+                            else{
+                                recipesearched = recipepluscategory.getRecipe()
+                            }
+                            
                         })
-                        RecipeList(Recipes: RecipeArray, category: selectedCategory ?? "")
+                        RecipeList(Recipes: RecipeArray, category: selectedCategory ?? "", recipe: recipesearched )
                     }
                     
 

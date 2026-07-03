@@ -25,7 +25,7 @@ struct categoryframe: View{
 struct listOfcategories: View{
     var Recipes: [Recipe]
     var catList: [String]
-    var onTap: (String?) -> Void //this is the category that is selected, and the category that is going to be filted
+    var onTap: (filterRecipes) -> Void //this is the category that is selected, and the category that is going to be filted
     @State var selectedcategory: String? = nil
     @State var searchRecipeShowing: Bool = false
     var uniqueCategories: [String] {
@@ -59,12 +59,14 @@ struct listOfcategories: View{
                             }
                             else if (selectedcategory==category){//if button is double tapped, unpress
                                 selectedcategory = nil
+                                onTap(filterRecipes(catFiltered: selectedcategory))
 //                                searc/hRecipeShowing = false
                             }
                             else{
                                 selectedcategory=category
+                                onTap(filterRecipes(catFiltered: selectedcategory))
                             }
-                            onTap(selectedcategory)
+                            
                         }){
                         ZStack{
                             if(selectedcategory == (category)){
@@ -92,7 +94,7 @@ struct listOfcategories: View{
             .padding(.trailing, 35)
         }
             .sheet(isPresented: $searchRecipeShowing, onDismiss: {selectedcategory=nil; searchRecipeShowing = false}){
-                searchRecipesView(recipeList: Recipes, recipeOut: {recipe in  })
+                searchRecipesView(recipeList: Recipes, recipeOut: {recipe in onTap(filterRecipes(recipe: recipe, isFilteringCats: false))})
             }
     }
 }

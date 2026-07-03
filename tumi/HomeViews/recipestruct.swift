@@ -218,11 +218,17 @@ struct filterRecipes: Identifiable, Hashable{
     }
     func getcatFiltered() -> String?{
         if isFilteringCats{
-            return catFiltered!
+            return catFiltered
         }
         return nil
     }
     func getisFilteringCats() -> Bool{
         return isFilteringCats
+    }
+    func getRecipe() -> Recipe?{
+        if !isFilteringCats{
+            return recipe
+        }
+        return nil
     }
 }

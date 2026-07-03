@@ -1,5 +1,5 @@
 {
-  "originHash" : "4002268bca12fb10333a2f669367bea92ca33be982a308da987991c9aad387b5",
+  "originHash" : "d3bc92355fc746a42adfb6c3cf01ee33463421b7cb6aafaed223ce2ab9c03702",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -152,15 +152,6 @@
       "state" : {
         "revision" : "540318ecedd63d883069ae7f1ed811a2df00b6ac",
         "version" : "2.4.0"
-      }
-    },
-    {
-      "identity" : "searchbar",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SzpakKamil/SearchBar",
-      "state" : {
-        "revision" : "e72c14615b3b6473ca32cdb3b3bea4d40d5d28f1",
-        "version" : "2.1.7"
       }
     },
     {
