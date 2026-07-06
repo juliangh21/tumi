@@ -94,7 +94,7 @@ struct listOfcategories: View{
             .padding(.trailing, 35)
         }
             .sheet(isPresented: $searchRecipeShowing, onDismiss: {selectedcategory=nil; searchRecipeShowing = false}){
-                searchRecipesView(recipeList: Recipes, recipeOut: {recipe in onTap(filterRecipes(recipe: recipe, isFilteringCats: false))})
+                searchRecipesView(recipeList: Recipes, recipeOut: {recipe in searchRecipeShowing=false; onTap(filterRecipes(recipe: recipe, isFilteringCats: false))})
             }
     }
 }

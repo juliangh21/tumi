@@ -8,7 +8,7 @@ import SwiftUI
 import Foundation
 func sortRecipe(list1:[Recipe], _ SelectedCategory: String?)->[Recipe]{
     let sortedRecipe = list1.sorted{ $0.getRank()<$1.getRank()}
-    let sr1 = catrecipeonly(list1: sortedRecipe, SelectedCategory: SelectedCategory)
+    let sr1 = catrecipeonly(list1: sortedRecipe, SelectedCategory: SelectedCategory, recipe: nil)
     return sr1
 }
 
@@ -28,34 +28,41 @@ func NicePrintRecipe(list1:[Recipe])->(Void){
     }
 }
 
-func catrecipeonly(list1:[Recipe], SelectedCategory: String?)->[Recipe]{ //this function sorts through a list of recipes that only have the selected category
+func catrecipeonly(list1:[Recipe], SelectedCategory: String?, recipe: Recipe?)->[Recipe]{ //this function sorts through a list of recipes that only have the selected category
     var goodRecipes : [Recipe] = []
-    if(SelectedCategory==nil || SelectedCategory == ""){//if not selected category: no change
+    if(SelectedCategory==nil || SelectedCategory == "" && recipe == nil){//if not selected category: no change
         return list1
     }
-    if(SelectedCategory == "Date" || SelectedCategory == "Alphabetically"){
-        if(SelectedCategory == "Date"){
-            print("date selected....trying to filter")
-            let dateSortedRecipe = list1.sorted{$0.getDate() < $1.getDate()}
-            print(dateSortedRecipe)
-            return dateSortedRecipe
-        }
-        else{
-            let alphasortedrecipe = list1.sorted{$0.getName() > $1.getName()}
-            return alphasortedrecipe
-        }
+    if(recipe != nil){
+       print("only the recipe has been returned")
+        return [recipe!]
     }
     else{
-        for recipe in list1 {
-            if (recipe.getRank( ) == -1){
-                print("NOPE")
-                
+        if(SelectedCategory == "Date" || SelectedCategory == "Alphabetically"){
+            if(SelectedCategory == "Date"){
+                print("date selected....trying to filter")
+                let dateSortedRecipe = list1.sorted{$0.getDate() < $1.getDate()}
+                print(dateSortedRecipe)
+                return dateSortedRecipe
             }
-            else if (recipe.getType().lowercased() == SelectedCategory?.lowercased()){
-                goodRecipes.append(recipe)
+            else{
+                let alphasortedrecipe = list1.sorted{$0.getName() > $1.getName()}
+                return alphasortedrecipe
+            }
+        }
+        else{
+            for recipe in list1 {
+                if (recipe.getRank( ) == -1){
+                    print("NOPE")
+                    
+                }
+                else if (recipe.getType().lowercased() == SelectedCategory?.lowercased()){
+                    goodRecipes.append(recipe)
+                }
             }
         }
     }
+    
     
     return goodRecipes
 }

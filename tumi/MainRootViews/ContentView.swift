@@ -16,7 +16,7 @@ struct RecipeList: View{
     var recipe: Recipe? = nil
     
     var body: some View {
-        var sortedrecipe = resortrecipe(list1: catrecipeonly(list1: Recipes, SelectedCategory: category))
+        var sortedrecipe = resortrecipe(list1: catrecipeonly(list1: Recipes, SelectedCategory: category, recipe: recipe))
 //        let x1 = catrecipeonly(list1: sortedrecipe, SelectedCategory: category)
         VStack{
             ForEach(sortRecipe(list1: sortedrecipe, category )) {card in
@@ -79,6 +79,7 @@ struct ContentView: View {
                     VStack{
                         listOfcategories(/*Recipes: RecipeArray*/ Recipes: RecipeArray, catList: catRecipes  , onTap: { recipepluscategory in //this is the closure statement. From the listOfcategories struct, it grabs a value, and runs the code
                             if(recipepluscategory.getisFilteringCats()){
+                                recipesearched = nil
                                 let selectedcategory: String? = recipepluscategory.getcatFiltered()
                                 if !(selectedCategory == selectedcategory){
                                     selectedCategory = selectedcategory
@@ -86,6 +87,7 @@ struct ContentView: View {
                             }
                             else{
                                 recipesearched = recipepluscategory.getRecipe()
+                                print("recipe has been grabbed")
                             }
                             
                         })
