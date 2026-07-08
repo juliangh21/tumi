@@ -28,6 +28,7 @@ struct listOfcategories: View{
     var onTap: (filterRecipes) -> Void //this is the category that is selected, and the category that is going to be filted
     @State var selectedcategory: String? = nil
     @State var searchRecipeShowing: Bool = false
+    @State var clear: Bool = false
     var uniqueCategories: [String] {
         var categorys: [String] = []
         categorys.append("Search Recipe")
@@ -93,9 +94,19 @@ struct listOfcategories: View{
             .padding(.leading, 35)
             .padding(.trailing, 35)
         }
-            .sheet(isPresented: $searchRecipeShowing, onDismiss: {selectedcategory=nil; searchRecipeShowing = false}){
-                searchRecipesView(recipeList: Recipes, recipeOut: {recipe in searchRecipeShowing=false; onTap(filterRecipes(recipe: recipe, isFilteringCats: false))})
+            .sheet(isPresented: $searchRecipeShowing, onDismiss: {selectedcategory=nil; searchRecipeShowing = false
+                if(!clear){
+                    print("cleared")
+                    onTap(filterRecipes(catFiltered: nil))
+                }
+
+                    
+            }){
+                searchRecipesView(recipeList: Recipes, recipeOut: {recipe in searchRecipeShowing=false; onTap(filterRecipes(recipe: recipe, isFilteringCats: false));clear = true}  )
+                    .onAppear(perform: {clear = false})
             }
+            
+            .presentationDetents([.medium, .large])
     }
 }
 
@@ -109,26 +120,40 @@ struct searchRecipesView: View {
     var recipeOut: (Recipe) -> Void
     var body: some View {
         NavigationStack{
-            List{
-                if(isSearching){
-                    ForEach(searchResults){ recipe in
-                        Button(action:{recipeOut(recipe)}){
-                            Text(recipe.getName())
+            ZStack{
+                Color.lightbrownbkgrnd
+                    .ignoresSafeArea()
+                List{
+                    if(isSearching){
+                        ForEach(searchResults){ recipe in
+                            Button(action:{recipeOut(recipe)}){
+                                Text(recipe.getName())
+                                    .foregroundStyle(Color.brownfont)
+                            }
+                            
                         }
-                        
+                        .listRowBackground(Color.primarybrown)
+
                     }
-                }
-                else{
-                    ForEach(recipeList){ recipe in
-                        Button(action:{recipeOut(recipe)}){
-                            Text(recipe.getName())
+                    else{
+                        ForEach(recipeList){ recipe in
+                            Button(action:{recipeOut(recipe)}){
+                                Text(recipe.getName())
+                                    .foregroundStyle(Color.brownfont)
+                            }
+                            
+                            
                         }
-                        
-                        
+                        .listRowBackground(Color.primarybrown)
+
                     }
+                    
+                    
                 }
-                
+                .scrollContentBackground(.hidden)
             }
+            
+            
             .navigationTitle("Recipes")
         }
         .searchable(text: $searchQuery, prompt: "Recipe Name")
