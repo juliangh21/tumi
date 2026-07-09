@@ -25,7 +25,7 @@ final class RecipeManager: ObservableObject{
     }
     func loadUser(uid: String) async{
         self.uid = uid
-//        self.username = username
+        //        self.username = username
         await fetchRecipes()
     }
     func clearUser(){
@@ -134,10 +134,18 @@ final class RecipeManager: ObservableObject{
             print("Image upload ERROR :\(error) ")
             return nil
         }
-            
-            
-            
         
+    }
+    func saveAllrecipesWithRank( recipes: [Recipe]) async {
+        guard let ref = collectionRef else {return}
+        for recipe in recipes{
+            do{
+                try ref.document(recipe.id).setData(from: recipe, merge: true)
+            }
+            catch{
+                print("rank save error \(error)")
+            }
+        }
     }
     
 }

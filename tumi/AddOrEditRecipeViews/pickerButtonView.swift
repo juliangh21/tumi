@@ -8,6 +8,7 @@
 import SwiftUI
 struct pickerButton: View {
     @State var inputtype: String = "Recipe Category"
+    let  oldinputtype = inputtype
     @State var custom = false
     @State var pickershowing = false
     @State var catpicked = false

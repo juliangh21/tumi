@@ -88,6 +88,8 @@ struct tumiApp: App {
                         Task {
                             await recipemanager.saveRecipes(recipenew)
                             await recipemanager.savePubRecipes(recipe: recipenew)
+                            await recipemanager.saveAllrecipesWithRank(recipes: recipemanager.recipes)
+                            
                         }
                         
                         print("New Recipe added")

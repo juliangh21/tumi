@@ -100,9 +100,9 @@ struct addSheet: View{
     @State var recipename  = ""
     @State var recipeCategory = ""
     @State var selecetedImage: UIImage?
-    @State var recipeSource = ""
+    @State var recipeSource: String = ""
     @State var isSearchPresented = false
-    @State var SourceType =  ""
+    @State var SourceType: String =  ""
     @State var catSourceType: String = ""
     @State var recipeMealTime = ""
     @State var recipeNotes: String =  ""
@@ -114,7 +114,7 @@ struct addSheet: View{
 //            ScrollView{
 
                 VStack{
-                    Button(action: {let recipenew = Recipe(recipeRank: 2, recipeName: recipename, recipeType: recipeCategory, Image: ImageToData(image: selecetedImage ?? nil /*?? UIImage(systemName: "gear")*/), recipeSourceType: SourceType,recipeMeal: recipeMealTime, recipeNotes: recipeNotes )
+                    Button(action: {let recipenew = Recipe(recipeRank: 2, recipeName: recipename, recipeType: recipeCategory, Image: ImageToData(image: selecetedImage ?? nil /*?? UIImage(systemName: "gear")*/), source: recipeSource, recipeSourceType: SourceType,recipeMeal: recipeMealTime, recipeNotes: recipeNotes )
                         recipeAdded(recipenew);canMoveOn1.toggle()}){
                             
                             HStack{
