@@ -103,10 +103,12 @@ struct listOfcategories: View{
                     
             }){
                 searchRecipesView(recipeList: Recipes, recipeOut: {recipe in searchRecipeShowing=false; onTap(filterRecipes(recipe: recipe, isFilteringCats: false));clear = true}  )
+                    .presentationDragIndicator(.visible)
+                    .presentationDetents([.fraction(0.5), .medium])
                     .onAppear(perform: {clear = false})
             }
-            
-            .presentationDetents([.medium, .large])
+//            .presentationDragIndicator(.visible)
+//            .presentationDetents([.medium, .large])
     }
 }
 

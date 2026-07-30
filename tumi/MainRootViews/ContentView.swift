@@ -126,6 +126,7 @@ struct addRecipeButton: View {
                 print("New Recipe added")
                 recipeSheetshowing = false
             })
+            .presentationDragIndicator(.visible)
             .presentationDetents([.medium, .large])
             
         }

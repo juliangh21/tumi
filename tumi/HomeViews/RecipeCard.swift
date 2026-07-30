@@ -196,19 +196,21 @@ struct recipeView: View {
                             let bothRecipes = RecipeViewStruct(newRecipe: recipenew, oldRecipe: oldRecipe)
                             newRecipe(bothRecipes)
                         })
-                        .presentationDetents([.medium, .large])
+                        .presentationDragIndicator(.visible)
+                        .presentationDetents([.fraction(0.75),  .large])
                     }
-                    .presentationDetents([.medium, .large])
+//                    .presentationDetents([ .large])
                     
                     if(theRecipe.getSourceString() != ""){
                         HStack(spacing:1){
-                            Link(destination: URL(string: theRecipe.getSourceString())!,){
-                                BigTextView(input: theRecipe.recipeName)
-                                    .padding([.horizontal], -30)
+                            VStack(alignment: .leading){
+                                Link(destination: URL(string: theRecipe.getSourceString())!,){
+                                    BigTextView(input: theRecipe.recipeName)
+                                        .padding([.horizontal], -30)
+                                }
                             }
-                            Image(systemName: "link")
-                                .font(.system(size:40))
-                                .foregroundStyle(Color.brownfont)
+                            
+                
                         }
                         .padding([.horizontal], 30)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -254,9 +256,10 @@ struct recipeView: View {
                                 let bothRecipes = RecipeViewStruct(newRecipe: theRecipe, oldRecipe: oldRecipe)
                                 newRecipe(bothRecipes)
                             })
+                            .presentationDragIndicator(.visible)
                             .presentationDetents([.medium, .large])
                         }
-                        .presentationDetents([.medium, .large])
+//                        .presentationDetents([.medium, .large])
                         
                         
                     }

@@ -38,15 +38,16 @@ func catrecipeonly(list1:[Recipe], SelectedCategory: String?, recipe: Recipe?)->
         return [recipe!]
     }
     else{
-        if(SelectedCategory == "Date" || SelectedCategory == "Alphabetically"){
+        if(SelectedCategory == "Date" || SelectedCategory == "A-Z"){ // checking if sorting date or A-Z
             if(SelectedCategory == "Date"){
                 print("date selected....trying to filter")
-                let dateSortedRecipe = list1.sorted{$0.getDate() < $1.getDate()}
+                let dateSortedRecipe = list1.sorted{$0.getDate() < $1.getDate()} //sorts date
                 print(dateSortedRecipe)
                 return dateSortedRecipe
             }
             else{
-                let alphasortedrecipe = list1.sorted{$0.getName() > $1.getName()}
+                print("A-Z selected... trying to filter")
+                let alphasortedrecipe = list1.sorted{$0.getName() < $1.getName()} // sorts name
                 return alphasortedrecipe
             }
         }

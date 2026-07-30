@@ -8,7 +8,9 @@
 import SwiftUI
 struct pickerButton: View {
     @State var inputtype: String = "Recipe Category"
-    let  oldinputtype = inputtype
+    var theinputType: String {
+        return inputtype
+    }
     @State var custom = false
     @State var pickershowing = false
     @State var catpicked = false
@@ -141,7 +143,7 @@ struct pickerButton: View {
                     textInputField(inputtype: inputtype, input: $picked)
                     HStack{
                         Spacer()
-                        Button(action:{ custom=false; pickershowing = true;inputtype="Recipe Category"}){
+                        Button(action:{ custom=false; pickershowing = true;inputtype=theinputType}){
                             sfSymbolImage(imageName: "arrow.uturn.backward", imageColor: Color.brown)
                         }
                     }

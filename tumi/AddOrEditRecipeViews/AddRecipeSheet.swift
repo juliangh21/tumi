@@ -164,7 +164,8 @@ struct addSheet: View{
                         recipeCategory = recipe.getType()
                         isSearchPresented.toggle()
                 })
-                    .presentationDetents([.fraction(0.15), .medium])
+                    .presentationDragIndicator(.visible)
+                    .presentationDetents([.fraction(0.25), .medium, .large])
                 
             }
         }
