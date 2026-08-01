@@ -63,6 +63,8 @@ struct BigTextView: View {
     var input: String
     var body: some View {
         Text(input)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .multilineTextAlignment(.leading)
             .font(.system(size:50))
             .foregroundStyle(Color.brownfont)
             .lineLimit(3)
@@ -225,7 +227,7 @@ struct textInputField: View {
                 Group{
                     if(isloggin){
                         TextField(/*"Recipe " +*/ inputtype, text: $input)
-                            .foregroundStyle(Color.mutedgray)
+                            .foregroundStyle(Color.black)
                             .textContentType(.emailAddress)
                             .textContentType(.username)
                     }

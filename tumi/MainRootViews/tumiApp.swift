@@ -73,6 +73,7 @@ struct tumiApp: App {
                     
 
                 }
+                .tint(Color.accentorange)
 
                 .onChange(of: selectedTab){ oldValue, newValue in
                     if(newValue == 1){

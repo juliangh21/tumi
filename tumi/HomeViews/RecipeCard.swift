@@ -54,6 +54,9 @@ struct infoView: View { // this is the view for the data from recipe. NOT THE RE
             VStack(alignment: .leading){
                 Text(recipe_name)
 //                    .font(.body)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .multilineTextAlignment(.leading)
+
                     .font(.system(size:20))
                     .foregroundStyle(Color.brownfont)
                     .bold()
@@ -72,7 +75,7 @@ struct infoView: View { // this is the view for the data from recipe. NOT THE RE
 //                    .clipped(false, antialiased: true)
             }
             else{
-                turntRectangle()
+//                turntRectangle()
             }
             
 
@@ -311,6 +314,10 @@ struct recipeView: View {
         }
     }
     
+
+
+
+
 struct basicText:View {
     var input:String
     var color: Color
