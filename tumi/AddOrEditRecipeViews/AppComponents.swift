@@ -201,7 +201,7 @@ struct selectYourPhoto: View {
     var alrselected: Bool
     var body: some View {
         HStack(spacing: -4){
-            Text( alrselected ? "Open photo library": "Select your photo")
+            Text( alrselected ? "Open photo library. CLICK AGAIN": "Select your photo")
                 .foregroundStyle(Color.mutedgray)
                 .frame(width: .infinity)
                 .padding(.horizontal)
@@ -220,6 +220,7 @@ struct textInputField: View {
     var widthheigh=[240,45]
     var width: CGFloat = .infinity
     var notSearching: Bool = true
+    var isEditing: Bool = false
     var body: some View {
         ZStack{
             brownRectangle(width: /*CGFloat(widthheigh[0])*/.infinity, height: CGFloat(widthheigh[1]))
@@ -238,7 +239,7 @@ struct textInputField: View {
                         
                     }
                     else{
-                        TextField(/*"Recipe " +*/ inputtype, text: $input)
+                        TextField(/*"Recipe " +*/ inputtype, text:  $input)
                     }
                 }
                 .padding(.horizontal)

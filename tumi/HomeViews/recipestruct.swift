@@ -75,6 +75,12 @@ struct Recipe: Identifiable, Hashable, Codable{ //this is the recipe struct
         }
         return UIImage(systemName: "camera")!
     }
+    func confirmImage() ->Bool{
+        if let Image = Image{
+            return true
+        }
+        return false
+    }
     func getSourceString() -> String{
         return source
     }
@@ -85,7 +91,20 @@ struct Recipe: Identifiable, Hashable, Codable{ //this is the recipe struct
         return angleRandom
     }
     func getRecipeSourceType() -> String{
-        checkIfNil(variable: recipeSourceType, niltext: "Recipe source type")
+        var bracket = ["(", ")"]
+        
+        let checkedifnil = checkIfNil(variable: recipeSourceType, niltext: "Recipe source type")
+        if((checkedifnil == (""))){
+            bracket = [" ",""]
+            print(checkedifnil)
+            print("DOESNT ")
+        }
+        else{
+            print("WHY THOUGH")
+            bracket = [" (",") "]
+        }
+        
+         return bracket[0]  + checkIfNil(variable: recipeSourceType, niltext: "Recipe source type") + bracket[1]
     }
     func getRecipeMealTime() -> String{
         checkIfNil(variable: recipeMeal, niltext: "Recipe meal")

@@ -106,7 +106,11 @@ struct addSheet: View{
     @State var catSourceType: String = ""
     @State var recipeMealTime = ""
     @State var recipeNotes: String =  ""
+    var recipeUiImage: UIImage? = nil
     var recipeAdded: (Recipe) -> Void
+//    init(recipeName: String){
+//        self._recipename = State(initialValue: theRecipe.getName())
+//    }
     var body: some View {
         ZStack{
             Color.lightbrownbkgrnd
@@ -143,7 +147,7 @@ struct addSheet: View{
                         BigTextView(input: "Edit your Recipe.")
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
-                    addButton(inputtype: "Name", /*input: $recipename,*/ color: namemoveon ? Color.brownfont:Color.red, content: {textInputField(inputtype: isCreating ? "Recipe Name": theRecipe.getName() , input: $recipename)})
+                    addButton(inputtype: "Name", /*input: $recipename,*/ color: namemoveon ? Color.brownfont:Color.red, content: {textInputField(inputtype: isCreating ? "Recipe Name": theRecipe.getName() , input: $recipename, isEditing: !isCreating)})
                     //                addButton(inputtype: "Category", /*input: $recipename,*/ color: namemoveon ? Color.brownfont:Color.red, content: {textInputField(inputtype: isCreating ? "Recipe Name": theRecipe.getType() , input: $recipeCategory)})
                     addButton(inputtype: "Category", /*input: $recipeCategory,*/ color: catmoveon ? Color.brownfont:Color.red, content: {pickerButton(inputtype: isCreating ? "Recipe Category": theRecipe.getType(), picked: $recipeCategory, SourceType: $catSourceType, list: recipelist, pickerType: "Category")})
                     addButton(inputtype: "Source", color: Color.brown, content: {pickerButton(inputtype: isCreating ? "Recipe Source": theRecipe.getSourceString(), picked: $recipeSource, SourceType: $SourceType, list: recipelist,  pickerType: "Source"  )})
@@ -168,6 +172,16 @@ struct addSheet: View{
                     .presentationDetents([.fraction(0.25), .medium, .large])
                 
             }
+                .onAppear{
+                    recipename = theRecipe.getName()
+                    recipeCategory = theRecipe.getType()
+                    recipeSource = theRecipe.getSourceString()
+                    recipeNotes = theRecipe.getRecipeNotes()
+                    if(recipeUiImage != nil){
+                        selecetedImage = recipeUiImage
+                    }
+                    
+                }
         }
     }
 }

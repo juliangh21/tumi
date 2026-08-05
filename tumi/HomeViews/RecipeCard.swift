@@ -192,7 +192,7 @@ struct recipeView: View {
                     .frame(maxWidth:.infinity, alignment: .trailing)
                     .padding(.horizontal)
                     .sheet(isPresented: $editsheetshowing ){
-                        addSheet(theRecipe: theRecipe, isCreating: false, recipelist: recipeList, recipeAdded: { recipenew in
+                        addSheet(theRecipe: theRecipe, isCreating: false, recipelist: recipeList, recipeUiImage: recipeImage, recipeAdded: { recipenew in
                             let oldRecipe = theRecipe
                             theRecipe = recipenew
                             editsheetshowing = false
@@ -271,7 +271,7 @@ struct recipeView: View {
                     .padding(.horizontal)
                     .frame(maxWidth: .infinity, alignment: .leading)
 //                    Text("Recipe Source:" + theRecipe.getSourceString() + "from a " + theRecipe.getRecipeSourceType())    
-                    basicText(input: ( theRecipe.getRecipeMealTime() + " From: " + theRecipe.getSourceString() + "(" + theRecipe.getRecipeSourceType() +  ")"), color: Color.secondaryfont)
+                    basicText(input: ( theRecipe.getRecipeMealTime() + " From: " + theRecipe.getSourceString()  + theRecipe.getRecipeSourceType()  ), color: Color.secondaryfont)
                         .padding(.horizontal)
                         .padding(.horizontal)
                         .padding(.horizontal)

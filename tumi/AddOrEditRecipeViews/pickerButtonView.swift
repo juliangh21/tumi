@@ -146,6 +146,8 @@ struct pickerButton: View {
                         Button(action:{ custom=false; pickershowing = true;inputtype=theinputType}){
                             sfSymbolImage(imageName: "arrow.uturn.backward", imageColor: Color.brown)
                         }
+                        Spacer()
+                            .frame(width:25)
                     }
                     .frame(width: 220,height: 45)
                     
